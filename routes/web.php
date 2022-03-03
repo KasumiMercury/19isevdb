@@ -24,6 +24,12 @@ Route::get('/', function () {
     ]);
 });
 
+Route::prefix('login/{provider}')->where(['provider'=> 'google'])->group(function(){
+    Route::get('/',[App\Http\Controllers\Auth\LoginController::class, 'redirectToProvider'])->name('sns_login.redirect');
+    Route::get('/callback',[App\Http\Controllers\Auth\LoginController::class, 'handleProviderCallback'])->name('sns_login.callback');
+});
+
+
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');

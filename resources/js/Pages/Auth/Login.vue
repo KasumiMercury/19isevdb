@@ -65,6 +65,7 @@
                 </jet-button>
             </div>
         </form>
+        <a :href="route('sns_login.redirect', 'google')">Twitter</a>
     </jet-authentication-card>
 </template>
 
