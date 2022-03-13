@@ -6,7 +6,7 @@
     "display": "standalone",
     "orientation": "any",
     "scope": "/",
-    "start_url": "/",
+    "start_url": "https://isevdb.sakura.ne.jp/",
     "icons": [
         {
             "src": "images/icons/icon-72x72.png",
