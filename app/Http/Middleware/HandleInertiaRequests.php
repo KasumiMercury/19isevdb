@@ -4,6 +4,8 @@ namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
 use Inertia\Middleware;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -36,8 +38,23 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $member = DB::table('member')->get();
+        $category = DB::table('category')->get();
+
+        $id = Auth::id();
+        if($id != null){
+            $likesTemp = DB::table('bookmarks')->whereUser_id($id)->get(['player_id','id'])->toArray();
+            $likesObj = array_column($likesTemp, 'player_id');
+        }else{
+            $likesObj = null;
+        }
+
         return array_merge(parent::share($request), [
-            //
+            'setting' => [
+                'member' => $member,
+                'category' => $category,
+                'likesObj' => $likesObj,
+            ]
         ]);
     }
 }

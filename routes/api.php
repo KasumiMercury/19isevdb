@@ -17,3 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::put('/status/player', 'App\Http\Controllers\PlayerController@editStatus')->name('player.status');
+Route::put('/edit/player', 'App\Http\Controllers\PlayerController@playerChange')->name('player.change');
+Route::POST('/add/twitter', 'App\Http\Controllers\PlayerController@addTwitter')->name('add.twitter');
+Route::POST('/add/clip', 'App\Http\Controllers\PlayerController@addClip')->name('add.clip');
+Route::POST('/add/youtube', 'App\Http\Controllers\PlayerController@addYoutube')->name('add.youtube');
+Route::POST('/add/{id}/like', 'App\Http\Controllers\PlayerController@addLike')->name('add.like');
+Route::POST('/delete/{id}/dislike', 'App\Http\Controllers\PlayerController@DisLike')->name('delete.like');

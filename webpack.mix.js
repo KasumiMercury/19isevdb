@@ -1,4 +1,5 @@
-const mix = require('laravel-mix');
+const mix = require("laravel-mix")
+require("laravel-mix-purgecss")
 
 /*
  |--------------------------------------------------------------------------
@@ -11,13 +12,12 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js').vue()
-    .postCss('resources/css/app.css', 'public/css', [
-        require('postcss-import'),
-        require('tailwindcss'),
-    ])
-    .webpackConfig(require('./webpack.config'));
+mix.js("resources/js/app.js", "public/js")
+    .vue()
+    .postCss("resources/css/app.css", "public/css", [require("postcss-import"), require("tailwindcss"), require("autoprefixer")])
+    .webpackConfig(require("./webpack.config"))
+    .purgeCss()
 
 if (mix.inProduction()) {
-    mix.version();
+    mix.version()
 }
