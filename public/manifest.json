@@ -1,12 +1,12 @@
 {
     "name": "非公式いせぶいDB",
-    "short_name": "非公式いせぶいDB",
+    "short_name": "iseV DB",
     "theme_color": "#F64879",
     "background_color": "#282222",
     "display": "standalone",
     "orientation": "any",
     "scope": "/",
-    "start_url": "https://isevdb.sakura.ne.jp/",
+    "start_url": "index.php",
     "icons": [
         {
             "src": "images/icons/icon-72x72.png",

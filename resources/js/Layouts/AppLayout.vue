@@ -345,7 +345,6 @@
                                             </span>
                                         </div>
                                         <Link
-                                            v-if="$page.props.user"
                                             as="div"
                                             :href="route('data.add')"
                                             class="flex-1 mx-1 animate-flicker flex-1 cursor-pointer border-2 rounded-sm text-center focus:outline-none font-Raleway font-bold min-w-max text-emerald-300 bg-gradient-radial from-emerald-600 via-emerald-800 to-emerald-900 border-emerald-600 border-x-emerald-700"
@@ -354,15 +353,6 @@
                                                 <span class="mx-2 lg:mx-5">AddData</span>
                                             </span>
                                         </Link>
-                                        <div
-                                            v-else
-                                            @click="modalShow = true"
-                                            class="flex-1 mx-1 animate-flicker flex-1 cursor-pointer border-2 rounded-sm text-center focus:outline-none font-Raleway font-bold min-w-max text-emerald-300 bg-gradient-radial from-emerald-600 via-emerald-800 to-emerald-900 border-emerald-600 border-x-emerald-700"
-                                        >
-                                            <span class="px-auto py-1 inline-flex items-center text-xxs">
-                                                <span class="mx-2 lg:mx-5">AddData</span>
-                                            </span>
-                                        </div>
                                     </div>
                                 </div>
                                 <!-- SP btn end -->
@@ -377,7 +367,7 @@
                     <a class="text-xxs lg:text-xs text-gray-100" href="https://twitter.com/Mmazoku_media?s=20&t=aTPqq5WEuY9UgH-AKAKZTw"
                         >管理人：@Mmazoku_media</a
                     >
-                    <p class="text-xs lg-text-sm text-gray-100 mb-1">
+                    <p class="text-xxs lg-text-xs text-gray-100 mb-1">
                         ご意見・バグ報告は
                         <a class="text-blue-300" href="https://forms.gle/NrwdxsRVT9Q5XYkz9">Googleフォーム</a>
                         からでも可能です。
