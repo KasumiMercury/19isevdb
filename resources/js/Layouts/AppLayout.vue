@@ -7,11 +7,11 @@
             <div class="bg-stone-800">
                 <header>
                     <div class="flex justify-evenly max-w-5xl mx-auto bg-stone-800 pt-4 pb-2" id="siteTitle">
-                        <h2 class="goldTitle font-Caveat text-sm sm:text-4xl my-auto">UNOFFICIAL</h2>
-                        <div class="notGold font-Caveat text-ms sm:text-5xl my-auto">
+                        <h2 class="goldTitle font-Caveat text-xl sm:text-4xl my-auto">UNOFFICIAL</h2>
+                        <div class="notGold font-Caveat text-2xl sm:text-5xl my-auto">
                             <slot name="header"></slot>
                         </div>
-                        <h2 class="goldTitle font-Caveat text-sm sm:text-4xl my-auto">DATABASE</h2>
+                        <h2 class="goldTitle font-Caveat text-xl sm:text-4xl my-auto">DATABASE</h2>
                     </div>
                     <div class="flex flex-row justify-end pr-4 lg:pr-10 pb-2 bg-stone-800">
                         <Link
@@ -305,12 +305,12 @@
                                 <!-- SP btn -->
                                 <div class="fixed bottom-0 inset-x-0 mx-0 w-full z-10 md:hidden shadow-xl shadow-stone-900">
                                     <div class="w-full h-px goldLine m-0"></div>
-                                    <div class="flex flex-row bg-stone-800 mx-0 w-full pb-1 pt-3">
+                                    <div class="flex flex-row bg-stone-800 mx-0 w-full">
                                         <Link
                                             v-if="$page.props.user"
                                             as="div"
                                             :href="route('user.book')"
-                                            class="flex-1 mx-1 cursor-pointer border-2 rounded-sm text-center focus:outline-none font-Raleway font-bold min-w-max text-cyan-300 bg-gradient-radial from-cyan-600 via-cyan-800 to-cyan-900 border-cyan-600 border-x-cyan-700"
+                                            class="flex-1 py-1 cursor-pointer text-center focus:outline-none font-Raleway font-bold min-w-max text-cyan-300 bg-gradient-radial from-cyan-600 via-cyan-800 to-cyan-900 border-cyan-600 border-x-cyan-700"
                                         >
                                             <span class="px-auto py-0.5 text-xs">
                                                 <span class="mx-2 lg:mx-5">BookMark</span>
@@ -319,17 +319,18 @@
                                         <div
                                             v-else
                                             @click="modalShow = true"
-                                            class="flex-1 mx-1 cursor-pointer border-2 rounded-sm text-center focus:outline-none font-Raleway font-bold min-w-max text-cyan-300 bg-gradient-radial from-cyan-600 via-cyan-800 to-cyan-900 border-cyan-600 border-x-cyan-700"
+                                            class="flex-1 py-1 cursor-pointer text-center focus:outline-none font-Raleway font-bold min-w-max text-cyan-300 bg-gradient-radial from-cyan-600 via-cyan-800 to-cyan-900 border-cyan-600 border-x-cyan-700"
                                         >
                                             <span class="px-auto py-0.5 text-xs mx-auto my-auto">
                                                 <span class="mx-2 lg:mx-5">BookMark</span>
                                             </span>
                                         </div>
+                                        <div class="h-full w-px bg-gray-900 m-0 p-0"></div>
                                         <Link
                                             v-if="$page.props.user"
                                             as="div"
                                             :href="route('user.added')"
-                                            class="flex-1 mx-1 cursor-pointer border-2 rounded-sm text-center focus:outline-none font-Raleway font-bold min-w-max text-cyan-300 bg-gradient-radial from-cyan-600 via-cyan-800 to-cyan-900 border-cyan-600 border-x-cyan-700"
+                                            class="flex-1 py-1 cursor-pointer text-center focus:outline-none font-Raleway font-bold min-w-max text-cyan-300 bg-gradient-radial from-cyan-600 via-cyan-800 to-cyan-900 border-cyan-600 border-x-cyan-700"
                                         >
                                             <span class="px-auto py-0.5 text-xs mx-auto my-auto">
                                                 <span class="mx-2 lg:mx-5">YourData</span>
@@ -338,16 +339,17 @@
                                         <div
                                             v-else
                                             @click="modalShow = true"
-                                            class="flex-1 mx-1 cursor-pointer border-2 rounded-sm text-center focus:outline-none font-Raleway font-bold min-w-max text-cyan-300 bg-gradient-radial from-cyan-600 via-cyan-800 to-cyan-900 border-cyan-600 border-x-cyan-700"
+                                            class="flex-1 py-1 cursor-pointer text-center focus:outline-none font-Raleway font-bold min-w-max text-cyan-300 bg-gradient-radial from-cyan-600 via-cyan-800 to-cyan-900 border-cyan-600 border-x-cyan-700"
                                         >
                                             <span class="px-auto py-0.5 text-xs mx-auto my-auto">
                                                 <span class="mx-2 lg:mx-5">YourData</span>
                                             </span>
                                         </div>
+                                        <div class="h-full w-px bg-gray-900 m-0 p-0"></div>
                                         <Link
                                             as="div"
                                             :href="route('data.add')"
-                                            class="flex-1 mx-1 animate-flicker flex-1 cursor-pointer border-2 rounded-sm text-center focus:outline-none font-Raleway font-bold min-w-max text-emerald-300 bg-gradient-radial from-emerald-600 via-emerald-800 to-emerald-900 border-emerald-600 border-x-emerald-700"
+                                            class="flex-1 py-1 animate-flicker cursor-pointer text-center focus:outline-none font-Raleway font-bold min-w-max text-emerald-300 bg-gradient-radial from-emerald-600 via-emerald-800 to-emerald-900 border-emerald-600 border-x-emerald-700"
                                         >
                                             <span class="px-auto py-0.5 text-xs mx-auto my-auto">
                                                 <span class="mx-2 lg:mx-5">AddData</span>
