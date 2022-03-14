@@ -3,20 +3,20 @@
         <div class="flex flex-row">
             <Link
                 v-if="currentPage == 1"
-                class="mr-1 my-auto px-3 py-2 text-sm rounded-full bg-stone-800 text-stone-800 pointer-events-none"
+                class="mr-1 my-auto px-3 py-1 mx:px-4 md:py-2 text-sm rounded-full bg-stone-800 text-stone-800 pointer-events-none"
                 :href="links[0].url + search + sort + order"
                 v-html="'&laquo;'"
             />
             <Link
                 v-else
-                class="mr-1 my-auto px-3 py-2 text-sm rounded-full text-gray-300 hover:bg-white hover:text-gray-900 focus:bg-white focus:text-gray-900"
+                class="mr-1 my-auto px-3 py-1 mx:px-4 md:py-2 text-sm rounded-full text-gray-300 hover:bg-white hover:text-gray-900 focus:bg-white focus:text-gray-900"
                 :href="links[0].url + search + sort + order"
                 v-html="'&laquo;'"
             />
 
-            <div class="w-56 lg:w-72 flex flex-row justify-center">
+            <div class="w-52 lg:w-72 flex flex-row justify-center">
                 <Link
-                    class="mr-1 my-auto px-3 py-2 text-xxs lg:text-xs rounded-full text-gray-300 hover:bg-white hover:text-gray-900 focus:bg-white focus:text-gray-900"
+                    class="mr-1 my-auto px-3 py-1 mx:px-4 md:py-2 text-xs rounded-full text-gray-300 hover:bg-white hover:text-gray-900 focus:bg-white focus:text-gray-900"
                     :class="{ 'box-emit shadow-gray-200': links[1].active }"
                     :href="links[1].url + search + sort + order"
                     v-html="'1'"
@@ -24,7 +24,7 @@
 
                 <Link
                     v-if="pageLength > 5 && currentPage > 3"
-                    class="mr-1 my-auto px-3 py-2 text-xxs lg:text-xs rounded-full text-gray-300 hover:bg-white hover:text-gray-900 focus:bg-white focus:text-gray-900"
+                    class="mr-1 my-auto px-3 py-1 mx:px-4 md:py-2 text-xs rounded-full text-gray-300 hover:bg-white hover:text-gray-900 focus:bg-white focus:text-gray-900"
                     :href="links[currentPage - 2].url + search + sort + order"
                     v-html="'&hellip;'"
                 />
@@ -32,7 +32,7 @@
                 <Link
                     v-for="(item, index) in paginateArray"
                     :key="index"
-                    class="mr-1 my-auto px-3 py-2 text-xxs lg:text-xs rounded-full text-gray-300 hover:bg-white hover:text-gray-900 focus:bg-white focus:text-gray-900"
+                    class="mr-1 my-auto px-3 py-1 mx:px-4 md:py-2 text-xs rounded-full text-gray-300 hover:bg-white hover:text-gray-900 focus:bg-white focus:text-gray-900"
                     :class="{ 'box-emit shadow-gray-200': links[item].active }"
                     :href="links[item].url + search + sort + order"
                     v-html="item"
@@ -40,13 +40,13 @@
 
                 <Link
                     v-if="pageLength > 5 && currentPage < pageLength - 4"
-                    class="mr-1 my-auto px-3 py-2 text-xxs lg:text-xs rounded-full text-gray-300 hover:bg-white hover:text-gray-900 focus:bg-white focus:text-gray-900"
+                    class="mr-1 my-auto px-3 py-1 mx:px-4 md:py-2 text-xs rounded-full text-gray-300 hover:bg-white hover:text-gray-900 focus:bg-white focus:text-gray-900"
                     :href="links[currentPage + 2].url + search + sort + order"
                     v-html="'&hellip;'"
                 />
 
                 <Link
-                    class="mr-1 my-auto px-3 py-2 text-xxs lg:text-xs rounded-full text-gray-300 hover:bg-white hover:text-gray-900 focus:bg-white focus:text-gray-900"
+                    class="mr-1 my-auto px-3 py-1 mx:px-4 md:py-2 text-xs rounded-full text-gray-300 hover:bg-white hover:text-gray-900 focus:bg-white focus:text-gray-900"
                     :class="{ 'box-emit shadow-gray-200': links[pageLength - 2].active }"
                     :href="links[pageLength - 2].url + search + sort + order"
                     v-html="String(pageLength - 2)"
@@ -55,13 +55,13 @@
 
             <Link
                 v-if="currentPage == pageLength - 2"
-                class="mr-1 my-auto px-3 py-2 text-sm rounded-full bg-stone-800 text-stone-800 pointer-events-none"
+                class="mr-1 my-auto px-3 py-1 mx:px-4 md:py-2 text-sm rounded-full bg-stone-800 text-stone-800 pointer-events-none"
                 :href="links[pageLength - 1].url + search + sort + order"
                 v-html="'&raquo;'"
             />
             <Link
                 v-else
-                class="mr-1 my-auto px-3 py-2 text-sm rounded-full text-gray-300 hover:bg-white hover:text-gray-900 focus:bg-white focus:text-gray-900"
+                class="mr-1 my-auto px-3 py-1 mx:px-4 md:py-2 text-sm rounded-full text-gray-300 hover:bg-white hover:text-gray-900 focus:bg-white focus:text-gray-900"
                 :href="links[pageLength - 1].url + search + sort + order"
                 v-html="'&raquo;'"
             />

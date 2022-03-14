@@ -132,7 +132,7 @@
 
             <template #player>
                 <div class="flex flex-col">
-                    <div class="max-w-fit flex flex-row px-5 mt-1">
+                    <div class="max-w-fit mx-auto flex flex-row px-5 mt-1">
                         <div class="flex flex-col">
                             <button @click="redoPlayer" class="m-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="fill-gray-100 w-8 h-8">
@@ -185,27 +185,30 @@
                             <p class="text-xxs text-gray-100 mx-auto">Next</p>
                         </div>
                     </div>
-                    <button class="text-xl lg:text-2xl bg-[#1DA1F2] mx-auto w-fit px-5 py-1 mt-6 text-gray-200 rounded-md" @click="TweetMake = true">
+                    <button
+                        class="text-xl lg:text-2xl bg-[#1DA1F2] mx-auto w-fit px-5 py-1 mt-6 text-gray-200 rounded-full shadow-md shadow-gray-900"
+                        @click="TweetMake = true"
+                    >
                         Tweet
                     </button>
+                    <Link
+                        as="button"
+                        :href="route('member.latest', { member: currentMember.name })"
+                        class="text-gray-300 rounded-full border border-gray-300 my-5 w-fit mx-auto text-sm lg:text-md py-2 px-8 shadow-md shadow-gray-900"
+                        >このメンバーの非公式DBへ</Link
+                    >
                 </div>
             </template>
 
             <template #default>
                 <div class="flex flex-col mx-0 mt-16">
-                    <Link
-                        as="button"
-                        :href="route('member.latest', { member: currentMember.name })"
-                        class="text-gray-300 rounded-full border border-gray-300 my-5 w-fit mx-auto text-sm lg:text-md py-2 px-8"
-                        >このメンバーの非公式DBへ</Link
-                    >
                     <AccordionPanel v-if="list != null" class="mb-4" :default="false">
                         <template v-slot:title>
                             <span class="font-semibold text-xl text-gray-300">リスト</span>
                         </template>
                         <template v-slot:content>
                             <div class="flex flex-row flex-wrap">
-                                <div v-for="item in list" :key="'list' + item.id" class="py-1 px-10 lg:px-1 h-fit w-full lg:w-1/3">
+                                <div v-for="item in list" :key="'list' + item.id" class="py-1 px-3 sm:px-6 lg:px-1 lg:px-1 h-fit w-full lg:w-1/3">
                                     <div v-if="item.twitter == null">
                                         <y-tcard
                                             :title="item.title"
@@ -236,7 +239,11 @@
                         </template>
                         <template v-slot:content>
                             <div class="flex flex-row flex-wrap">
-                                <div v-for="item in related" :key="'related' + item.id" class="py-1 px-10 lg:px-1 h-fit w-full lg:w-1/3">
+                                <div
+                                    v-for="item in related"
+                                    :key="'related' + item.id"
+                                    class="py-1 px-3 sm:px-6 lg:px-1 lg:px-1 h-fit w-full lg:w-1/3"
+                                >
                                     <div v-if="item.twitter == null">
                                         <y-tcard
                                             :title="item.title"

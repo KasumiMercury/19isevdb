@@ -7,11 +7,11 @@
             <div class="bg-stone-800">
                 <header>
                     <div class="flex justify-evenly max-w-5xl mx-auto bg-stone-800 pt-4 pb-2" id="siteTitle">
-                        <h2 class="goldTitle font-Caveat text-xl md:text-4xl my-auto">UNOFFICIAL</h2>
-                        <div class="notGold font-Caveat text-3xl md:text-5xl my-auto">
+                        <h2 class="goldTitle font-Caveat text-sm sm:text-4xl my-auto">UNOFFICIAL</h2>
+                        <div class="notGold font-Caveat text-ms sm:text-5xl my-auto">
                             <slot name="header"></slot>
                         </div>
-                        <h2 class="goldTitle font-Caveat text-xl md:text-4xl my-auto">DATABASE</h2>
+                        <h2 class="goldTitle font-Caveat text-sm sm:text-4xl my-auto">DATABASE</h2>
                     </div>
                     <div class="flex flex-row justify-end pr-4 lg:pr-10 pb-2 bg-stone-800">
                         <Link
@@ -312,7 +312,7 @@
                                             :href="route('user.book')"
                                             class="flex-1 mx-1 cursor-pointer border-2 rounded-sm text-center focus:outline-none font-Raleway font-bold min-w-max text-cyan-300 bg-gradient-radial from-cyan-600 via-cyan-800 to-cyan-900 border-cyan-600 border-x-cyan-700"
                                         >
-                                            <span class="px-auto py-0.5 inline-flex items-center text-xxs">
+                                            <span class="px-auto py-0.5 text-xs">
                                                 <span class="mx-2 lg:mx-5">BookMark</span>
                                             </span>
                                         </Link>
@@ -321,7 +321,7 @@
                                             @click="modalShow = true"
                                             class="flex-1 mx-1 cursor-pointer border-2 rounded-sm text-center focus:outline-none font-Raleway font-bold min-w-max text-cyan-300 bg-gradient-radial from-cyan-600 via-cyan-800 to-cyan-900 border-cyan-600 border-x-cyan-700"
                                         >
-                                            <span class="px-auto py-0.5 inline-flex items-center text-xxs">
+                                            <span class="px-auto py-0.5 text-xs mx-auto my-auto">
                                                 <span class="mx-2 lg:mx-5">BookMark</span>
                                             </span>
                                         </div>
@@ -331,7 +331,7 @@
                                             :href="route('user.added')"
                                             class="flex-1 mx-1 cursor-pointer border-2 rounded-sm text-center focus:outline-none font-Raleway font-bold min-w-max text-cyan-300 bg-gradient-radial from-cyan-600 via-cyan-800 to-cyan-900 border-cyan-600 border-x-cyan-700"
                                         >
-                                            <span class="px-auto py-0.5 inline-flex items-center text-xxs">
+                                            <span class="px-auto py-0.5 text-xs mx-auto my-auto">
                                                 <span class="mx-2 lg:mx-5">YourData</span>
                                             </span>
                                         </Link>
@@ -340,7 +340,7 @@
                                             @click="modalShow = true"
                                             class="flex-1 mx-1 cursor-pointer border-2 rounded-sm text-center focus:outline-none font-Raleway font-bold min-w-max text-cyan-300 bg-gradient-radial from-cyan-600 via-cyan-800 to-cyan-900 border-cyan-600 border-x-cyan-700"
                                         >
-                                            <span class="px-auto py-0.5 inline-flex items-center text-xxs">
+                                            <span class="px-auto py-0.5 text-xs mx-auto my-auto">
                                                 <span class="mx-2 lg:mx-5">YourData</span>
                                             </span>
                                         </div>
@@ -349,7 +349,7 @@
                                             :href="route('data.add')"
                                             class="flex-1 mx-1 animate-flicker flex-1 cursor-pointer border-2 rounded-sm text-center focus:outline-none font-Raleway font-bold min-w-max text-emerald-300 bg-gradient-radial from-emerald-600 via-emerald-800 to-emerald-900 border-emerald-600 border-x-emerald-700"
                                         >
-                                            <span class="px-auto py-1 inline-flex items-center text-xxs">
+                                            <span class="px-auto py-0.5 text-xs mx-auto my-auto">
                                                 <span class="mx-2 lg:mx-5">AddData</span>
                                             </span>
                                         </Link>

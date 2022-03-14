@@ -75,7 +75,7 @@
                 <PaginateBtn class="mb-6 mx-auto" :links="players.links" :search="search" :sort="''" :currentPage="players.current_page" />
 
                 <div class="flex flex-row flex-wrap">
-                    <div v-for="item in players.data" :key="'player' + item.id" class="py-1 px-10 lg:px-1 w-full lg:w-1/3">
+                    <div v-for="item in players.data" :key="'player' + item.id" class="py-1 px-3 sm:px-6 lg:px-1 lg:px-1 w-full lg:w-1/3">
                         <div v-if="item.twitter == null">
                             <y-tcard
                                 :title="item.title"

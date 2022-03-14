@@ -62,7 +62,7 @@
                         <Link
                             as="button"
                             :href="route('welcome.page')"
-                            class="text-gray-300 rounded-full border border-gray-300 my-5 w-fit mx-auto text-sm lg:text-md py-2 px-8"
+                            class="text-gray-300 rounded-full border border-gray-300 my-2 md:my-5 w-fit mx-auto text-xs md:text-sm lg:text-md py-1 px-4 md:py-2 md:px-8"
                             >初めての方へ</Link
                         >
                     </div>
@@ -222,7 +222,7 @@
                     ></PaginateBtn>
 
                     <div class="flex flex-row flex-wrap">
-                        <div v-for="item in DisplayPlayers" :key="'player' + item.id" class="py-1 px-10 lg:px-1 w-full lg:w-1/3">
+                        <div v-for="item in DisplayPlayers" :key="'player' + item.id" class="py-1 px-3 sm:px-6 lg:px-1 w-full lg:w-1/3">
                             <div v-if="item.twitter == null">
                                 <y-tcard
                                     :title="item.title"

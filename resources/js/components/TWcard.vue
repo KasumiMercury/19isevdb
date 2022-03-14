@@ -19,7 +19,7 @@
             <div class="cursor-pointer pl-3 text-white" @click="$emit('tweetShow')">
                 <p class="text-sm">{{ moment(date, "YYYY/MM/DD") }}</p>
             </div>
-            <div class="cursor-pointer p-2 w-8 h-8 mx-2 mr-0 ml-auto bg-[#1da1f2] rounded-sm" @click="$emit('tweetShow')">
+            <div class="cursor-pointer p-1 lg:p-2 w-6 h-6 lg:w-8 lg:h-8 mx-2 mr-0 ml-auto bg-[#1da1f2] rounded-sm" @click="$emit('tweetShow')">
                 <svg class="fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                     <!--! Font Awesome Pro 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
                     <path

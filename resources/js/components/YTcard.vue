@@ -63,7 +63,7 @@
 
             <div
                 v-if="status == 0"
-                class="p-1 w-8 h-8 mx-2 mr-0 ml-auto rounded-sm bg-gradient-radial from-[#d96870] via-[#d9646d] to-[#da1725] shadow-md shadow-[#DA1725]/80 border-[#d96870] border-x-[#e35d67] border"
+                class="p-1 lg:p-2 w-6 h-6 lg:w-8 lg:h-8 mx-2 mr-0 ml-auto rounded-sm bg-gradient-radial from-[#d96870] via-[#d9646d] to-[#da1725] shadow-md shadow-[#DA1725]/80 border-[#d96870] border-x-[#e35d67] border"
             >
                 <svg xmlns="http://www.w3.org/2000/svg" class="fill-white" viewBox="0 0 576 512">
                     <!--! Font Awesome Pro 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
@@ -74,7 +74,7 @@
             </div>
             <div
                 v-else-if="status == 1"
-                class="p-1 w-8 h-8 mx-2 mr-0 ml-auto rounded-sm bg-gradient-radial from-green-400 via-green-600 to-green-800 shadow-md shadow-green-800/80 border-green-500 border-x-green-600 border"
+                class="p-1 lg:p-2 w-6 h-6 lg:w-8 lg:h-8 mx-2 mr-0 ml-auto rounded-sm bg-gradient-radial from-green-400 via-green-600 to-green-800 shadow-md shadow-green-800/80 border-green-500 border-x-green-600 border"
             >
                 <svg xmlns="http://www.w3.org/2000/svg" class="fill-white" viewBox="0 0 576 512">
                     <!--! Font Awesome Pro 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
@@ -83,7 +83,7 @@
                     />
                 </svg>
             </div>
-            <div v-else class="p-1 w-8 h-8 mx-2 mr-0 ml-auto bg-gray-900 rounded-sm">
+            <div v-else class="p-1 lg:p-2 w-6 h-6 lg:w-8 lg:h-8 mx-2 mr-0 ml-auto bg-gray-900 rounded-sm">
                 <svg xmlns="http://www.w3.org/2000/svg" class="fill-gray-500" viewBox="0 0 576 512">
                     <!--! Font Awesome Pro 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
                     <path
