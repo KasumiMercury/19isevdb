@@ -9,15 +9,15 @@
 
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
-        <link rel="apple-touch-icon" sizes="180x180" href="/images/icons/apple-touch-icon.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="/images/icons/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/images/icons/favicon-16x16.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
         <link rel="manifest" href="/manifest.json">
-        <link rel="mask-icon" href="/images/icons/safari-pinned-tab.svg" color="#ff9cbb">
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#fd5183">
         <meta name="apple-mobile-web-app-title" content="非公式いせぶいDB">
         <meta name="application-name" content="非公式いせぶいDB">
-        <meta name="msapplication-TileColor" content="#00aba9">
-        <meta name="theme-color" content="#ff9cbb">
+        <meta name="msapplication-TileColor" content="#fd5183">
+        <meta name="theme-color" content="#ffffff">
         
         @if( Request::routeIs('TopPage'))
         <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/website#">
@@ -41,7 +41,7 @@
         <script>
             window.addEventListener('load', function() {
               if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register("/js/serviceWorker.js")
+                navigator.serviceWorker.register("/sw.js",{scope:"/"})
                   .then(function(registration) {
                     console.log("serviceWorker registed.");
                   }).catch(function(error) {
@@ -49,7 +49,7 @@
                   });
               }
             });
-          </script>
+        </script>
     </head>
     <body class="font-body antialiased">
         @inertia

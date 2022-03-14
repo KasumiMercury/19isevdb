@@ -6,7 +6,7 @@
             <p class="text-xs lg:text-sm">ハンドルネームとパスワード、</p>
             <p class="text-xs lg:text-sm">またはGoogleアカウントのみで登録できます。</p>
             <Link as="button" :href="route('myLogin')" class="text-lg rounded-md bg-green-600 text-gray-100 px-8 py-3 mt-6 mb-2 mx-auto">ログイン・登録はこちら</Link>
-            <Link as="button" :href="route('sns_login.redirect', 'google')" class="text-lg rounded-md bg-red-600 text-gray-100 px-8 py-3 mt-2 mb-10 mx-auto">Googleでログイン</Link>
+            <a :href="route('sns_login.redirect', 'google')" class="text-lg rounded-md bg-red-600 text-gray-100 px-8 py-3 mt-2 mb-10 mx-auto">Googleでログイン</a>
         </div>
     </teleport>
 </template>

@@ -61,11 +61,8 @@
                         </div>
                     </form>
                     <div class="mx-auto mt-16 w-fit">
-                        <Link
-                            as="button"
-                            :href="route('sns_login.redirect', 'google')"
-                            class="px-16 py-5 rounded-md text-xl text-gray-50 bg-[#ea4335]"
-                            >Googleでログイン</Link
+                        <a :href="route('sns_login.redirect', 'google')" class="px-16 py-5 rounded-md text-xl text-gray-50 bg-[#ea4335]"
+                            >Googleでログイン</a
                         >
                     </div>
                 </div>

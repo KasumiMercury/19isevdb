@@ -1,5 +1,6 @@
 const path = require("path")
 const CompressionPlugin = require("compression-webpack-plugin")
+const { GenerateSW } = require("workbox-webpack-plugin")
 
 module.exports = {
     resolve: {
@@ -9,6 +10,17 @@ module.exports = {
         },
     },
     plugins: [
+        new GenerateSW({
+            swDest: "js/service-worker.js",
+            clientsClaim: true,
+            skipWaiting: true,
+            runtimeCaching: [
+                {
+                    urlPattern: new RegExp("/"),
+                    handler: "StaleWhileRevalidate",
+                },
+            ],
+        }),
         new CompressionPlugin({
             test: /\.js$|\.css$|\.html$|\.svg$/,
             compressionOptions: {
