@@ -4,6 +4,8 @@ import { createApp, h } from "vue"
 import { createInertiaApp } from "@inertiajs/inertia-vue3"
 import { InertiaProgress } from "@inertiajs/progress"
 
+const appName = window.document.getElementsByTagName("title")[0]?.innerText || "非公式いせぶいDB"
+
 window.addEventListener("load", function () {
     if ("serviceWorker" in navigator) {
         navigator.serviceWorker
@@ -16,8 +18,6 @@ window.addEventListener("load", function () {
             })
     }
 })
-
-const appName = window.document.getElementsByTagName("title")[0]?.innerText || "非公式いせぶいDB"
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,

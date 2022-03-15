@@ -21,7 +21,7 @@
                     <div class="w-full m-0 h-px goldLine"></div>
                     <div class="py-1 lg:py-5 px-1 customSticky window max-w-full md:max-w-2xl lg:max-w-3xl mx-auto bg-zinc-800">
                         <div class="flex flex-col w-full">
-                            <p class="text-xl lg:text-3xl text-gray-200 py-1 mx-auto">"{{ player.title }}"</p>
+                            <p class="text-lg lg:text-2xl text-center text-gray-200 py-1 mx-auto">"{{ player.title }}"</p>
                             <div class="relative w-full aspect-video mb-10 flex-none">
                                 <YouTube
                                     :src="player.VideoID"
@@ -279,7 +279,9 @@ export default defineComponent({
                 clearTimeout(this.timer)
             }
             if (NowStatus == 0) {
+                clearTimeout(this.timer)
                 this.playStatus = false
+                this.overlay = true
                 this.countDown()
             }
         },

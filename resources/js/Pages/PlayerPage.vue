@@ -67,7 +67,7 @@
                             </svg>
                         </button>
                     </div>
-                    <p class="text-xl lg:text-3xl text-gray-200 py-1 mx-auto">"{{ player.title }}"</p>
+                    <p class="text-lg lg:text-2xl text-center text-gray-200 py-1 mx-auto">"{{ player.title }}"</p>
                     <div class="relative w-full aspect-video mb-10 flex-none">
                         <YouTube
                             :src="player.VideoID"
@@ -359,7 +359,9 @@ export default defineComponent({
                 clearTimeout(this.timer)
             }
             if (NowStatus == 0) {
+                clearTimeout(this.timer)
                 this.playStatus = false
+                this.overlay = true
                 this.countDown()
             }
         },
