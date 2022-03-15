@@ -11,7 +11,7 @@ module.exports = {
     },
     plugins: [
         new GenerateSW({
-            swDest: "js/service-worker.js",
+            swDest: "service-worker.js",
             clientsClaim: true,
             skipWaiting: true,
             runtimeCaching: [

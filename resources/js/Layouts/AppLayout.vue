@@ -109,7 +109,7 @@
                                                                 @mouseover="activeMember = 'top'"
                                                                 @mouseout="activeMember = ''"
                                                                 class="flex w-full justify-between items-center rounded px-2 py-2 my-1 hover:text-white"
-                                                                :href="'/'"
+                                                                href="/"
                                                             >
                                                                 トップページ
                                                             </Link>

@@ -9,9 +9,9 @@
 
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/icons/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/icons/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/icons/favicon-16x16.png">
         <link rel="manifest" href="/manifest.json">
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#fd5183">
         <meta name="apple-mobile-web-app-title" content="非公式いせぶいDB">
@@ -38,18 +38,6 @@
         @routes
         <script src="{{ mix('js/app.js') }}" defer></script>
         <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-        <script>
-            window.addEventListener('load', function() {
-              if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register("/sw.js",{scope:"/"})
-                  .then(function(registration) {
-                    console.log("serviceWorker registed.");
-                  }).catch(function(error) {
-                    console.warn("serviceWorker error.", error);
-                  });
-              }
-            });
-        </script>
     </head>
     <body class="font-body antialiased">
         @inertia

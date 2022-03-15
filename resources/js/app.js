@@ -4,6 +4,19 @@ import { createApp, h } from "vue"
 import { createInertiaApp } from "@inertiajs/inertia-vue3"
 import { InertiaProgress } from "@inertiajs/progress"
 
+window.addEventListener("load", function () {
+    if ("serviceWorker" in navigator) {
+        navigator.serviceWorker
+            .register("/service-worker.js", { scope: "/" })
+            .then(function (registration) {
+                console.log("serviceWorker registed.")
+            })
+            .catch(function (error) {
+                console.warn("serviceWorker error.", error)
+            })
+    }
+})
+
 const appName = window.document.getElementsByTagName("title")[0]?.innerText || "非公式いせぶいDB"
 
 createInertiaApp({

@@ -1007,7 +1007,12 @@ export default defineComponent({
                 if (WhereTime != -1) {
                     this.createID = this.YTurl.slice(WhereS, WhereTime)
                 } else {
-                    this.createID = this.YTurl.slice(WhereS)
+                    let whereQuery = this.YTurl.indexOf("&")
+                    if (whereQuery != -1) {
+                        this.createID = this.YTurl.slice(WhereS, whereQuery)
+                    } else {
+                        this.createID = this.YTurl.slice(WhereS)
+                    }
                 }
             } else {
                 let WhereDomain = this.YTurl.indexOf("youtu.be/") + 9
@@ -1051,7 +1056,12 @@ export default defineComponent({
                 if (WhereTime != -1) {
                     this.createID = this.YTurl.slice(WhereS, WhereTime)
                 } else {
-                    this.createID = this.YTurl.slice(WhereS)
+                    let whereQuery = this.YTurl.indexOf("&")
+                    if (whereQuery != -1) {
+                        this.createID = this.YTurl.slice(WhereS, whereQuery)
+                    } else {
+                        this.createID = this.YTurl.slice(WhereS)
+                    }
                 }
             } else {
                 let WhereDomain = this.YTurl.indexOf("youtu.be/") + 9
@@ -1103,8 +1113,11 @@ export default defineComponent({
             this.Tweeturl = this.urlInput
             let whereStatus = this.Tweeturl.indexOf("/status/") + 8
             let whereEnd = this.Tweeturl.indexOf("?s=")
-            //this.createTweet = this.Tweeturl.slice(whereStatus, 16)
-            this.createTweet = this.Tweeturl.slice(whereStatus, whereEnd)
+            if (whereEnd == -1) {
+                this.createTweet = this.Tweeturl.slice(whereStatus)
+            } else {
+                this.createTweet = this.Tweeturl.slice(whereStatus, whereEnd)
+            }
 
             this.tweetForm = []
 

@@ -377,27 +377,29 @@ class PlayerController extends Controller
         $player = Players::find($id);
         $currentMember = Member::whereId($player->member_id)->first();
         $relatedTemp = Players::where('member_id','=',$player['member_id'])
-                            ->where('id','!=', $id)
-                            ->where('status','!=','3')
-                            ->where('status','!=','2')
-                            ->where('twitter','=',null)
-                            ->inRandomOrder()
-                            ->limit(10)
-                            ->get()->toArray();
-        $relatedNum = count($relatedTemp);
-        if($relatedNum < 10){
-            $temp = Players::where('id','!=', $id)
-            ->where('status','!=','3')
-            ->where('status','!=','2')
-            ->where('twitter','=',null)
-            ->inRandomOrder()
-            ->limit(10 -$relatedNum)
-            ->get()->toArray();
-            $relatedTemp = array_merge($relatedTemp,$temp);
-        }
-        
-        $related=json_encode($relatedTemp);
-        return view('SharePlayer',compact('id','player','currentMember','related'));
+                                ->where('players.id','!=', $id)
+                                ->where('status','=','1')
+                                ->where('twitter','=',null)
+                                ->inRandomOrder()
+                                ->limit(12)
+                                ->join('member','players.member_id','=','member.id')
+                                ->select('players.title','players.date','players.status','players.id','member.name')
+                                ->get()->toArray();
+            $relatedNum = count($relatedTemp);
+            if($relatedNum < 12){
+                $temp = Players::where('id','!=', $id)
+                                ->where('status','=','1')
+                                ->where('twitter','=',null)
+                                ->inRandomOrder()
+                                ->limit(12 -$relatedNum)
+                                ->join('member','players.member_id','=','member.id')
+                                ->select('players.title','players.date','players.status','players.id','member.name')
+                                ->get()->toArray();
+                                $relatedTemp = array_merge($relatedTemp,$temp);
+            };
+
+            $related=json_encode($relatedTemp);
+            return view('SharePlayer',compact('id','player','currentMember','related'));
     }
 
     public function bookMark(Request $request)
