@@ -223,7 +223,17 @@
 
                     <div class="flex flex-row flex-wrap">
                         <div v-for="item in DisplayPlayers" :key="'player' + item.id" class="py-1 px-3 sm:px-6 lg:px-1 w-full lg:w-1/3">
-                            <div v-if="item.twitter == null">
+                            <div v-if="item.twitter != null">
+                                <t-wcard
+                                    :isLike="likes.includes(item.id)"
+                                    :title="item.title"
+                                    :date="item.date"
+                                    @tweetShow="tweetShow(item.tweetUrl, item.tweetType, item.id)"
+                                    @disLikeEmit="DisLike(item.id)"
+                                    @addLikeEmit="addLike(item.id)"
+                                ></t-wcard>
+                            </div>
+                            <div v-else-if="item.YTclipUrl == null">
                                 <y-tcard
                                     :title="item.title"
                                     :date="item.date"
@@ -235,14 +245,15 @@
                                 ></y-tcard>
                             </div>
                             <div v-else>
-                                <t-wcard
-                                    :title="item.title"
+                                <CLIPcard
                                     :isLike="likes.includes(item.id)"
+                                    :title="item.title"
                                     :date="item.date"
-                                    @tweetShow="tweetShow(item.tweetUrl, item.tweetType, item.id)"
+                                    :status="item.status"
+                                    :url="item.YTclipUrl"
                                     @disLikeEmit="DisLike(item.id)"
                                     @addLikeEmit="addLike(item.id)"
-                                ></t-wcard>
+                                ></CLIPcard>
                             </div>
                         </div>
                     </div>
@@ -259,6 +270,7 @@ import AppLayout from "@/Layouts/AppLayout.vue"
 import { Head, Link } from "@inertiajs/inertia-vue3"
 import YTcard from "../components/YTcard.vue"
 import TWcard from "../components/TWcard.vue"
+import CLIPcard from "../components/CLIPcard.vue"
 import TWwindow from "../components/TWwindow.vue"
 import IMGwindow from "../components/IMGwindow.vue"
 import LoginModal from "../components/LoginModal"
@@ -275,6 +287,7 @@ export default defineComponent({
         AppLayout,
         YTcard,
         TWcard,
+        CLIPcard,
         TWwindow,
         IMGwindow,
         PaginateBtn,

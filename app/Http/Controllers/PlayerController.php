@@ -231,6 +231,7 @@ class PlayerController extends Controller
                 $list = DB::table('players')->join('bookmarks','players.id','=','bookmarks.player_id')
                                     ->where('bookmarks.user_id','=', $user_id)
                                     ->where('twitter','=',null)
+                                    ->where('YTclipUrl',null)
                                     ->orderBy('bookmarks.id','ASC')
                                     ->join('member','players.member_id','=','member.id')
                                     ->select('players.title','players.date','players.status','players.id','member.name')
@@ -245,6 +246,7 @@ class PlayerController extends Controller
                                     ->where('status','!=','3')
                                     ->where('status','!=','2')
                                     ->where('twitter','=',null)
+                                    ->where('YTclipUrl',null)
                                     ->inRandomOrder()
                                     ->limit(12)
                                     ->join('member','players.member_id','=','member.id')
@@ -256,6 +258,7 @@ class PlayerController extends Controller
                                     ->where('status','!=','3')
                                     ->where('status','!=','2')
                                     ->where('twitter','=',null)
+                                    ->where('YTclipUrl',null)
                                     ->inRandomOrder()
                                     ->limit(12 -$relatedNum)
                                     ->join('member','players.member_id','=','member.id')
@@ -269,6 +272,7 @@ class PlayerController extends Controller
                 $name = $user["name"];
                 $list = DB::table('players')->where('createrHN','=',$name)
                                     ->where('twitter','=',null)
+                                    ->where('YTclipUrl',null)
                                     ->orderBy('players.id','DESC')
                                     ->join('member','players.member_id','=','member.id')
                                     ->select('players.title','players.date','players.status','players.id','member.name')
@@ -283,6 +287,7 @@ class PlayerController extends Controller
                                     ->where('status','!=','3')
                                     ->where('status','!=','2')
                                     ->where('twitter','=',null)
+                                    ->where('YTclipUrl',null)
                                     ->inRandomOrder()
                                     ->limit(12)
                                     ->join('member','players.member_id','=','member.id')
@@ -294,6 +299,7 @@ class PlayerController extends Controller
                                     ->where('status','!=','3')
                                     ->where('status','!=','2')
                                     ->where('twitter','=',null)
+                                    ->where('YTclipUrl',null)
                                     ->inRandomOrder()
                                     ->limit(12 -$relatedNum)
                                     ->join('member','players.member_id','=','member.id')
@@ -309,6 +315,7 @@ class PlayerController extends Controller
                                     ->where('status','!=','3')
                                     ->where('status','!=','2')
                                     ->where('twitter','=',null)
+                                    ->where('YTclipUrl',null)
                                     ->inRandomOrder()
                                     ->limit(12)
                                     ->join('member','players.member_id','=','member.id')
@@ -320,6 +327,7 @@ class PlayerController extends Controller
                                     ->where('status','!=','3')
                                     ->where('status','!=','2')
                                     ->where('twitter','=',null)
+                                    ->where('YTclipUrl',null)
                                     ->inRandomOrder()
                                     ->limit(12 -$relatedNum)
                                     ->join('member','players.member_id','=','member.id')
@@ -339,6 +347,7 @@ class PlayerController extends Controller
                                 ->where('status','!=','3')
                                 ->where('status','!=','2')
                                 ->where('twitter','=',null)
+                                ->where('YTclipUrl',null)
                                 ->inRandomOrder()
                                 ->limit(12)
                                 ->join('member','players.member_id','=','member.id')
@@ -350,6 +359,7 @@ class PlayerController extends Controller
                                 ->where('status','!=','3')
                                 ->where('status','!=','2')
                                 ->where('twitter','=',null)
+                                ->where('YTclipUrl',null)
                                 ->inRandomOrder()
                                 ->limit(12 -$relatedNum)
                                 ->join('member','players.member_id','=','member.id')
@@ -375,11 +385,12 @@ class PlayerController extends Controller
     public function sharePlayer($member,$id)
     {
         $player = Players::find($id);
-        $currentMember = Member::whereId($player->member_id)->first();
+        $currentMember = Member::where('id','=',$player['member_id'])->first();
         $relatedTemp = Players::where('member_id','=',$player['member_id'])
                                 ->where('players.id','!=', $id)
-                                ->where('status','=','1')
+                                ->where('status','=','0')
                                 ->where('twitter','=',null)
+                                ->where('YTclipUrl',null)
                                 ->inRandomOrder()
                                 ->limit(12)
                                 ->join('member','players.member_id','=','member.id')
@@ -387,9 +398,10 @@ class PlayerController extends Controller
                                 ->get()->toArray();
             $relatedNum = count($relatedTemp);
             if($relatedNum < 12){
-                $temp = Players::where('id','!=', $id)
-                                ->where('status','=','1')
+                $temp = Players::where('players.id','!=', $id)
+                                ->where('status','=','0')
                                 ->where('twitter','=',null)
+                                ->where('YTclipUrl',null)
                                 ->inRandomOrder()
                                 ->limit(12 -$relatedNum)
                                 ->join('member','players.member_id','=','member.id')
@@ -498,13 +510,13 @@ class PlayerController extends Controller
                 $entitiesTemp = json_decode(json_encode($getTweet["data"]), true)[0]["entities"]["urls"];
                 $urlsTemp  = end($entitiesTemp);
                 $mediaUrl = $urlsTemp["expanded_url"];
-                var_dump($mediaUrl);
             }
 
             $sendArray[$i]["tweetType"] = $mediaType;
             $sendArray[$i]["tweetUrl"]=$mediaUrl;
             $sendArray[$i]["twitter"]=$temp[$i]["twitter"];
             $sendArray[$i]["title"]=$temp[$i]["title"];
+            $sendArray[$i]["date"]=$temp[$i]["date"];
             $sendArray[$i]["status"]=0;
             $sendArray[$i]["cate_id"]=$temp[$i]["cate_id"];
             $sendArray[$i]["member_id"]=$temp[$i]["member_id"];
@@ -520,6 +532,11 @@ class PlayerController extends Controller
         DB::table('players')->insert($temp);
     }
     public function addYoutube(Request $request){
+        $temp = $request->all();
+        var_dump($temp);
+        DB::table('players')->insert($temp);
+    }
+    public function addYTclip(Request $request){
         $temp = $request->all();
         var_dump($temp);
         DB::table('players')->insert($temp);

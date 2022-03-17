@@ -309,6 +309,14 @@
                                 Twitter
                             </button>
                         </div>
+                        <div class="py-8 w-full mx-auto px-4 lg:px-16">
+                            <button
+                                @click="setType('YTclip')"
+                                class="bg-[#da1725] text-lg font-bold text-gray-50 w-full py-5 rounded-md shadow-md shadow-gray-900"
+                            >
+                                YouTube Clip
+                            </button>
+                        </div>
                     </div>
                     <div v-if="step == 2" class="justify-center pt-5">
                         <template v-if="this.contentType == 'youtube'">
@@ -373,12 +381,17 @@
                             </div>
                         </template>
                         <template v-if="this.contentType == 'twitter'">
-                            <p class="text-md text-red-300 text-bold text-center my-2 mx-auto">画像または動画を含むツイートのみ対応しています。</p>
                             <p class="text-sm text-gray-100 mt-2 text-center mb-1 mx-auto">
                                 いくつでも追加できます。登録順は次の画面で変更することができます。
                             </p>
                             <p class="text-sm text-gray-100 mt-1 text-center mb-2 mx-auto">
                                 メンバーを複数含む場合は、メンバー毎に設定してください。
+                            </p>
+                            <p class="text-md text-red-300 text-bold text-center mb-2 mt-4 mx-auto">
+                                画像または動画を含むツイートのみ対応しています。
+                            </p>
+                            <p class="text-md text-red-300 text-bold text-center my-2 mx-auto">
+                                ツイート右下のボタン→「ツイートのリンクをコピー」から取得されるURLを入力してください。
                             </p>
                             <div class="relative mt-5 lg:mt-10">
                                 <label class="sr-only" for="twitter"> Twitter </label>
@@ -411,6 +424,53 @@
                             </div>
                             <div class="mr-1 ml-auto w-fit mt-5 lg:mt-10">
                                 <p v-if="errorTWArray.includes(true)" class="text-lg font-bold text-red-300 px-5 py-1 lg:py-2">
+                                    タイトルが入力されていないデータがあります。
+                                </p>
+                                <button v-else class="bg-gray-200 text-lg font-bold text-gray-900 px-5 py-1 lg:py-2 rounded-md" @click="nextStep(2)">
+                                    一括登録
+                                </button>
+                            </div>
+                            <div class="mr-auto ml-1 w-fit mt-5 lg:mt-10">
+                                <button class="text-gray-200 text-lg font-bold px-5 py-1 lg:py-2 rounded-md" @click="backStep(2)">Back</button>
+                            </div>
+                        </template>
+                        <template v-if="this.contentType == 'YTclip'">
+                            <p class="text-sm text-gray-100 mt-2 text-center mb-1 mx-auto">
+                                いくつでも追加できます。登録順は次の画面で変更することができます。
+                            </p>
+                            <p class="text-sm text-gray-100 mt-1 text-center mb-2 mx-auto">
+                                メンバーを複数含む場合は、メンバー毎に設定してください。
+                            </p>
+                            <div class="relative mt-5 lg:mt-10">
+                                <label class="sr-only" for="YTclip"> Youtube Clip </label>
+
+                                <input
+                                    class="w-full py-3 pl-3 pr-12 text-sm border-2 border-gray-200 rounded"
+                                    id="YTclip"
+                                    type="url"
+                                    placeholder="https://www.youtube.com/clip/"
+                                    v-model="urlInput"
+                                />
+                            </div>
+                            <div class="mr-1 ml-auto w-fit mt-5 lg:mt-10">
+                                <button class="bg-[#da1725] text-lg font-bold text-gray-50 px-5 py-1 lg:py-2 rounded-md" @click="addYTclip">
+                                    Add
+                                </button>
+                            </div>
+                            <div class="flex flex-col w-full">
+                                <div v-for="(YTclip, index) in YTclipArray" :key="'YTclip' + index">
+                                    <ytclipForm
+                                        :YTclip="YTclip"
+                                        :error="errorYTclipArray[index]"
+                                        @update:YTclipMember="changeYTclipMember(index, $event)"
+                                        @update:YTclipCategory="changeYTclipCategory(index, $event)"
+                                        @update:YTclipTitle="changeYTclipTitle(index, $event)"
+                                        @delete="YTclipDelete(index)"
+                                    ></ytclipForm>
+                                </div>
+                            </div>
+                            <div class="mr-1 ml-auto w-fit mt-5 lg:mt-10">
+                                <p v-if="errorYTclipArray.includes(true)" class="text-lg font-bold text-red-300 px-5 py-1 lg:py-2">
                                     タイトルが入力されていないデータがあります。
                                 </p>
                                 <button v-else class="bg-gray-200 text-lg font-bold text-gray-900 px-5 py-1 lg:py-2 rounded-md" @click="nextStep(2)">
@@ -839,6 +899,26 @@
                                 <button class="text-gray-200 text-lg font-bold px-5 py-1 lg:py-2 rounded-md" @click="backStep(3)">Back</button>
                             </div>
                         </template>
+                        <template v-if="this.contentType == 'YTclip'">
+                            <p class="text-sm text-gray-100 mt-2 mb-1 text-center mx-auto">ドラッグで登録順を並び替えることができます。</p>
+                            <p class="text-sm text-gray-100 my-1 text-center mx-auto">上から順にデータベースに登録されます。</p>
+                            <p class="text-sm text-gray-100 mt-1 mb-2 text-center mx-auto">登録データを変更したい場合はBackで戻ってください。</p>
+                            <div class="relative mt-5 lg:mt-10">
+                                <div class="mr-1 ml-auto w-fit mt-5 lg:mt-10">
+                                    <button class="bg-gray-200 text-lg font-bold text-gray-900 px-5 py-1 lg:py-2 rounded-md" @click="nextStep(3)">
+                                        Next
+                                    </button>
+                                </div>
+                                <draggable v-model="YTclipArray" item-key="id" @start="drag = true" @update="dragClip" @end="drag = false">
+                                    <template #item="{ element }">
+                                        <ytclipLabel :element="element"></ytclipLabel>
+                                    </template>
+                                </draggable>
+                            </div>
+                            <div class="mr-auto ml-1 w-fit mt-5 lg:mt-10">
+                                <button class="text-gray-200 text-lg font-bold px-5 py-1 lg:py-2 rounded-md" @click="backStep(3)">Back</button>
+                            </div>
+                        </template>
                     </div>
                     <div v-if="step == 4" class="justify-center pt-5">
                         <div v-if="$page.props.user" class="relative mt-5 lg:mt-10">
@@ -873,6 +953,13 @@
                         <template v-if="this.contentType == 'twitter'">
                             <div class="mx-auto ml-auto w-fit mt-5 lg:mt-10">
                                 <button class="bg-green-500 text-2xl font-bold text-gray-50 px-5 py-1 lg:py-2 rounded-md" @click="postTweet">
+                                    Update
+                                </button>
+                            </div>
+                        </template>
+                        <template v-if="this.contentType == 'YTclip'">
+                            <div class="mx-auto ml-auto w-fit mt-5 lg:mt-10">
+                                <button class="bg-green-500 text-2xl font-bold text-gray-50 px-5 py-1 lg:py-2 rounded-md" @click="postYTclip">
                                     Update
                                 </button>
                             </div>
@@ -914,6 +1001,8 @@ import clipLabel from "../components/clipLabel"
 import clipForm from "../components/clipForm"
 import twForm from "../components/twForm"
 import twLabel from "../components/twLabel"
+import ytclipForm from "../components/ytclipForm"
+import ytclipLabel from "../components/ytclipLabel"
 import TWwindow from "../components/TWwindow.vue"
 import AccordionPanel from "../components/AccordionPanel"
 import YouTube from "vue3-youtube"
@@ -930,11 +1019,14 @@ export default defineComponent({
             urlInput: "",
             YTurl: "",
             Tweeturl: "",
+            YTclipurl: "",
             youtubeInfo: [],
             clipArray: [],
             clipMember: [],
             tweetForm: [],
             tweetArray: [],
+            YTclipForm: [],
+            YTclipArray: [],
             youtubeArray: new Array(),
             youtubeForm: new Object(),
             youtubeIsStart: new Array(),
@@ -958,6 +1050,7 @@ export default defineComponent({
             playStatus: false,
             errorTWArray: new Array(),
             errorYTArray: new Array(),
+            errorYTclipArray: new Array(),
             loading: false,
             complete: false,
             sendError: false,
@@ -1159,6 +1252,97 @@ export default defineComponent({
             this.tweetShowUrl = event
             this.tweetWindow = true
         },
+        addYTclip() {
+            this.YTclipurl = this.urlInput
+
+            this.YTclipForm = []
+
+            this.YTclipForm.id = Math.floor(Math.random() * 101)
+            this.YTclipForm.YTclipURL = this.YTclipurl
+            this.YTclipForm.title = ""
+            this.YTclipForm.cate_id = 4
+            this.YTclipForm.member_id = 1
+            this.YTclipArray.push(this.YTclipForm)
+            this.errorYTclipArray.push(true)
+        },
+        changeYTclipMember(index, event) {
+            this.YTclipArray[index]["member_id"] = event
+        },
+        changeYTclipCategory(index, event) {
+            this.YTclipArray[index]["cate_id"] = event
+        },
+        changeYTclipTitle(index, event) {
+            this.YTclipArray[index]["title"] = event
+            if (this.YTclipArray[index].title == "") {
+                this.errorYTclipArray[index] = true
+            } else {
+                this.errorYTclipArray[index] = false
+            }
+        },
+        YTclipDelete(index) {
+            this.YTclipArray.splice(index, 1)
+            this.errorYTclipArray.splice(index, 1)
+        },
+        YTclipCheck(index) {
+            this.YTclipWindow = false
+            this.YTclipShowUrl = this.YTclipArray[index].YTclipURL
+            this.$nextTick(function () {
+                this.YTclipWindow = true
+            })
+        },
+        postYTclip() {
+            this.complete = false
+            if (this.$page.props.user == null) {
+                this.sendArray = []
+                for (let i = 0; i < Object.keys(this.YTclipArray).length; i++) {
+                    this.sendArray.push({
+                        title: this.YTclipArray[i].title,
+                        date: new Date(),
+                        status: 0,
+                        cate_id: this.YTclipArray[i].cate_id,
+                        member_id: this.YTclipArray[i].member_id,
+                        YTclipUrl: this.YTclipArray[i].YTclipURL,
+                        created_at: new Date(),
+                        updated_at: new Date(),
+                        createrHN: this.createrHN,
+                    })
+                }
+            } else {
+                this.sendArray = []
+                for (let i = 0; i < Object.keys(this.YTclipArray).length; i++) {
+                    this.sendArray.push({
+                        title: this.YTclipArray[i].title,
+                        date: new Date(),
+                        status: 0,
+                        cate_id: this.YTclipArray[i].cate_id,
+                        member_id: this.YTclipArray[i].member_id,
+                        YTclipUrl: this.YTclipArray[i].YTclipURL,
+                        created_at: new Date(),
+                        updated_at: new Date(),
+                        createrHN: this.$page.props.user.name,
+                    })
+                }
+            }
+            console.log(this.sendArray)
+            let self = this
+            this.loading = true
+            axios({
+                method: "post",
+                url: "/api/add/youtubeclip",
+                dataType: "json",
+                data: this.sendArray,
+            })
+                .then((response) => {
+                    console.log(response)
+                    self.loading = false
+                    self.complete = true
+                })
+                .catch((error) => {
+                    self.loading = false
+                    self.sendError = false
+                    console.log(error)
+                })
+        },
         postTweet() {
             this.complete = false
             if (this.$page.props.user == null) {
@@ -1299,18 +1483,12 @@ export default defineComponent({
             this.YTplayer.seekTo(time - 1, true)
         },
         InputMinus() {
-            let PMtemp = this.PMInput.replace(/[０-９]/g, function (s) {
-                return String.fromCharCode(s.charCodeAt(0) - 0xfee0)
-            })
             let time = this.YTplayer.getCurrentTime()
-            this.YTplayer.seekTo(time - Number(PMtemp), true)
+            this.YTplayer.seekTo(time - Number(this.PMInput), true)
         },
         InputPlus() {
-            let PMtemp = this.PMInput.replace(/[０-９]/g, function (s) {
-                return String.fromCharCode(s.charCodeAt(0) - 0xfee0)
-            })
             let time = this.YTplayer.getCurrentTime()
-            this.YTplayer.seekTo(time + Number(PMtemp), true)
+            this.YTplayer.seekTo(time + Number(this.PMInput), true)
         },
         InputSeek() {
             let InputTimeTemp = this.SeekInput.replace(/[０-９：]/g, function (s) {
@@ -1535,7 +1713,7 @@ export default defineComponent({
             this.complete = false
             if (this.$page.props.user == null) {
                 this.sendArray = []
-                let SendLength = 0
+                console.log(this.youtubeASC)
                 for (let i = 0; i < Object.keys(this.youtubeASC).length; i++) {
                     if (this.youtubeASC[i].isStart == true) {
                         if (this.youtubeASC[i].switch == true) {
@@ -1552,27 +1730,9 @@ export default defineComponent({
                                 updated_at: new Date(),
                                 createrHN: this.createrHN,
                             })
-                            SendLength = SendLength++
                         }
                     } else {
-                        if (this.youtubeASC[i - 1].isStart == false) {
-                            this.sendArray.push({
-                                title: this.youtubeASC[i].title,
-                                date: this.youtubeInfo.date,
-                                VideoID: this.youtubeInfo.VideoID,
-                                start: this.youtubeASC[i].rowTime,
-                                end: 0,
-                                status: 0,
-                                cate_id: this.youtubeASC[i].cate_id,
-                                member_id: this.youtubeASC[i].member_id,
-                                created_at: new Date(),
-                                updated_at: new Date(),
-                                createrHN: this.createrHN,
-                            })
-                            SendLength = SendLength++
-                        } else {
-                            this.sendArray[SendLength].end = this.youtubeASC[i].rowTime
-                        }
+                        this.sendArray[this.sendArray.length - 1].end = this.youtubeASC[i].rowTime
                     }
                 }
             } else {
@@ -1594,27 +1754,9 @@ export default defineComponent({
                                 updated_at: new Date(),
                                 createrHN: this.$page.props.user.name,
                             })
-                            SendLength = SendLength++
                         }
                     } else {
-                        if (this.youtubeASC[i - 1].isStart == false) {
-                            this.sendArray.push({
-                                title: this.youtubeASC[i].title,
-                                date: this.youtubeInfo.date,
-                                VideoID: this.youtubeInfo.VideoID,
-                                start: this.youtubeASC[i].rowTime,
-                                end: 0,
-                                status: 0,
-                                cate_id: this.youtubeASC[i].cate_id,
-                                member_id: this.youtubeASC[i].member_id,
-                                created_at: new Date(),
-                                updated_at: new Date(),
-                                createrHN: this.createrHN,
-                            })
-                            SendLength = SendLength++
-                        } else {
-                            this.sendArray[SendLength].end = this.youtubeASC[i].rowTime
-                        }
+                        this.sendArray[this.sendArray.length - 1].end = this.youtubeASC[i].rowTime
                     }
                 }
             }
@@ -1655,6 +1797,8 @@ export default defineComponent({
         clipForm,
         twForm,
         twLabel,
+        ytclipForm,
+        ytclipLabel,
         TWwindow,
         YouTube,
         Head,
