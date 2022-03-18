@@ -577,4 +577,26 @@ class PlayerController extends Controller
 
         $data->save();
     }
+
+    public function getStatus()
+    {
+        $live = DB::connection('mysql_liveinfo')->table('stock')
+                    ->where('status','2')
+                    ->join('member','stock.member_id','=','member.id')
+                    ->select('stock.*','member.display','member.MainCol','member.ImageCol','member.ENname')
+                    ->get();
+        $schedule = DB::connection('mysql_liveinfo')->table('stock')
+                    ->where('status','1')
+                    ->orderBy('schedule', 'asc')
+                    ->join('member','stock.member_id','=','member.id')
+                    ->select('stock.*','member.display','member.MainCol','member.ImageCol','member.ENname')
+                    ->get();
+        
+        return response()->json(
+            [
+                'live' => $live,
+                'schedule' => $schedule,
+            ]
+        );
+    }
 }

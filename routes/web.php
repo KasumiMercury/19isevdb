@@ -34,6 +34,10 @@ Route::prefix('login/{provider}')->where(['provider'=> 'google'])->group(functio
     Route::get('/callback',[App\Http\Controllers\Auth\LoginController::class, 'handleProviderCallback'])->name('sns_login.callback');
 });
 
+Route::get('/live/info', function () {
+    return Inertia::render('LiveInfo');
+})->name('live.info'); 
+
 Route::get('/add', function () {
     return Inertia::render('DataAdd');
 })->name('data.add'); 

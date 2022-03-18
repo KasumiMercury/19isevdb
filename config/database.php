@@ -63,6 +63,26 @@ return [
             ]) : [],
         ],
 
+        'mysql_liveinfo' => [
+            'driver' => 'mysql',
+            'url' => env('DATABASE_URL_liveinfo'),
+            'host' => env('DB_HOST_liveinfo', '127.0.0.1'),
+            'port' => env('DB_PORT_liveinfo', '3306'),
+            'database' => env('DB_DATABASE_liveinfo', 'forge'),
+            'username' => env('DB_USERNAME_liveinfo', 'forge'),
+            'password' => env('DB_PASSWORD_liveinfo', ''),
+            'unix_socket' => env('DB_SOCKET_liveinfo', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),

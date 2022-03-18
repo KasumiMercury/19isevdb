@@ -16,6 +16,14 @@
                     <div class="flex flex-row justify-end pr-4 lg:pr-10 pb-2 bg-stone-800">
                         <Link
                             as="button"
+                            href="/live/info"
+                            v-if="!$page.props.user"
+                            class="flex flex-row font-Caveast bg-transparent text-red-400 text-emit-lg shadow-red-200 text-xs md:text-lg mr-auto ml-3 lg:ml-5"
+                        >
+                            LIVE info
+                        </Link>
+                        <Link
+                            as="button"
                             :href="route('myLogin')"
                             v-if="!$page.props.user"
                             class="flex flex-row font-Caveast bg-transparent text-emerald-500 text-emit-lg shadow-emerald-400 text-xs md:text-lg ml-auto mr-3 lg:mr-5"

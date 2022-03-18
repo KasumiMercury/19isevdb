@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::GET('/liveinfo/status', 'App\Http\Controllers\PlayerController@getStatus')->name('liveinfo.status');
 Route::put('/status/player', 'App\Http\Controllers\PlayerController@editStatus')->name('player.status');
 Route::put('/edit/player', 'App\Http\Controllers\PlayerController@playerChange')->name('player.change');
 Route::POST('/add/twitter', 'App\Http\Controllers\PlayerController@addTwitter')->name('add.twitter');
