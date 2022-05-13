@@ -72,7 +72,14 @@
                     </Link>
                 </div>
 
-                <PaginateBtn class="mb-6 mx-auto" :links="players.links" :search="search" :sort="''" :currentPage="players.current_page" />
+                <PaginateBtn
+                    class="mb-6 mx-auto"
+                    :links="players.links"
+                    :search="search"
+                    :sort="''"
+                    :currentPage="players.current_page"
+                    :order="''"
+                />
 
                 <div class="flex flex-row flex-wrap">
                     <div v-for="item in players.data" :key="'player' + item.id" class="py-1 px-3 sm:px-6 lg:px-1 lg:px-1 w-full lg:w-1/3">

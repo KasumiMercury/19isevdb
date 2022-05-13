@@ -641,7 +641,7 @@
                                 <p v-if="errorYTArray.includes(true)" class="text-lg font-bold text-red-300 px-5 py-1 lg:py-2">
                                     タイトルが入力されていないデータがあります。
                                 </p>
-                                <button v-else class="bg-gray-200 text-lg font-bold text-gray-900 px-5 py-1 lg:py-2 rounded-md" @click="nextStep(3)">
+                                <button v-else class="bg-gray-200 text-lg font-bold text-gray-900 px-5 py-1 lg:py-2 rounded-md" @click="checkShow(3)">
                                     一括登録
                                 </button>
                             </div>
@@ -905,7 +905,7 @@
                             <p class="text-sm text-gray-100 mt-1 mb-2 text-center mx-auto">登録データを変更したい場合はBackで戻ってください。</p>
                             <div class="relative mt-5 lg:mt-10">
                                 <div class="mr-1 ml-auto w-fit mt-5 lg:mt-10">
-                                    <button class="bg-gray-200 text-lg font-bold text-gray-900 px-5 py-1 lg:py-2 rounded-md" @click="nextStep(3)">
+                                    <button class="bg-gray-200 text-lg font-bold text-gray-900 px-5 py-1 lg:py-2 rounded-md" @click="checkShow(3)">
                                         Next
                                     </button>
                                 </div>
@@ -938,7 +938,24 @@
                         </div>
                         <template v-if="this.contentType == 'youtube'">
                             <div class="mx-auto ml-auto w-fit mt-5 lg:mt-10">
-                                <button class="bg-green-500 text-2xl font-bold text-gray-50 px-5 py-1 lg:py-2 rounded-md" @click="postYoutube">
+                                <button class="bg-transparent mt-5 mb-5 mx-auto flex flex-row justify-items-center" @click="showSwitch = !showSwitch">
+                                    <svg
+                                        :class="showSwitch ? 'fill-green-400' : 'fill-green-800'"
+                                        class="w-6 h-6 mx-2 my-auto"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 512 512"
+                                    >
+                                        <!--! Font Awesome Pro 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                                        <path
+                                            d="M0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256zM371.8 211.8C382.7 200.9 382.7 183.1 371.8 172.2C360.9 161.3 343.1 161.3 332.2 172.2L224 280.4L179.8 236.2C168.9 225.3 151.1 225.3 140.2 236.2C129.3 247.1 129.3 264.9 140.2 275.8L204.2 339.8C215.1 350.7 232.9 350.7 243.8 339.8L371.8 211.8z"
+                                        />
+                                    </svg>
+                                    <p class="text-gray-200 my-auto">登録者表示を許可</p>
+                                </button>
+                                <button
+                                    class="mx-auto bg-green-500 text-2xl font-bold text-gray-50 px-5 py-1 lg:py-2 rounded-md"
+                                    @click="postYoutube"
+                                >
                                     Update
                                 </button>
                             </div>
@@ -959,7 +976,21 @@
                         </template>
                         <template v-if="this.contentType == 'YTclip'">
                             <div class="mx-auto ml-auto w-fit mt-5 lg:mt-10">
-                                <button class="bg-green-500 text-2xl font-bold text-gray-50 px-5 py-1 lg:py-2 rounded-md" @click="postYTclip">
+                                <button class="bg-transparent mt-5 mb-5 mx-auto flex flex-row justify-items-center" @click="showSwitch = !showSwitch">
+                                    <svg
+                                        :class="showSwitch ? 'fill-green-400' : 'fill-green-800'"
+                                        class="w-6 h-6 mx-2 my-auto"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 512 512"
+                                    >
+                                        <!--! Font Awesome Pro 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                                        <path
+                                            d="M0 256C0 114.6 114.6 0 256 0C397.4 0 512 114.6 512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256zM371.8 211.8C382.7 200.9 382.7 183.1 371.8 172.2C360.9 161.3 343.1 161.3 332.2 172.2L224 280.4L179.8 236.2C168.9 225.3 151.1 225.3 140.2 236.2C129.3 247.1 129.3 264.9 140.2 275.8L204.2 339.8C215.1 350.7 232.9 350.7 243.8 339.8L371.8 211.8z"
+                                        />
+                                    </svg>
+                                    <p class="text-gray-200 my-auto">登録者表示を許可</p>
+                                </button>
+                                <button class="mx-auto bg-green-500 text-2xl font-bold text-gray-50 px-5 py-1 lg:py-2 rounded-md" @click="postYTclip">
                                     Update
                                 </button>
                             </div>
@@ -1010,6 +1041,8 @@ import YouTube from "vue3-youtube"
 export default defineComponent({
     data() {
         return {
+            showSwitch: true,
+            isShow: 1,
             isPaste: false,
             TimeStamp: false,
             SeekInput: "5:04",
@@ -1069,6 +1102,27 @@ export default defineComponent({
                 if (this.tweetArray.length == 1) {
                     this.step = 4
                 }
+            }
+        },
+        checkShow(n) {
+            let self = this
+            if (this.$page.props.user) {
+                axios
+                    .get("/api/register/show/" + this.$page.props.user.id)
+                    .then((response) => {
+                        if (response["data"]["isShow"] == 1) {
+                            self.showSwitch = true
+                        } else {
+                            self.showSwitch = false
+                        }
+                        self.step = n + 1
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    })
+            } else {
+                this.showSwitch = 1
+                this.step = n + 1
             }
         },
         backStep(n) {
@@ -1291,6 +1345,11 @@ export default defineComponent({
             })
         },
         postYTclip() {
+            if (this.showSwitch) {
+                this.isShow = 1
+            } else {
+                this.isShow = 0
+            }
             this.complete = false
             if (this.$page.props.user == null) {
                 this.sendArray = []
@@ -1305,6 +1364,7 @@ export default defineComponent({
                         created_at: new Date(),
                         updated_at: new Date(),
                         createrHN: this.createrHN,
+                        isShow: this.isShow,
                     })
                 }
             } else {
@@ -1320,6 +1380,7 @@ export default defineComponent({
                         created_at: new Date(),
                         updated_at: new Date(),
                         createrHN: this.$page.props.user.name,
+                        isShow: this.isShow,
                     })
                 }
             }
@@ -1710,6 +1771,11 @@ export default defineComponent({
             this.errorYTArray.splice(index, 1)
         },
         postYoutube() {
+            if (this.showSwitch) {
+                this.isShow = 1
+            } else {
+                this.isShow = 0
+            }
             this.complete = false
             if (this.$page.props.user == null) {
                 this.sendArray = []
@@ -1729,6 +1795,7 @@ export default defineComponent({
                                 created_at: new Date(),
                                 updated_at: new Date(),
                                 createrHN: this.createrHN,
+                                isShow: this.isShow,
                             })
                         }
                     } else {
@@ -1753,6 +1820,7 @@ export default defineComponent({
                                 created_at: new Date(),
                                 updated_at: new Date(),
                                 createrHN: this.$page.props.user.name,
+                                isShow: this.isShow,
                             })
                         }
                     } else {

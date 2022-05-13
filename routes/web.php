@@ -29,6 +29,10 @@ Route::get('/dashboard', function () {
     return redirect('/');
 })->name('dashboard'); 
 
+Route::get('/questionnaire', function () {
+    return Inertia::render('questionnaire');
+}); 
+
 Route::prefix('login/{provider}')->where(['provider'=> 'google'])->group(function(){
     Route::get('/',[App\Http\Controllers\Auth\LoginController::class, 'redirectToProvider'])->name('sns_login.redirect');
     Route::get('/callback',[App\Http\Controllers\Auth\LoginController::class, 'handleProviderCallback'])->name('sns_login.callback');

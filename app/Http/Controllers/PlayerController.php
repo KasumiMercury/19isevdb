@@ -26,8 +26,16 @@ class PlayerController extends Controller
             $search = "";
         }else{
             $search = $request->searchWord;
-            $searchTemp = '%' . addcslashes($search, '%_\\') . '%';
-            $query->where('title', 'like', $searchTemp);
+
+            $spaceConversion = mb_convert_kana($search, 's');
+
+            $wordArraySearched = preg_split('/[\s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
+
+
+            foreach($wordArraySearched as $value) {
+                $query->where('title', 'like', '%'.$value.'%');
+            }
+
         }
 
         if($request->sortType == null || $request->sortType == ""){
@@ -95,8 +103,15 @@ class PlayerController extends Controller
             $search = "";
         }else{
             $search = $request->searchWord;
-            $searchTemp = '%' . addcslashes($search, '%_\\') . '%';
-            $query->where('title', 'like', $searchTemp);
+
+            $spaceConversion = mb_convert_kana($search, 's');
+
+            $wordArraySearched = preg_split('/[\s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
+
+
+            foreach($wordArraySearched as $value) {
+                $query->where('title', 'like', '%'.$value.'%');
+            }
         }
 
         if($request->sortType == null || $request->sortType == ""){
@@ -164,6 +179,15 @@ class PlayerController extends Controller
             $search = "";
         }else{
             $search = $request->searchWord;
+
+            $spaceConversion = mb_convert_kana($search, 's');
+
+            $wordArraySearched = preg_split('/[\s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
+
+
+            foreach($wordArraySearched as $value) {
+                $query->where('title', 'like', '%'.$value.'%');
+            }
         }
 
         if($request->sortType == null || $request->sortType == ""){
@@ -596,6 +620,45 @@ class PlayerController extends Controller
             [
                 'live' => $live,
                 'schedule' => $schedule,
+            ]
+        );
+    }
+    public function postIsShow(Request $request)
+    {
+        $temp = $request->all();
+        $isExsit = DB::table('user_isshow')->where('CreaterHN',$request["CreaterHN"])->exists();
+        if($isExsit){
+            DB::table('user_isshow')->where('CreaterHN',$temp["CreaterHN"])->update($temp);
+        }else{
+            DB::table('user_isshow')->insert($request["data"]);
+        }
+        DB::table('players')->where('CreaterHN',$temp["CreaterHN"])->update(['isShow'=> $temp["isShow"]]);
+    }
+    public function registerShow($id)
+    {
+        $user = DB::table('users')->where('id',$id)->get()->toArray();
+        $name = $user[0]->name;
+        
+        $isExsit = DB::table('user_isshow')->where('createrHN','=',$name)->exists();
+        if($isExsit){
+            $showTemp = DB::table('user_isshow')->where('createrHN','=',$name)->get();
+            $isShow = $showTemp[0]->isShow;
+        }else{
+            $isShow = 1;
+        }
+
+        return response()->json(
+            [
+                'isShow' => $isShow,
+            ]);
+    }
+    public function newData()
+    {
+        $players = DB::table('players')->where('status','!=','3')->where('member_id','1')->orderBy('id','DESC')->limit(10)->get();
+
+        return response()->json(
+            [
+                'players' => $players,
             ]
         );
     }

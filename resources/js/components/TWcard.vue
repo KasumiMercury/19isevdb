@@ -17,7 +17,7 @@
 
         <div class="flex flex-row mb-0 mt-1">
             <div class="cursor-pointer pl-3 text-white" @click="$emit('tweetShow')">
-                <p class="text-sm">{{ moment(date, "YYYY/MM/DD") }}</p>
+                <p class="text-xxs lg:text-sm">{{ moment(date, "YYYY/MM/DD") }}</p>
             </div>
             <div class="cursor-pointer p-1 lg:p-2 w-6 h-6 lg:w-8 lg:h-8 mx-2 mr-0 ml-auto bg-[#1da1f2] rounded-sm" @click="$emit('tweetShow')">
                 <svg class="fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">

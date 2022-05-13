@@ -34,11 +34,7 @@
             leave-class="opacity-100 scale-100"
             leave-to-class="opacity-0 scale-75"
         >
-            <div
-                class="z-20 hidden md:block absolute shadow-lg border w-48 rounded py-1 px-2 text-xs mt-4 bg-stone-200 left-44"
-                :class="'-top-' + topOffset"
-                v-if="open"
-            >
+            <div class="z-20 hidden md:block absolute shadow-lg border w-48 rounded py-1 px-2 text-xs mt-4 bg-stone-200" v-if="open">
                 <slot name="content"></slot>
             </div>
         </transition>

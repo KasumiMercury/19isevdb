@@ -49,7 +49,7 @@ class GetRss extends Command
             $obj = get_object_vars($xml);
             $obj_entry = $obj["entry"];
                 
-            for($k = 0; $k < 10; $k++){
+            for($k = 0; $k < count($obj_entry); $k++){
                 $temp = $obj_entry[$k];
                 $tempArray = json_decode(json_encode($temp), true);
                 $sendArray["title"] = $tempArray["title"];

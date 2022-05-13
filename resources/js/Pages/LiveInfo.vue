@@ -1,5 +1,14 @@
 <template>
     <div>
+        <Head title="LIVE info">
+            <meta name="description" content="個人Vtuberグループいせぶい非公式データベース　リアルタイムライブ状況" />
+            <meta property="og:title" :content="'非公式いせぶいDBリアルタイムライブ状況'" />
+            <meta property="og:type" content="article" />
+            <meta property="og:url" content="https://isevdb.sakura.ne.jp/" />
+            <meta property="og:site_name" content="非公式いせぶいDB" />
+            <meta property="og:description" content="非公式いせぶいDBリアルタイムライブ状況" />
+            <meta property="og:locale" content="ja_JP" />
+        </Head>
         <!-- header -->
         <div class="bg-stone-800 py-3">
             <header>
@@ -22,31 +31,55 @@
             </header>
         </div>
         <div class="w-full m-0 h-px goldLine"></div>
-        <p class="text-md w-fit ml-auto mr-5 my-2 text-green-300" :class="load === true ? 'visible' : 'invisible'">Update</p>
-        <div class="container mx-auto py-5 px-2">
-            <p class="text-3xl text-gray-200 text-center my-4">Now Live</p>
-            <div class="flex flex-row flex-wrap">
-                <div v-for="item in Live" :key="'live' + item.id" class="py-1 px-1 sm:px-2 lg:px-1 w-full sm:w-1/2 lg:w-1/3 mx-auto">
-                    <Card :title="item.title" :VideoID="item.VideoID" :date="null" :col="item.ImageCol" :member="item.display"></Card>
-                </div>
-            </div>
-            <p class="text-3xl text-gray-200 text-center mt-6 mb-4">Live Schedule</p>
-            <div class="flex flex-row flex-wrap">
-                <div v-for="item in Schedule" :key="'schedule' + item.id" class="py-1 px-1 sm:px-2 lg:px-1 w-full sm:w-1/2 lg:w-1/3 mx-auto">
-                    <Card :title="item.title" :VideoID="item.VideoID" :date="item.schedule" :col="item.ImageCol" :member="item.display"></Card>
-                </div>
-            </div>
-        </div>
-        <div class="w-full py-16 bg-stone-800 px-5">
-            <div class="max-w-5xl mx-auto text-center">
+        <div class="w-full pt-5 bg-stone-800 px-5 relative">
+            <div class="max-w-5xl mx-auto text-center pb-5">
                 <p class="text-xxs lg-text-xs text-gray-100 mb-1">
-                    <span>10分ごとにYouTubeのRSSから情報を取得し、</span>
+                    <span>2分ごとにYouTubeのRSSから情報を取得し、</span>
                     <span>YouTubeAPIから状態を読み込んでいます。</span>
                 </p>
                 <p class="text-xxs lg-text-xs text-gray-100 mb-1">
                     <span>YouTubeの不具合や仕様で</span>
                     <span>反映されない場合があります。</span>
                 </p>
+                <p class="text-xxs lg-text-xs text-red-400 mb-1">ページの再読み込みは不要です。</p>
+                <p class="text-xxs lg-text-xs text-gray-100 mb-1">それぞれのカードをクリックすると新規タブで開きます。</p>
+            </div>
+            <div class="absolute bottom-0 left-0 w-full">
+                <transition>
+                    <p v-show="load == true" class="text-xxs lg-text-xs text-green-300 mb-1 w-fit mx-auto">Updated</p>
+                </transition>
+            </div>
+        </div>
+        <div class="container mx-auto pb-5 px-2 flex flex-col">
+            <div>
+                <p class="text-3xl text-gray-200 text-center mb-4">Now Live</p>
+                <div class="flex flex-row flex-wrap">
+                    <div v-for="item in Live" :key="'live' + item.id" class="py-1 px-1 sm:px-2 lg:px-1 w-full sm:w-1/2 lg:w-1/3 mx-auto">
+                        <Card
+                            :title="item.title"
+                            :status="item.status"
+                            :VideoID="item.VideoID"
+                            :date="null"
+                            :col="item.ImageCol"
+                            :member="item.display"
+                        ></Card>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <p class="text-3xl text-gray-200 text-center mt-6 mb-4">Live Schedule</p>
+                <div class="flex flex-row flex-wrap">
+                    <div v-for="item in Schedule" :key="'schedule' + item.id" class="py-1 px-1 sm:px-2 lg:px-1 w-full sm:w-1/2 lg:w-1/3 mx-auto">
+                        <Card
+                            :title="item.title"
+                            :status="item.status"
+                            :VideoID="item.VideoID"
+                            :date="item.schedule"
+                            :col="item.ImageCol"
+                            :member="item.display"
+                        ></Card>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="w-full pt-52 pb-16 bg-stone-800 px-5">
@@ -89,18 +122,20 @@ export default defineComponent({
     },
     mounted() {
         this.getStatus()
-        this.Interval = setInterval(this.getStatus, 600000)
+        this.Interval = setInterval(this.getStatus, 120000)
     },
     methods: {
         getStatus() {
             let self = this
-            this.load = true
             axios
                 .get("/api/liveinfo/status")
                 .then((response) => {
                     self.Live = response["data"]["live"]
                     self.Schedule = response["data"]["schedule"]
-                    self.load = false
+                    self.load = true
+                    setTimeout(() => {
+                        self.load = false
+                    }, 1)
                 })
                 .catch((error) => {
                     console.log(error)
@@ -137,5 +172,15 @@ export default defineComponent({
 }
 span {
     display: inline-block;
+}
+.v-leave-active {
+    transition: opacity 5s;
+}
+.v-leave {
+    opacity: 1;
+}
+
+.v-leave-to {
+    opacity: 0;
 }
 </style>
