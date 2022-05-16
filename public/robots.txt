@@ -1,3 +1,2 @@
 User-agent: *
-Disallow:
-Sitemap: https://isevdb.sakura.ne.jp/sitemap.xml
+Sitemap: https://isevdb.net/sitemap.xml

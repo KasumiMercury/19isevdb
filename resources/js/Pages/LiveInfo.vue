@@ -1,12 +1,18 @@
 <template>
     <div>
         <Head title="LIVE info">
-            <meta name="description" content="個人Vtuberグループいせぶい非公式データベース　リアルタイムライブ状況" />
+            <meta
+                name="description"
+                content="個人Vtuberグループ、異世界転生してVになりました、略して「いせぶい」に所属する恋惡まよ、心寧はな、星降あめる、綵てまり、羽奏こはく、泉谷このみ、紅月うる、稲荷こまち、神白ニア、各メンバーのリアルタイムライブ配信状況"
+            />
             <meta property="og:title" :content="'非公式いせぶいDBリアルタイムライブ状況'" />
             <meta property="og:type" content="article" />
-            <meta property="og:url" content="https://isevdb.sakura.ne.jp/" />
+            <meta property="og:url" content="https://isevdb.net/" />
             <meta property="og:site_name" content="非公式いせぶいDB" />
-            <meta property="og:description" content="非公式いせぶいDBリアルタイムライブ状況" />
+            <meta
+                property="og:description"
+                content="個人Vtuberグループ、異世界転生してVになりました、略して「いせぶい」に所属する恋惡まよ、心寧はな、星降あめる、綵てまり、羽奏こはく、泉谷このみ、紅月うる、稲荷こまち、神白ニア、各メンバーのリアルタイムライブ配信状況"
+            />
             <meta property="og:locale" content="ja_JP" />
         </Head>
         <!-- header -->

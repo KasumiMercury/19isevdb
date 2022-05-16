@@ -1,15 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="bg-stone-800">
     <head>
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-F68QQG0RYN"></script>
-        <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'G-F68QQG0RYN');
-        </script>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,6 +18,11 @@
         <meta name="application-name" content="非公式いせぶいDB">
         <meta name="msapplication-TileColor" content="#fd5183">
         <meta name="theme-color" content="#ffffff">
+
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:title" content="非公式いせぶいデータベース">
+        <meta name="twitter:description" content="いせぶいメンバーの切り抜き・好きな声・好きな場面・エピソード・ファンアートなどをまとめ、貯蓄し気軽に見返せる非公式データベース">
+        <meta name="twitter:image" content="https://isevdb.net/images/isevdb_ogp.png">
         
         @if( Request::routeIs('TopPage'))
         <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/website#">
@@ -34,9 +30,6 @@
         <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
         @endif
         
-        <meta name="description" content="個人Vtuberグループいせぶい非公式データベース" />
-
-
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 

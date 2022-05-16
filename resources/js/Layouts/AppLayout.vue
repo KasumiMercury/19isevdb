@@ -373,7 +373,7 @@
             </main>
             <div class="w-full pt-52 pb-16 bg-stone-800 px-5">
                 <div class="max-w-5xl mx-auto text-center flex flex-col">
-                    <a class="text-xxs lg-text-xs text-blue-300 mb-1" href="https://isevdb.sakura.ne.jp/matome">まよすけまとめ（ネタページ）</a>
+                    <a class="text-xxs lg-text-xs text-blue-300 mb-1" href="https://isevdb.net/matome">まよすけまとめ（ネタページ）</a>
                     <a class="text-xxs lg:text-xs text-gray-100" href="https://twitter.com/Mmazoku_media?s=20&t=aTPqq5WEuY9UgH-AKAKZTw"
                         >管理人：@Mmazoku_media</a
                     >

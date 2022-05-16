@@ -71,7 +71,7 @@ export default {
         }
     },
     created() {
-        this.Tweet["url"] = "https://isevdb.sakura.ne.jp/" + this.currentMember.name + "/share/" + this.player.id
+        this.Tweet["url"] = "https://isevdb.net/" + this.currentMember.name + "/share/" + this.player.id
         this.Tweet["title"] = "非公式" + this.currentMember.display + "DB No." + this.player.id + "　”" + this.player.title + "”"
         this.Tweet["hash"] = this.currentMember.display + "非公式DB," + this.currentMember.display
     },
@@ -96,15 +96,10 @@ export default {
                 }
             } else {
                 if (this.TWyt == false) {
-                    this.Tweet["url"] = "https://isevdb.sakura.ne.jp/" + this.currentMember.name + "/share/" + this.player.id
+                    this.Tweet["url"] = "https://isevdb.net/" + this.currentMember.name + "/share/" + this.player.id
                 } else {
                     this.Tweet["url"] =
-                        "https://isevdb.sakura.ne.jp/" +
-                        this.currentMember.name +
-                        "/share/" +
-                        this.player.id +
-                        "　https://youtu.be/" +
-                        this.player.VideoID
+                        "https://isevdb.net/" + this.currentMember.name + "/share/" + this.player.id + "　https://youtu.be/" + this.player.VideoID
                 }
             }
         },

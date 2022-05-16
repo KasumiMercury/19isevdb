@@ -7,7 +7,7 @@
             />
             <meta property="og:title" :content="'非公式' + currentMember.display + 'DB'" />
             <meta property="og:type" content="article" />
-            <meta property="og:url" :content="'https://isevdb.sakura.ne.jp/' + currentMember.name" />
+            <meta property="og:url" :content="'https://isevdb.net/' + currentMember.name" />
             <meta property="og:site_name" :content="'非公式' + currentMember.display + 'DB'" />
             <meta property="og:description" :content="'非公式' + currentMember.display + 'DB　データ一覧ページ'" />
             <meta property="og:locale" content="ja_JP" />
@@ -224,7 +224,7 @@
                                     :title="item.title"
                                     :date="item.date"
                                     :status="item.status"
-                                    :url="'/' + item.name + '/player/' + item.id"
+                                    :url="'/' + this.currentMember.name + '/player/' + item.id"
                                     :isLike="likes.includes(item.id)"
                                     @disLikeEmit="DisLike(item.id)"
                                     @addLikeEmit="addLike(item.id)"

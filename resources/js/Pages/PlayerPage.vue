@@ -7,7 +7,7 @@
             />
             <meta property="og:title" :content="'非公式' + currentMember.display + 'DB | PlayerPage'" />
             <meta property="og:type" content="article" />
-            <meta property="og:url" :content="'https://isevdb.sakura.ne.jp/' + currentMember.name + '/player/' + id" />
+            <meta property="og:url" :content="'https://isevdb.net/' + currentMember.name + '/player/' + id" />
             <meta property="og:image" :content="'https://i.ytimg.com/vi/' + player.VideoID + '/hqdefault.jpg'" />
             <meta property="og:site_name" :content="'非公式' + currentMember.display + 'DB'" />
             <meta
@@ -70,6 +70,7 @@
                     <p class="text-lg lg:text-2xl text-center text-gray-200 py-1 mx-auto">"{{ player.title }}"</p>
                     <div class="relative w-full aspect-video mb-10 flex-none">
                         <YouTube
+                            v-show="readyYT"
                             :src="player.VideoID"
                             @ready="onReady"
                             @state-change="status"
@@ -318,6 +319,7 @@ export default defineComponent({
             nextIndex: 0,
             listLength: 0,
             autoNext: true,
+            readyYT: false,
         }
     },
     created() {
@@ -331,6 +333,7 @@ export default defineComponent({
         } else {
             this.likes = this.$page.props.setting.likesObj
         }
+        this.readyYT = true
     },
     methods: {
         onReady() {

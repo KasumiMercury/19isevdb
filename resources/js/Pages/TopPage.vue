@@ -1,12 +1,18 @@
 <template>
     <div>
         <Head>
-            <meta name="description" content="個人Vtuberグループいせぶい非公式データベース　トップページ" />
+            <meta
+                name="description"
+                content="個人Vtuberグループ、異世界転生してVになりました、略して「いせぶい」に所属する恋惡まよ、心寧はな、星降あめる、綵てまり、羽奏こはく、泉谷このみ、紅月うる、稲荷こまち、神白ニア、各メンバーの切り抜きや歌ってみたなどの非公式データベース"
+            />
             <meta property="og:title" :content="'非公式いせぶいDB'" />
             <meta property="og:type" content="website" />
-            <meta property="og:url" content="https://isevdb.sakura.ne.jp/" />
+            <meta property="og:url" content="https://isevdb.net/" />
             <meta property="og:site_name" content="非公式いせぶいDB" />
-            <meta property="og:description" content="非公式いせぶいDBトップページ" />
+            <meta
+                property="og:description"
+                content="個人Vtuberグループ、異世界転生してVになりました、略して「いせぶい」に所属する恋惡まよ、心寧はな、星降あめる、綵てまり、羽奏こはく、泉谷このみ、紅月うる、稲荷こまち、神白ニア、各メンバーの切り抜きや歌ってみたなどの非公式データベース"
+            />
             <meta property="og:locale" content="ja_JP" />
         </Head>
         <app-layout title="TopPage" :chooseCate="false" NowPage="iseV DB TOP" NowCate="NONE" :isSub="false">

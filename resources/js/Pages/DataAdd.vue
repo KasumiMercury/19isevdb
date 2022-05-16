@@ -1804,7 +1804,6 @@ export default defineComponent({
                 }
             } else {
                 this.sendArray = []
-                let SendLength = 0
                 for (let i = 0; i < Object.keys(this.youtubeASC).length; i++) {
                     if (this.youtubeASC[i].isStart == true) {
                         if (this.youtubeASC[i].switch == true) {
