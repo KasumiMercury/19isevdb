@@ -6,6 +6,7 @@ use App\Models\Players;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PhpParser\Node\Expr\Cast\Array_;
 
 class SnsController extends Controller
 {
@@ -21,7 +22,7 @@ class SnsController extends Controller
         $spreadsheet_service = new \Google_Service_Sheets($client);
 
         $TWsheet_id = '1GhtCo0kSexw7-ckjrIgZOuj5GbWBcQgfajTXlPPPp7Q';
-        $TWrange = 'combineList!E1:E11'; 
+        $TWrange = 'combineList!E1:G11'; 
         $TWresponse = $spreadsheet_service->spreadsheets_values->get($TWsheet_id, $TWrange);
         $TWvalues = $TWresponse->getValues();
         $TWlist = array();
@@ -35,7 +36,7 @@ class SnsController extends Controller
                     $TWMember = array('display'=>'いせぶい公式','ImageCol'=>'#FEDF0D');
                     $TWvalue = $TWvalues[$i];
                     $TWvalue[] = $TWMember;
-                    $offTWres = $spreadsheet_service->spreadsheets_values->get($TWsheet_id, 'combineList!A11:G11');
+                    $offTWres = $spreadsheet_service->spreadsheets_values->get($TWsheet_id, 'combineList!A11:H11');
                     $offTWValues = $offTWres->getValues();
                     $officialTW = $offTWValues[0];
                     $TWvalue[] = $officialTW;
@@ -45,7 +46,7 @@ class SnsController extends Controller
         }
 
         $YTsheet_id = '1Bnl5N666vtcRiHlq-yqpn-oOMekW1KdI4uV_5wMhDQk';
-        $YTrange = 'combineList!F1:F11'; 
+        $YTrange = 'combineList!F1:H11'; 
         $YTresponse = $spreadsheet_service->spreadsheets_values->get($YTsheet_id, $YTrange);
         $YTvalues = $YTresponse->getValues();
         $YTlist = array();
@@ -59,7 +60,7 @@ class SnsController extends Controller
                     $YTMember = array('display'=>'いせぶい公式','ImageCol'=>'#FEDF0D');
                     $YTvalue = $YTvalues[$j];
                     $YTvalue[] = $YTMember;
-                    $offYTres = $spreadsheet_service->spreadsheets_values->get($YTsheet_id, 'combineList!A11:H11');
+                    $offYTres = $spreadsheet_service->spreadsheets_values->get($YTsheet_id, 'combineList!A11:I11');
                     $offYTValues = $offYTres->getValues();
                     $officialYT = $offYTValues[0];
                     $YTvalue[] = $officialYT;

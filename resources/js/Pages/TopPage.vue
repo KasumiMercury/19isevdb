@@ -140,30 +140,30 @@
                             <div v-for="(YTfollower, index) in YTlist" :key="index" class="mx-auto w-fit px-1 mt-1">
                                 <div
                                     class="py-2 px-4 border rounded-full w-fit my-2 flex flex-row"
-                                    :style="'border-color:' + YTfollower[1]['ImageCol']"
+                                    :style="'border-color:' + YTfollower[3]['ImageCol']"
                                 >
                                     <Link
                                         as="a"
-                                        :style="'color:' + YTfollower[1]['ImageCol']"
-                                        v-if="YTfollower[1]['display'] != 'いせぶい公式'"
+                                        :style="'color:' + YTfollower[3]['ImageCol']"
+                                        v-if="YTfollower[3]['display'] != 'いせぶい公式'"
                                         class="text-xxs md:text-xs"
-                                        :href="'/' + YTfollower[1]['name'] + '/latest'"
+                                        :href="'/' + YTfollower[3]['name'] + '/latest'"
                                     >
-                                        {{ YTfollower[1]["display"] }}YouTubeチャンネル登録者数にニュースがあります！！
+                                        {{ YTfollower[3]["display"] }}YouTubeチャンネル登録者数にニュースがあります！！
                                     </Link>
                                     <div v-else>
                                         <a href="https://www.youtube.com/channel/UC7JnbgdpZKohbBc9H-LaveA" target="_blank" rel="noopener noreferrer">
                                             <p
-                                                :style="'color:' + YTfollower[1]['ImageCol']"
+                                                :style="'color:' + YTfollower[3]['ImageCol']"
                                                 v-if="YTfollower[2][6] == 'FALSE'"
                                                 class="text-xxs md:text-xs"
                                             >
                                                 いせぶい公式YouTubeチャンネル登録者数が{{ YTfollower[2][3] }}人まで{{ YTfollower[2][4] }}人！！
                                             </p>
-                                            <p :style="'color:' + YTfollower[1]['ImageCol']" v-else class="text-xs md:text-sm">
+                                            <p :style="'color:' + YTfollower[3]['ImageCol']" v-else class="text-xs md:text-sm">
                                                 いせぶい公式YouTubeチャンネル登録者数が{{ YTfollower[2][3] }}人になりました！！
                                             </p>
-                                            <p class="text-right text-gray-400 text-xxs ml-1 mb-0 mt-auto">{{ YTfollower[2][7] }}取得</p>
+                                            <p class="text-right text-gray-400 text-xxs ml-1 mb-0 mt-auto">{{ YTfollower[2][8] }}取得</p>
                                         </a>
                                     </div>
                                 </div>
@@ -171,30 +171,30 @@
                             <div v-for="(TWfollower, index) in TWlist" :key="index" class="mx-auto w-fit mt-1 px-1">
                                 <div
                                     class="py-2 px-4 border rounded-full w-fit my-2 flex flex-row"
-                                    :style="'border-color:' + TWfollower[1]['ImageCol']"
+                                    :style="'border-color:' + TWfollower[3]['ImageCol']"
                                 >
                                     <Link
                                         as="a"
-                                        :style="'color:' + TWfollower[1]['ImageCol']"
-                                        v-if="TWfollower[1]['display'] != 'いせぶい公式'"
+                                        :style="'color:' + TWfollower[3]['ImageCol']"
+                                        v-if="TWfollower[3]['display'] != 'いせぶい公式'"
                                         class="text-xxs md:text-xs"
-                                        :href="'/' + TWfollower[1]['name'] + '/latest'"
+                                        :href="'/' + TWfollower[3]['name'] + '/latest'"
                                     >
-                                        {{ TWfollower[1]["display"] }}Twitterフォロワー数にニュースがあります！！
+                                        {{ TWfollower[3]["display"] }}Twitterフォロワー数にニュースがあります！！
                                     </Link>
                                     <div v-else>
                                         <a href="https://twitter.com/isev_info" target="_blank" rel="noopener noreferrer">
                                             <p
-                                                :style="'color:' + TWfollower[1]['ImageCol']"
+                                                :style="'color:' + TWfollower[3]['ImageCol']"
                                                 v-if="TWfollower[2][5] == 'FALSE'"
                                                 class="text-xxs md:text-xs"
                                             >
                                                 いせぶい公式Twitterフォロワー数が{{ TWfollower[2][2] }}人まで{{ TWfollower[2][3] }}人！！
                                             </p>
-                                            <p :style="'color:' + TWfollower[1]['ImageCol']" v-else class="text-xs md:text-sm">
+                                            <p :style="'color:' + TWfollower[3]['ImageCol']" v-else class="text-xs md:text-sm">
                                                 いせぶい公式Twitterフォロワー数が{{ TWfollower[2][2] }}人になりました！！
                                             </p>
-                                            <p class="text-right text-gray-400 text-xxs ml-1 mb-0 mt-auto">{{ TWfollower[2][6] }}取得</p>
+                                            <p class="text-right text-gray-400 text-xxs ml-1 mb-0 mt-auto">{{ TWfollower[2][7] }}取得</p>
                                         </a>
                                     </div>
                                 </div>
@@ -415,7 +415,8 @@ export default defineComponent({
             TWlist: {},
             YTlist: {},
             showSNS: false,
-            SNSBatch: true,
+            SNSBatch: false,
+            openedDate: null,
         }
     },
     created() {
@@ -440,6 +441,7 @@ export default defineComponent({
                 document.getElementById("MainContent").scrollIntoView(true)
             })
         }
+        this.openedDate = this.$cookies.get("openedSNS")
         this.autoImg()
         this.getSNSinfo()
     },
@@ -447,6 +449,7 @@ export default defineComponent({
         SNSinfo() {
             this.showSNS = !this.showSNS
             this.SNSBatch = false
+            this.$cookies.set("openedSNS", new Date(), "7d")
         },
         getSNSinfo() {
             let self = this
@@ -455,6 +458,23 @@ export default defineComponent({
                 .then((response) => {
                     self.YTlist = response["data"]["YTlist"]
                     self.TWlist = response["data"]["TWlist"]
+                    if (self.openedDate == null) {
+                        self.SNSBatch = true
+                    } else {
+                        let compareDate = new Date(self.openedDate)
+                        for (let i = 0; i < self.YTlist.length; i++) {
+                            let tempDate = new Date(self.YTlist[i][2])
+                            if (tempDate.getTime() >= compareDate.getTime()) {
+                                self.SNSBatch = true
+                            }
+                        }
+                        for (let j = 0; j < self.TWlist.length; j++) {
+                            let tempDate = new Date(self.TWlist[j][2])
+                            if (tempDate.getTime() >= compareDate.getTime()) {
+                                self.SNSBatch = true
+                            }
+                        }
+                    }
                 })
                 .catch((error) => {
                     console.log(error)

@@ -38,6 +38,7 @@
         "@github/hotkey": "^2.0.0",
         "moment": "^2.29.1",
         "sass-loader": "^12.6.0",
+        "vue-cookies": "^1.8.1",
         "vue-social-sharing": "^4.0.0-alpha4",
         "vue3-youtube": "^0.1.9",
         "vuedraggable": "^4.1.0"

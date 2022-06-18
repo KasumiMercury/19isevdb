@@ -3,6 +3,7 @@ require("./bootstrap")
 import { createApp, h } from "vue"
 import { createInertiaApp } from "@inertiajs/inertia-vue3"
 import { InertiaProgress } from "@inertiajs/progress"
+import VueCookies from "vue-cookies"
 
 const appName = window.document.getElementsByTagName("title")[0]?.innerText || "非公式いせぶいDB"
 
@@ -25,6 +26,7 @@ createInertiaApp({
     setup({ el, app, props, plugin }) {
         return createApp({ render: () => h(app, props) })
             .use(plugin)
+            .use(VueCookies)
             .mixin({ methods: { route } })
             .mount(el)
     },
