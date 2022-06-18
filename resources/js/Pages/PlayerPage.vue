@@ -46,6 +46,7 @@
             :currentMember="currentMember"
             :isSub="true"
             :style="styles"
+            :shareUrl="'https://isevdb.net/' + this.currentMember.name + '/share/' + this.player.id"
         >
             <template #header>
                 <h2 class="emitTitle">{{ currentMember.ENname }}</h2>
@@ -479,9 +480,6 @@ export default defineComponent({
     computed: {
         styles() {
             return {
-                "--BtnCol": this.currentMember.BtnCol,
-                "--MainCol": this.currentMember.MainCol,
-                "--NavCol": this.currentMember.NavCol,
                 "--ImgCol": this.currentMember.ImageCol,
             }
         },

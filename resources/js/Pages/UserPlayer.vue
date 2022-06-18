@@ -1,5 +1,5 @@
 <template>
-    <app-layout :title="Display" :chooseCate="false" :NowPage="Display" NowCate="NONE" :isSub="false">
+    <app-layout :title="Display" :chooseCate="false" :NowPage="Display" NowCate="NONE" :isSub="false" shareUrl="https://isevdb.net">
         <template #header>
             <h2 class="emitTitle">iseV</h2>
         </template>
@@ -30,7 +30,7 @@
                         </svg>
                     </button>
                 </div>
-                <IMGwindow v-if="this.TWtype == 'photo'" :url="tweetUrl" class="min-w-full py-2"></IMGwindow>
+                <IMGwindow v-if="this.TWtype == 'photo'" :url="tweetUrl" :tweet="twitterUrl" class="min-w-full py-2"></IMGwindow>
                 <TWwindow v-if="this.TWtype == 'video'" :url="tweetUrl" class="min-w-full"></TWwindow>
             </div>
         </template>
@@ -38,7 +38,7 @@
         <template #default>
             <div class="flex flex-col mx-0">
                 <div class="mx-1 lg:mx-20 my-2 lg:mb-10 pointer-events-auto flex flex-row">
-                    <div class="relative flex-grow">
+                    <form @submit.prevent="submit" class="relative flex-grow">
                         <label class="sr-only text-white pointer-events-none" for="search"> Search </label>
 
                         <input
@@ -48,20 +48,15 @@
                             placeholder="Search"
                             v-model="searchInput"
                         />
-                        <Link
-                            as="button"
-                            method="get"
-                            :href="route(routeType, { searchWord: searchInput })"
-                            class="absolute p-1 text-white -translate-y-1/2 rounded-full top-1/2 right-4"
-                        >
+                        <button type="submit" class="absolute p-1 text-white -translate-y-1/2 rounded-full top-1/2 right-4">
                             <svg class="w-3 h-3 lg:w-4 lg:h-4 fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                                 <!--! Font Awesome Pro 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
                                 <path
                                     d="M500.3 443.7l-119.7-119.7c27.22-40.41 40.65-90.9 33.46-144.7C401.8 87.79 326.8 13.32 235.2 1.723C99.01-15.51-15.51 99.01 1.724 235.2c11.6 91.64 86.08 166.7 177.6 178.9c53.8 7.189 104.3-6.236 144.7-33.46l119.7 119.7c15.62 15.62 40.95 15.62 56.57 0C515.9 484.7 515.9 459.3 500.3 443.7zM79.1 208c0-70.58 57.42-128 128-128s128 57.42 128 128c0 70.58-57.42 128-128 128S79.1 278.6 79.1 208z"
                                 />
                             </svg>
-                        </Link>
-                    </div>
+                        </button>
+                    </form>
                     <Link v-if="searchWord" as="button" method="get" :href="route(routeType)" class="ml-2 px-2 text-white text-xs rounded-md">
                         <svg class="w-3 h-3 lg:w-4 lg:h-4 fill-gray-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                             <!--! Font Awesome Pro 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
@@ -72,15 +67,6 @@
                     </Link>
                 </div>
 
-                <PaginateBtn
-                    class="mb-6 mx-auto"
-                    :links="players.links"
-                    :search="search"
-                    :sort="''"
-                    :currentPage="players.current_page"
-                    :order="''"
-                />
-
                 <div class="flex flex-row flex-wrap">
                     <div v-for="item in players.data" :key="'player' + item.id" class="py-1 px-3 sm:px-6 lg:px-1 lg:px-1 w-full lg:w-1/3">
                         <div v-if="item.twitter != null">
@@ -88,7 +74,11 @@
                                 :isLike="likes.includes(item.id)"
                                 :title="item.title"
                                 :date="item.date"
-                                @tweetShow="tweetShow(item.tweetUrl, item.tweetType, item.id)"
+                                :tweetType="item.tweetType"
+                                :photoMode="false"
+                                :photoUrl="item.tweetUrl"
+                                :memberName="item.name"
+                                @tweetShow="tweetShow(item.tweetUrl, item.tweetType, item.id, item.twitter)"
                                 @disLikeEmit="DisLike(item.id)"
                                 @addLikeEmit="addLike(item.id)"
                             ></t-wcard>
@@ -99,6 +89,7 @@
                                 :date="item.date"
                                 :status="item.status"
                                 :url="'/' + item.name + '/player/' + item.id"
+                                :memberName="item.name"
                                 :isLike="likes.includes(item.id)"
                                 @disLikeEmit="DisLike(item.id)"
                                 @addLikeEmit="addLike(item.id)"
@@ -111,6 +102,7 @@
                                 :date="item.date"
                                 :status="item.status"
                                 :url="item.YTclipUrl"
+                                :memberName="item.name"
                                 @disLikeEmit="DisLike(item.id)"
                                 @addLikeEmit="addLike(item.id)"
                             ></CLIPcard>
@@ -118,6 +110,16 @@
                     </div>
                 </div>
             </div>
+        </template>
+        <template #paginate>
+            <PaginateBtn
+                :links="players.links"
+                :search="search"
+                :sort="''"
+                :currentPage="players.current_page"
+                :pageLength="players.last_page"
+                :order="''"
+            />
         </template>
     </app-layout>
 </template>
@@ -157,6 +159,7 @@ export default defineComponent({
             tweetWindow: false,
             tweetUrl: "",
             TWtype: "",
+            twitterUrl: "",
             currentIndex: 0,
             likes: [],
         }
@@ -170,18 +173,22 @@ export default defineComponent({
         }
     },
     methods: {
-        tweetShow(url, type, id) {
+        submit() {
+            this.$inertia.get(route(this.routeType, { searchWord: this.searchInput }))
+        },
+        tweetShow(url, type, id, twitter) {
             this.tweetWindow = false
             this.tweetUrl = url
             this.TWtype = type
+            this.twitterUrl = twitter
             this.$nextTick(function () {
                 this.tweetWindow = true
                 this.currentIndex = id
             })
             this.$nextTick(function () {
-                window.scrollTo({
-                    top: 0,
+                document.getElementById("playerTop").scrollIntoView({
                     behavior: "smooth",
+                    block: "start",
                 })
             })
         },

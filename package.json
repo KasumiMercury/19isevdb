@@ -35,6 +35,7 @@
         "workbox-webpack-plugin": "^6.5.1"
     },
     "dependencies": {
+        "@github/hotkey": "^2.0.0",
         "moment": "^2.29.1",
         "sass-loader": "^12.6.0",
         "vue-social-sharing": "^4.0.0-alpha4",

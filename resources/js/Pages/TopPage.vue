@@ -15,7 +15,7 @@
             />
             <meta property="og:locale" content="ja_JP" />
         </Head>
-        <app-layout title="TopPage" :chooseCate="false" NowPage="iseV DB TOP" NowCate="NONE" :isSub="false">
+        <app-layout title="TopPage" :chooseCate="false" NowPage="iseV DB TOP" NowCate="NONE" :isSub="true" :shareUrl="shareUrl">
             <template #header>
                 <h2 class="emitTitle">iseV</h2>
             </template>
@@ -98,7 +98,7 @@
                             </svg>
                         </button>
                     </div>
-                    <IMGwindow v-if="this.TWtype == 'photo'" :url="tweetUrl" class="min-w-full py-2"></IMGwindow>
+                    <IMGwindow v-if="this.TWtype == 'photo'" :url="tweetUrl" :tweet="twitterUrl" class="min-w-full py-2"></IMGwindow>
                     <TWwindow v-if="this.TWtype == 'video'" :url="tweetUrl" class="min-w-full"></TWwindow>
                     <Link
                         as="button"
@@ -109,10 +109,102 @@
                 </div>
             </template>
 
+            <template #player>
+                <div class="py-2 px-4 border rounded-full w-fit mt-4 mx-auto flex flex-row text-gray-200 text-xs">
+                    <p>SNS情報のお知らせは右下に移動しました</p>
+                </div>
+            </template>
+
             <template #default>
+                <div v-if="YTlist != null || TWlist != null" class="fixed bottom-12 right-0 z-50">
+                    <div
+                        @click="SNSinfo"
+                        class="rounded-l-full lg:py-4 md:py-3 py-2 lg:px-8 md:px-5 px-4 bg-gray-700 cursor-pointer flex flex-row items-center box-emit text-green-500 relative"
+                    >
+                        <div class="absolute -top-0.5 -left-0.5 md:-top-1 md:-left-1 flex">
+                            <div
+                                v-if="SNSBatch"
+                                class="animate-ping opacity-75 absolute w-4 h-4 md:w-6 md:h-6 lg:w-8 lg:h-8 bg-red-400 rounded-full"
+                            ></div>
+                            <div v-if="SNSBatch" class="relative w-4 h-4 md:w-6 md:h-6 lg:w-8 lg:h-8 bg-red-600 rounded-full"></div>
+                        </div>
+                        <div class="text-xs md:text-sm lg:text-lg text-center w-fit h-fit ml-0 mr-auto">
+                            <p>SNS<br />情報</p>
+                        </div>
+                        <div v-if="showSNS" class="text-xxs md:text-xs text-center w-fit h-fit ml-auto mr-2 mt-auto mb-0">
+                            <p>閉じる</p>
+                        </div>
+                    </div>
+                    <div v-if="showSNS" class="w-full bg-zinc-800 mt-2 py-5 px-4 rounded-l-lg overflow-y-auto max-h-96 border border-green-500">
+                        <div class="flex flex-col">
+                            <div v-for="(YTfollower, index) in YTlist" :key="index" class="mx-auto w-fit px-1 mt-1">
+                                <div
+                                    class="py-2 px-4 border rounded-full w-fit my-2 flex flex-row"
+                                    :style="'border-color:' + YTfollower[1]['ImageCol']"
+                                >
+                                    <Link
+                                        as="a"
+                                        :style="'color:' + YTfollower[1]['ImageCol']"
+                                        v-if="YTfollower[1]['display'] != 'いせぶい公式'"
+                                        class="text-xxs md:text-xs"
+                                        :href="'/' + YTfollower[1]['name'] + '/latest'"
+                                    >
+                                        {{ YTfollower[1]["display"] }}YouTubeチャンネル登録者数にニュースがあります！！
+                                    </Link>
+                                    <div v-else>
+                                        <a href="https://www.youtube.com/channel/UC7JnbgdpZKohbBc9H-LaveA" target="_blank" rel="noopener noreferrer">
+                                            <p
+                                                :style="'color:' + YTfollower[1]['ImageCol']"
+                                                v-if="YTfollower[2][6] == 'FALSE'"
+                                                class="text-xxs md:text-xs"
+                                            >
+                                                いせぶい公式YouTubeチャンネル登録者数が{{ YTfollower[2][3] }}人まで{{ YTfollower[2][4] }}人！！
+                                            </p>
+                                            <p :style="'color:' + YTfollower[1]['ImageCol']" v-else class="text-xs md:text-sm">
+                                                いせぶい公式YouTubeチャンネル登録者数が{{ YTfollower[2][3] }}人になりました！！
+                                            </p>
+                                            <p class="text-right text-gray-400 text-xxs ml-1 mb-0 mt-auto">{{ YTfollower[2][7] }}取得</p>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-for="(TWfollower, index) in TWlist" :key="index" class="mx-auto w-fit mt-1 px-1">
+                                <div
+                                    class="py-2 px-4 border rounded-full w-fit my-2 flex flex-row"
+                                    :style="'border-color:' + TWfollower[1]['ImageCol']"
+                                >
+                                    <Link
+                                        as="a"
+                                        :style="'color:' + TWfollower[1]['ImageCol']"
+                                        v-if="TWfollower[1]['display'] != 'いせぶい公式'"
+                                        class="text-xxs md:text-xs"
+                                        :href="'/' + TWfollower[1]['name'] + '/latest'"
+                                    >
+                                        {{ TWfollower[1]["display"] }}Twitterフォロワー数にニュースがあります！！
+                                    </Link>
+                                    <div v-else>
+                                        <a href="https://twitter.com/isev_info" target="_blank" rel="noopener noreferrer">
+                                            <p
+                                                :style="'color:' + TWfollower[1]['ImageCol']"
+                                                v-if="TWfollower[2][5] == 'FALSE'"
+                                                class="text-xxs md:text-xs"
+                                            >
+                                                いせぶい公式Twitterフォロワー数が{{ TWfollower[2][2] }}人まで{{ TWfollower[2][3] }}人！！
+                                            </p>
+                                            <p :style="'color:' + TWfollower[1]['ImageCol']" v-else class="text-xs md:text-sm">
+                                                いせぶい公式Twitterフォロワー数が{{ TWfollower[2][2] }}人になりました！！
+                                            </p>
+                                            <p class="text-right text-gray-400 text-xxs ml-1 mb-0 mt-auto">{{ TWfollower[2][6] }}取得</p>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="flex flex-col mx-0">
                     <div class="mx-1 lg:mx-20 mt-2 mb-5 lg:mb-10 pointer-events-auto flex flex-row">
-                        <div class="relative flex-grow">
+                        <form @submit.prevent="submit" class="relative flex-grow">
                             <label class="sr-only text-white pointer-events-none" for="search"> Search </label>
 
                             <input
@@ -122,21 +214,16 @@
                                 placeholder="Search"
                                 v-model="searchInput"
                             />
-                            <Link
-                                as="button"
-                                method="get"
-                                :href="route('TopPage', { searchWord: searchInput })"
-                                class="absolute p-1 text-white -translate-y-1/2 rounded-full top-1/2 right-4"
-                            >
+                            <button type="submit" class="absolute p-1 text-white -translate-y-1/2 rounded-full top-1/2 right-4">
                                 <svg class="w-3 h-3 lg:w-4 lg:h-4 fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                                     <!--! Font Awesome Pro 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
                                     <path
                                         d="M500.3 443.7l-119.7-119.7c27.22-40.41 40.65-90.9 33.46-144.7C401.8 87.79 326.8 13.32 235.2 1.723C99.01-15.51-15.51 99.01 1.724 235.2c11.6 91.64 86.08 166.7 177.6 178.9c53.8 7.189 104.3-6.236 144.7-33.46l119.7 119.7c15.62 15.62 40.95 15.62 56.57 0C515.9 484.7 515.9 459.3 500.3 443.7zM79.1 208c0-70.58 57.42-128 128-128s128 57.42 128 128c0 70.58-57.42 128-128 128S79.1 278.6 79.1 208z"
                                     />
                                 </svg>
-                            </Link>
-                        </div>
-                        <Link v-if="searchWord" as="button" method="get" :href="route('TopPage')" class="ml-2 px-2 text-white text-xs rounded-md">
+                            </button>
+                        </form>
+                        <Link v-if="searchWord" as="button" method="get" :href="route(routeName)" class="ml-2 px-2 text-white text-xs rounded-md">
                             <svg class="w-3 h-3 lg:w-4 lg:h-4 fill-gray-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                                 <!--! Font Awesome Pro 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
                                 <path
@@ -151,7 +238,7 @@
                             :class="sortType == '' ? 'shadow-md shadow-zinc-900 text-gray-200 border-2 border-zinc-700 ' : 'text-gray-200'"
                             class="flex items-center mx-1 py-0.5 cursor-pointer rounded-md text-center focus:outline-none font-Raleway font-bold min-w-min"
                             as="div"
-                            :href="searchWord == '' ? route('TopPage') : route('TopPage', { searchWord: searchInput })"
+                            :href="searchWord == '' ? route(routeName) : route(routeName, { searchWord: searchInput })"
                         >
                             <span class="text-xs mx-2 lg:mx-5 my-auto"> id </span>
                         </Link>
@@ -161,8 +248,8 @@
                             as="div"
                             :href="
                                 searchWord == ''
-                                    ? route('TopPage', { sortType: 'date' })
-                                    : route('TopPage', { searchWord: searchInput, sortType: 'date' })
+                                    ? route(routeName, { sortType: 'date' })
+                                    : route(routeName, { searchWord: searchInput, sortType: 'date' })
                             "
                         >
                             <span class="text-xs mx-2 lg:mx-5 my-auto"> date </span>
@@ -173,8 +260,8 @@
                             as="div"
                             :href="
                                 searchWord == ''
-                                    ? route('TopPage', { sortType: 'title' })
-                                    : route('TopPage', { searchWord: searchInput, sortType: 'title' })
+                                    ? route(routeName, { sortType: 'title' })
+                                    : route(routeName, { searchWord: searchInput, sortType: 'title' })
                             "
                         >
                             <span class="text-xs mx-2 lg:mx-5 my-auto"> title </span>
@@ -218,15 +305,6 @@
                         </div>
                     </div>
 
-                    <PaginateBtn
-                        class="mb-6 mx-auto"
-                        :links="players.links"
-                        :search="search"
-                        :currentPage="players.current_page"
-                        :sort="sort"
-                        :order="orderPaginate"
-                    ></PaginateBtn>
-
                     <div class="flex flex-row flex-wrap">
                         <div v-for="item in DisplayPlayers" :key="'player' + item.id" class="py-1 px-3 sm:px-6 lg:px-1 w-full lg:w-1/3">
                             <div v-if="item.twitter != null">
@@ -234,7 +312,11 @@
                                     :isLike="likes.includes(item.id)"
                                     :title="item.title"
                                     :date="item.date"
-                                    @tweetShow="tweetShow(item.tweetUrl, item.tweetType, item.id)"
+                                    :tweetType="item.tweetType"
+                                    :photoMode="false"
+                                    :photoUrl="item.tweetUrl"
+                                    :memberName="item.name"
+                                    @tweetShow="tweetShow(item.tweetUrl, item.tweetType, item.id, item.twitter)"
                                     @disLikeEmit="DisLike(item.id)"
                                     @addLikeEmit="addLike(item.id)"
                                 ></t-wcard>
@@ -244,6 +326,7 @@
                                     :title="item.title"
                                     :date="item.date"
                                     :status="item.status"
+                                    :memberName="item.name"
                                     :url="'/' + item.name + '/player/' + item.id"
                                     :isLike="likes.includes(item.id)"
                                     @disLikeEmit="DisLike(item.id)"
@@ -257,6 +340,7 @@
                                     :date="item.date"
                                     :status="item.status"
                                     :url="item.YTclipUrl"
+                                    :memberName="item.name"
                                     @disLikeEmit="DisLike(item.id)"
                                     @addLikeEmit="addLike(item.id)"
                                 ></CLIPcard>
@@ -265,6 +349,16 @@
                     </div>
                 </div>
                 <LoginModal :isVisible="modalShow" @close="modalShow = false"></LoginModal>
+            </template>
+            <template #paginate>
+                <PaginateBtn
+                    :links="players.links"
+                    :search="search"
+                    :currentPage="players.current_page"
+                    :pageLength="players.last_page"
+                    :sort="sort"
+                    :order="orderPaginate"
+                ></PaginateBtn>
             </template>
         </app-layout>
     </div>
@@ -288,6 +382,8 @@ export default defineComponent({
         searchWord: String,
         sortType: String,
         order: Boolean,
+        shareUrl: String,
+        routeName: String,
     },
     components: {
         AppLayout,
@@ -307,6 +403,7 @@ export default defineComponent({
             tweetWindow: false,
             tweetUrl: "",
             TWtype: "",
+            twitterUrl: "",
             orderSwitch: false,
             DisplayPlayers: [],
             currentIndex: 0,
@@ -315,6 +412,10 @@ export default defineComponent({
             showImg: 0,
             autoTimt: undefined,
             imgLength: 0,
+            TWlist: {},
+            YTlist: {},
+            showSNS: false,
+            SNSBatch: true,
         }
     },
     created() {
@@ -334,21 +435,47 @@ export default defineComponent({
         } else {
             this.showImg = showTemp
         }
+        if (this.order != false || this.searchWord != null || this.sortType != "") {
+            this.$nextTick(function () {
+                document.getElementById("MainContent").scrollIntoView(true)
+            })
+        }
         this.autoImg()
+        this.getSNSinfo()
     },
     methods: {
-        tweetShow(url, type, id) {
+        SNSinfo() {
+            this.showSNS = !this.showSNS
+            this.SNSBatch = false
+        },
+        getSNSinfo() {
+            let self = this
+            axios
+                .get("/api/snsinfo/all")
+                .then((response) => {
+                    self.YTlist = response["data"]["YTlist"]
+                    self.TWlist = response["data"]["TWlist"]
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        },
+        submit() {
+            this.$inertia.get(route(this.routeName, { searchWord: this.searchInput }))
+        },
+        tweetShow(url, type, id, twitter) {
             this.tweetWindow = false
             this.tweetUrl = url
             this.TWtype = type
+            this.twitterUrl = twitter
             this.$nextTick(function () {
                 this.tweetWindow = true
                 this.currentIndex = id
             })
             this.$nextTick(function () {
-                window.scrollTo({
-                    top: 0,
+                document.getElementById("playerTop").scrollIntoView({
                     behavior: "smooth",
+                    block: "start",
                 })
             })
         },
@@ -441,9 +568,9 @@ export default defineComponent({
         },
         orderPaginate() {
             if (this.order) {
-                return "&sortType=asc"
+                return "&orderType=asc"
             } else {
-                return "&sortType=desc"
+                return "&orderType=desc"
             }
         },
     },

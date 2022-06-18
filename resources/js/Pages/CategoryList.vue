@@ -3,46 +3,75 @@
         <Head>
             <meta
                 name="description"
-                :content="'個人Vtuberグループいせぶい所属' + currentMember.display + '非公式' + currentMember.display + 'DB　データ一覧ページ'"
+                content="個人Vtuberグループ、異世界転生してVになりました、略して「いせぶい」に所属する恋惡まよ、心寧はな、星降あめる、綵てまり、羽奏こはく、泉谷このみ、紅月うる、稲荷こまち、神白ニア、各メンバーの切り抜きや歌ってみたなどの非公式データベース"
             />
-            <meta property="og:title" :content="'非公式' + currentMember.display + 'DB'" />
-            <meta property="og:type" content="article" />
-            <meta property="og:url" :content="'https://isevdb.net/' + currentMember.name" />
-            <meta property="og:site_name" :content="'非公式' + currentMember.display + 'DB'" />
-            <meta property="og:description" :content="'非公式' + currentMember.display + 'DB　データ一覧ページ'" />
+            <meta property="og:title" :content="'非公式いせぶいDB'" />
+            <meta property="og:type" content="website" />
+            <meta property="og:url" content="https://isevdb.net/" />
+            <meta property="og:site_name" content="非公式いせぶいDB" />
+            <meta
+                property="og:description"
+                content="個人Vtuberグループ、異世界転生してVになりました、略して「いせぶい」に所属する恋惡まよ、心寧はな、星降あめる、綵てまり、羽奏こはく、泉谷このみ、紅月うる、稲荷こまち、神白ニア、各メンバーの切り抜きや歌ってみたなどの非公式データベース"
+            />
             <meta property="og:locale" content="ja_JP" />
         </Head>
-        <app-layout
-            :title="currentMember.display + '非公式DB'"
-            :chooseCate="true"
-            :NowPage="currentMember.ENname"
-            :NowCate="cateName"
-            :currentMember="currentMember"
-            :isSub="true"
-            :style="styles"
-            :shareUrl="shareUrl"
-        >
+        <app-layout title="TopPage" :chooseCate="false" NowPage="Category" :NowCate="cateName" :isSub="false" :shareUrl="shareUrl">
             <template #header>
-                <h2 class="emitTitle">{{ currentMember.ENname }}</h2>
+                <h2 class="emitTitle">iseV</h2>
             </template>
 
             <template #window>
-                <div class="w-full flex flex-col" v-if="!tweetWindow">
-                    <div class="shadow-2xl shadow-stone-900 min-w-full aspect-video shadow-xl rounded-lg">
-                        <img
-                            loading="lazy"
-                            class="object-cover h-full w-full rounded-lg"
-                            :src="'/img/' + currentMember.name + '.jpg'"
-                            :alt="currentMember.name"
-                        />
+                <div v-if="!tweetWindow" class="w-full">
+                    <div class="flex flex-col w-full">
+                        <div class="mx-auto flex flex-row items-baseline w-fit py-1 lg:py-5">
+                            <p
+                                class="text-2xl md:text-5xl h-fit font-Caveat"
+                                :style="
+                                    'color:' +
+                                    $page.props.setting.member[this.showImg].ImageCol +
+                                    ';text-shadow: 0px 0px 20px' +
+                                    $page.props.setting.member[this.showImg].ImageCol
+                                "
+                            >
+                                {{ $page.props.setting.member[this.showImg].ENname }}
+                            </p>
+                            <p
+                                class="text-xs md:text-md ml-5 h-fit"
+                                :style="
+                                    'color:' +
+                                    $page.props.setting.member[this.showImg].ImageCol +
+                                    ';text-shadow: 0px 0px 20px' +
+                                    $page.props.setting.member[this.showImg].ImageCol
+                                "
+                            >
+                                {{ $page.props.setting.member[this.showImg].display }}
+                            </p>
+                        </div>
+                        <div class="shadow-2xl shadow-stone-900 w-full aspect-video rounded-lg">
+                            <div
+                                v-for="(member, index) in $page.props.setting.member"
+                                :key="member.name"
+                                class="w-full"
+                                :class="this.showImg == index ? '' : 'hidden'"
+                            >
+                                <Link
+                                    v-if="index != 6"
+                                    as="img"
+                                    class="object-cover h-full w-full rounded-lg cursor-pointer"
+                                    :src="'/img/' + member.name + '.jpg'"
+                                    :alt="member.name"
+                                    loading="lazy"
+                                    :href="route('member.latest', { member: member.name })"
+                                ></Link>
+                            </div>
+                        </div>
+                        <Link
+                            as="button"
+                            :href="route('welcome.page')"
+                            class="text-gray-300 rounded-full border border-gray-300 my-2 md:my-5 w-fit mx-auto text-xs md:text-sm lg:text-md py-1 px-4 md:py-2 md:px-8"
+                            >初めての方へ</Link
+                        >
                     </div>
-
-                    <Link
-                        as="button"
-                        :href="route('welcome.page')"
-                        class="text-gray-300 rounded-full border border-gray-300 my-2 md:my-5 w-fit mx-auto text-xs md:text-sm lg:text-md py-1 px-4 md:py-2 md:px-8"
-                        >初めての方へ</Link
-                    >
                 </div>
                 <div v-else class="pb-2 mx-0 min-w-full flex flex-col">
                     <div class="flex flex-row">
@@ -80,41 +109,6 @@
                 </div>
             </template>
 
-            <template #player>
-                <div class="flex flex-col">
-                    <div class="mx-auto w-fit px-1 mt-3">
-                        <a :href="'https://www.youtube.com/channel/' + currentMember['ChannelID']" target="_blank" rel="noopener noreferrer">
-                            <div v-if="SNSinfo[0]" class="py-2 px-4 rounded-full w-fit my-2 flex flex-row bg-[#da1725]">
-                                <p v-if="SNSinfo[0][6] == 'FALSE'" class="text-xxs md:text-xs text-gray-100">
-                                    YouTubeチャンネル登録者数が{{ SNSinfo[0][3] }}人まで{{ SNSinfo[0][4] }}人！！
-                                </p>
-                                <p v-else class="text-xs md:text-sm text-gray-100">
-                                    YouTubeチャンネル登録者数が{{ SNSinfo[0][3] }}人になりました！！
-                                </p>
-                                <p class="text-right text-gray-200 text-xxs ml-1 mb-0 mt-auto">{{ SNSinfo[0][7] }}取得</p>
-                            </div>
-                            <div v-else class="py-2 px-4 rounded-full w-fit my-2 flex flex-row bg-[#da1725]">
-                                <p class="text-xxs md:text-xs text-gray-100">YouTubeチャンネル</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="mx-auto w-fit px-1 mt-3">
-                        <a :href="'https://twitter.com/' + currentMember['TWaccount']" target="_blank" rel="noopener noreferrer">
-                            <div v-if="SNSinfo[1]" class="py-2 px-4 rounded-full w-fit my-2 flex flex-row bg-[#1da1f2]">
-                                <p v-if="SNSinfo[1][5] == 'FALSE'" class="text-xxs md:text-xs text-gray-100">
-                                    Twitterフォロワー数が{{ SNSinfo[1][2] }}人まで{{ SNSinfo[1][3] }}人！！
-                                </p>
-                                <p v-else class="text-xs md:text-sm text-gray-100">Twitterフォロワー数が{{ SNSinfo[1][2] }}人になりました！！</p>
-                                <p class="text-right text-gray-200 text-xxs ml-1 mb-0 mt-auto">{{ SNSinfo[1][6] }}取得</p>
-                            </div>
-                            <div v-else class="py-2 px-4 rounded-full w-fit my-2 flex flex-row bg-[#1da1f2]">
-                                <p class="text-xxs md:text-xs text-gray-100">Twitterアカウント</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </template>
-
             <template #default>
                 <div class="flex flex-col mx-0">
                     <div class="mx-1 lg:mx-20 mt-2 mb-5 lg:mb-10 pointer-events-auto flex flex-row">
@@ -141,7 +135,7 @@
                             v-if="searchWord"
                             as="button"
                             method="get"
-                            :href="route(routeName, { member: currentMember.name, cate: cateRoute })"
+                            :href="route(routeName, { cate: this.cate })"
                             class="ml-2 px-2 text-white text-xs rounded-md"
                         >
                             <svg class="w-3 h-3 lg:w-4 lg:h-4 fill-gray-200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -160,8 +154,8 @@
                             as="div"
                             :href="
                                 searchWord == ''
-                                    ? route(routeName, { member: currentMember.name, cate: cateRoute })
-                                    : route(routeName, { member: currentMember.name, cate: cateRoute, searchWord: searchInput })
+                                    ? route(routeName, { cate: this.cate })
+                                    : route(routeName, { cate: this.cate, searchWord: searchInput })
                             "
                         >
                             <span class="text-xs mx-2 lg:mx-5 my-auto"> id </span>
@@ -172,8 +166,8 @@
                             as="div"
                             :href="
                                 searchWord == ''
-                                    ? route(routeName, { member: currentMember.name, cate: cateRoute, sortType: 'date' })
-                                    : route(routeName, { member: currentMember.name, cate: cateRoute, searchWord: searchInput, sortType: 'date' })
+                                    ? route(routeName, { cate: this.cate, sortType: 'date' })
+                                    : route(routeName, { cate: this.cate, searchWord: searchInput, sortType: 'date' })
                             "
                         >
                             <span class="text-xs mx-2 lg:mx-5 my-auto"> date </span>
@@ -184,8 +178,8 @@
                             as="div"
                             :href="
                                 searchWord == ''
-                                    ? route(routeName, { member: currentMember.name, cate: cateRoute, sortType: 'title' })
-                                    : route(routeName, { member: currentMember.name, cate: cateRoute, searchWord: searchInput, sortType: 'title' })
+                                    ? route(routeName, { cate: this.cate, sortType: 'title' })
+                                    : route(routeName, { cate: this.cate, searchWord: searchInput, sortType: 'title' })
                             "
                         >
                             <span class="text-xs mx-2 lg:mx-5 my-auto"> title </span>
@@ -230,16 +224,16 @@
                     </div>
 
                     <div class="flex flex-row flex-wrap">
-                        <div v-for="item in DisplayPlayers" :key="'player' + item.id" class="py-1 px-3 sm:px-6 lg:px-1 lg:px-1 h-fit w-full lg:w-1/3">
+                        <div v-for="item in DisplayPlayers" :key="'player' + item.id" class="py-1 px-3 sm:px-6 lg:px-1 w-full lg:w-1/3">
                             <div v-if="item.twitter != null">
                                 <t-wcard
                                     :isLike="likes.includes(item.id)"
                                     :title="item.title"
                                     :date="item.date"
                                     :tweetType="item.tweetType"
-                                    :photoMode="cate == 5"
+                                    :photoMode="false"
                                     :photoUrl="item.tweetUrl"
-                                    :memberName="null"
+                                    :memberName="item.name"
                                     @tweetShow="tweetShow(item.tweetUrl, item.tweetType, item.id, item.twitter)"
                                     @disLikeEmit="DisLike(item.id)"
                                     @addLikeEmit="addLike(item.id)"
@@ -250,8 +244,8 @@
                                     :title="item.title"
                                     :date="item.date"
                                     :status="item.status"
-                                    :url="'/' + this.currentMember.name + '/player/' + item.id"
-                                    :memberName="null"
+                                    :memberName="item.name"
+                                    :url="'/' + item.name + '/player/' + item.id"
                                     :isLike="likes.includes(item.id)"
                                     @disLikeEmit="DisLike(item.id)"
                                     @addLikeEmit="addLike(item.id)"
@@ -262,9 +256,9 @@
                                     :isLike="likes.includes(item.id)"
                                     :title="item.title"
                                     :date="item.date"
-                                    :url="item.YTclipUrl"
                                     :status="item.status"
-                                    :memberName="null"
+                                    :url="item.YTclipUrl"
+                                    :memberName="item.name"
                                     @disLikeEmit="DisLike(item.id)"
                                     @addLikeEmit="addLike(item.id)"
                                 ></CLIPcard>
@@ -279,10 +273,10 @@
                     :links="players.links"
                     :search="search"
                     :currentPage="players.current_page"
+                    :pageLength="players.last_page"
                     :sort="sort"
                     :order="orderPaginate"
-                    :pageLength="players.last_page"
-                />
+                ></PaginateBtn>
             </template>
         </app-layout>
     </div>
@@ -303,13 +297,12 @@ import PaginateBtn from "@/Components/PaginateBtn"
 export default defineComponent({
     props: {
         players: Object,
-        currentMember: Object,
-        cate: Number,
         searchWord: String,
         sortType: String,
         order: Boolean,
         shareUrl: String,
-        directTW: Object,
+        routeName: String,
+        cate: Number,
     },
     components: {
         AppLayout,
@@ -319,16 +312,13 @@ export default defineComponent({
         TWwindow,
         IMGwindow,
         PaginateBtn,
+        LoginModal,
         Link,
         Head,
-        LoginModal,
     },
     data() {
         return {
-            cateName: "",
             searchInput: "",
-            cateRoute: "",
-            routeName: "",
             tweetWindow: false,
             tweetUrl: "",
             TWtype: "",
@@ -338,20 +328,19 @@ export default defineComponent({
             currentIndex: 0,
             likes: [],
             modalShow: false,
-            SNSinfo: {},
+            showImg: 0,
+            autoTimt: undefined,
+            imgLength: 0,
+            TWlist: {},
+            YTlist: {},
+            showSNS: false,
+            SNSBatch: true,
+            cateName: "",
         }
     },
     created() {
-        if (this.cate == 0) {
-            this.cateName = "Latest"
-            this.cateRoute = "latest"
-            this.routeName = "member.latest"
-        } else {
-            let tempCate = this.$page.props.setting.category.filter((u) => u.id === this.cate)
-            this.cateName = tempCate[0].title
-            this.cateRoute = this.cate
-            this.routeName = "member.cate"
-        }
+        let tempCate = this.$page.props.setting.category.filter((u) => u.id === this.cate)
+        this.cateName = tempCate[0].title
         this.searchInput = this.searchWord
         this.orderSwitch = this.order
         this.DisplayPlayers = this.players.data
@@ -361,35 +350,23 @@ export default defineComponent({
         } else {
             this.likes = this.$page.props.setting.likesObj
         }
-
-        if (this.cate != 0) {
+        this.imgLength = this.$page.props.setting.member.length
+        let showTemp = Math.floor(Math.random() * this.imgLength)
+        if (showTemp == 7) {
+            this.showImg = 8
+        } else {
+            this.showImg = showTemp
+        }
+        if (this.order != false || this.searchWord != null || this.sortType != "") {
             this.$nextTick(function () {
                 document.getElementById("MainContent").scrollIntoView(true)
             })
-        } else {
-            if (this.order != false || this.searchWord != null || this.sortType != "") {
-                this.$nextTick(function () {
-                    document.getElementById("MainContent").scrollIntoView(true)
-                })
-            }
         }
-
-        this.getSNSinfo()
+        this.autoImg()
     },
     methods: {
-        getSNSinfo() {
-            let self = this
-            axios
-                .get("/api/snsinfo/" + self.currentMember["id"])
-                .then((response) => {
-                    self.SNSinfo = response["data"]["SNSinfo"]
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
-        },
         submit() {
-            this.$inertia.get(route(this.routeName, { member: this.currentMember.name, cate: this.cateRoute, searchWord: this.searchInput }))
+            this.$inertia.get(route(this.routeName, { cate: this.cate, searchWord: this.searchInput }))
         },
         tweetShow(url, type, id, twitter) {
             this.tweetWindow = false
@@ -414,8 +391,7 @@ export default defineComponent({
             } else {
                 orderType = "asc"
             }
-            let transURL = "/" + this.currentMember.name + "/" + this.cateRoute + "/?orderType=" + orderType
-
+            let transURL = "/all/" + this.cate + "/?orderType=" + orderType
             if (this.sort) {
                 transURL = transURL + this.sort
             }
@@ -468,13 +444,19 @@ export default defineComponent({
                     console.log(error)
                 })
         },
-    },
-    computed: {
-        styles() {
-            return {
-                "--ImgCol": this.currentMember.ImageCol,
+        autoImg() {
+            this.autoTime = setTimeout(this.autoImg, 5000)
+            let autoTemp = this.showImg + 1
+            if (autoTemp == this.imgLength) {
+                this.showImg = 0
+            } else if (autoTemp == 6) {
+                this.showImg = 7
+            } else {
+                this.showImg = autoTemp
             }
         },
+    },
+    computed: {
         search() {
             if (this.searchInput == "") {
                 return ""
@@ -497,11 +479,14 @@ export default defineComponent({
             }
         },
     },
+    unmounted: function () {
+        clearTimeout(this.autoTime)
+    },
 })
 </script>
 <style scoped>
 .emitTitle {
-    color: var(--ImgCol);
-    text-shadow: 0px 0px 20px var(--ImgCol);
+    color: #f59e0b;
+    text-shadow: 0px 0px 20px #f59e0b;
 }
 </style>

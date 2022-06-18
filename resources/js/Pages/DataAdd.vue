@@ -3,7 +3,7 @@
         <Head>
             <meta name="description" content="個人Vtuberグループいせぶい非公式データベース　データ追加ページ" />
         </Head>
-        <app-layout title="AddPage" :chooseCate="false" NowPage="AddPage" NowCate="NONE" :isSub="true">
+        <app-layout title="AddPage" :chooseCate="false" NowPage="AddPage" NowCate="NONE" :isSub="true" shareUrl="https://isevdb.net">
             <template #header>
                 <h2 class="emitTitle">iseV</h2>
             </template>
@@ -23,7 +23,7 @@
                     <TWwindow :url="tweetShowUrl" class="min-w-full"></TWwindow>
                 </div>
                 <div v-if="youtubeWindow" class="relative w-full aspect-video mb-10 flex-none">
-                    <YouTube :src="youtubeInfo.VideoID" ref="youtube" width="100%" height="100%" class="videoWindow" />
+                    <YouTube :src="youtubeInfo.VideoID" ref="youtube" width="100%" height="100%" class="videoWindow" @state-change="YTstatus" />
                 </div>
             </template>
 
@@ -92,7 +92,7 @@
                         </div>
                     </div>
                     <div class="w-full flex justify-center px-5 my-3">
-                        <button @click="getTime" class="m-2 px-5 py-1 text-gray-900 bg-gray-300 flex flex-row rounded-md">
+                        <button @click="getTime" class="m-2 px-5 py-1 text-gray-900 bg-gray-300 flex flex-row rounded-md" data-hotkey="t">
                             <span class="my-auto text-md mr-1">現在時刻を取得</span>
                             <svg class="fill-gray-900 w-8 h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                                 <!--! Font Awesome Pro 6.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
@@ -101,6 +101,19 @@
                                 />
                             </svg>
                         </button>
+                    </div>
+                    <div class="flex flex-row justify-center my-auto h-fit">
+                        <p class="text-gray-300 my-auto">補正：</p>
+                        <div class="my-auto">
+                            <label for="fixSeconds" class="sr-only text-gray-700">Number input</label>
+                            <input
+                                v-model="fixSeconds"
+                                type="number"
+                                class="form-control w-16 px-3 py-1 text-md text-gray-700 bg-white border border-solid border-gray-300 rounded focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                id="fixSeconds"
+                                placeholder="Number input"
+                            />
+                        </div>
                     </div>
                     <div class="w-full flex justify-center px-5 my-3">
                         <button @click="switchPaste" class="m-2 px-5 py-1 text-gray-900 bg-gray-300 flex flex-row rounded-md">
@@ -689,6 +702,12 @@
                                     >
                                         変換
                                     </button>
+                                    <button
+                                        @click="isPaste = false"
+                                        class="text-md w-fit mx-auto py-3 px-6 my-3 bg-gray-200 text-gray-900 text-md rounded-md"
+                                    >
+                                        閉じる
+                                    </button>
                                 </div>
                             </template>
                             <template v-if="TimeStamp == true">
@@ -1037,6 +1056,7 @@ import ytclipLabel from "../components/ytclipLabel"
 import TWwindow from "../components/TWwindow.vue"
 import AccordionPanel from "../components/AccordionPanel"
 import YouTube from "vue3-youtube"
+import { install, uninstall } from "@github/hotkey"
 
 export default defineComponent({
     data() {
@@ -1088,6 +1108,8 @@ export default defineComponent({
             complete: false,
             sendError: false,
             pasteComplete: false,
+            hotkey: null,
+            fixSeconds: 1,
         }
     },
     methods: {
@@ -1188,6 +1210,13 @@ export default defineComponent({
                         self.youtubeInfo.member_id = 1
                         self.step = 3
                         self.youtubeWindow = true
+
+                        self.$nextTick(function () {
+                            self.hotkey = document.querySelectorAll("[data-hotkey]")
+                            for (const el of self.hotkey) {
+                                install(el)
+                            }
+                        })
                     })
                     .catch((error) => {
                         console.log(error)
@@ -1300,6 +1329,10 @@ export default defineComponent({
             this.tweetShowUrl = this.tweetArray[index].twitterURL
             this.$nextTick(function () {
                 this.tweetWindow = true
+                document.getElementById("playerTop").scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                })
             })
         },
         tweetCheckEmit(event) {
@@ -1519,6 +1552,14 @@ export default defineComponent({
                     console.log(error)
                 })
         },
+        YTstatus() {
+            let NowStatus = this.YTplayer.getPlayerState()
+            if (NowStatus == 1) {
+                this.playStatus = true
+            } else {
+                this.playStatus = false
+            }
+        },
         playVideo() {
             this.YTplayer.playVideo()
             this.playStatus = true
@@ -1591,6 +1632,9 @@ export default defineComponent({
             this.youtubeForm = []
             let time = this.YTplayer.getCurrentTime()
             let INTtime = Math.floor(time)
+            if (INTtime != 0) {
+                INTtime = INTtime - this.fixSeconds
+            }
             let hour = ("00" + Math.floor(INTtime / 3600)).slice(-2)
             let min = ("00" + Math.floor((INTtime % 3600) / 60)).slice(-2)
             let rem = ("00" + (INTtime % 60)).slice(-2)
@@ -1878,6 +1922,12 @@ export default defineComponent({
         youtubeASC() {
             return this.youtubeArray.slice().reverse()
         },
+    },
+    unmounted: function () {
+        for (const el of this.hotkey) {
+            uninstall(el)
+        }
+        console.log("uninstalled")
     },
 })
 </script>

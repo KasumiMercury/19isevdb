@@ -56,7 +56,9 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/added',[App\Http\Controll
 
 Route::get("/my-login", [App\Http\Controllers\Auth\LoginController::class, "index"])->name("myLogin");
 
-Route::get('/edit/{id}',[App\Http\Controllers\PlayerController::class, 'Edit'])->name('player.edit');
+Route::get('/edit/{id}',[App\Http\Controllers\DataController::class, 'Edit'])->name('player.edit');
+
+Route::get('/all/{cate}',[App\Http\Controllers\PlayerController::class, 'category'])->name('player.category');
 
 Route::get('/{member}',[App\Http\Controllers\PlayerController::class, 'memberTop'])->name('member.top');
 

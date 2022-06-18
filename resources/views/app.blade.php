@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="format-detection" content="telephone=no">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <link rel="canonical" href="https://isevdb.net">
 
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
@@ -18,6 +19,7 @@
         <meta name="application-name" content="非公式いせぶいDB">
         <meta name="msapplication-TileColor" content="#fd5183">
         <meta name="theme-color" content="#ffffff">
+        <meta name="og:image" content="https://isevdb.net/images/isevdb_ogp.png">
 
         <meta name="twitter:card" content="summary">
         <meta name="twitter:title" content="非公式いせぶいデータベース">

@@ -1,5 +1,5 @@
 <template>
-    <app-layout title="EditPage" :chooseCate="false" NowPage="Edit" NowCate="NONE" :isSub="false">
+    <app-layout title="EditPage" :chooseCate="false" NowPage="Edit" NowCate="NONE" :isSub="false" shareUrl="https://isevdb.net">
         <template #header>
             <h2 class="emitTitle">iseV</h2>
         </template>
@@ -61,7 +61,7 @@
                         </template>
                     </div>
 
-                    <div v-if="confirmChange" class="w-fit mx-auto my-4 py-3 px-6 shadow-md shadow-gray-900 border border-gray-300 rounded-lg">
+                    <div v-if="checkForm" class="w-fit mx-auto my-4 py-3 px-6 shadow-md shadow-gray-900 border border-gray-300 rounded-lg">
                         <p class="text-xl text-gray-200 mb-8">登録時のハンドルネームを入力、またはログインしてください。</p>
                         <div class="w-full">
                             <label class="sr-only" for="HandleName"> HandleName </label>
@@ -184,7 +184,7 @@ export default defineComponent({
             sendArray: new FormData(),
             createrHN: "",
             confirmDelete: false,
-            confirmChange: false,
+            checkForm: false,
             errorMessage: false,
             completeDelete: false,
         }
@@ -299,7 +299,7 @@ export default defineComponent({
         },
         checkLogin() {
             if (this.$page.props.user) {
-                if (this.$pgae.props.user.name == this.player.CreaterHN) {
+                if (this.$page.props.user.name == this.player.CreaterHN) {
                     this.errorMessage = false
                     this.isForm = true
                 } else {
@@ -307,7 +307,7 @@ export default defineComponent({
                 }
             } else {
                 this.confirmDelete = false
-                this.confirmChange = true
+                this.checkForm = true
             }
         },
         checkHN() {
@@ -319,7 +319,7 @@ export default defineComponent({
             }
         },
         checkDelete() {
-            this.confirmChange = false
+            this.checkForm = false
             this.confirmDelete = true
         },
     },

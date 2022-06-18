@@ -5,7 +5,7 @@
             :class="classSet"
             @click="open = !open"
         >
-            <span class="px-1 lg:px-2 py-1 lg:py-2 text-xxs lg:text-xs min-w-full">
+            <span class="px-1 lg:px-2 py-1 lg:py-2 text-xs min-w-full">
                 <div class="flex justify-items-center">
                     <div class="flex-grow">
                         <div class="min-w-full flex justify-center">

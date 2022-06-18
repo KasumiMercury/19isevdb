@@ -3,7 +3,7 @@
         <Head>
             <meta name="description" content="個人Vtuberグループいせぶい非公式データベース　初めての方へ" />
         </Head>
-        <app-layout title="Welcome" :chooseCate="false" NowPage="Welcome" NowCate="NONE" :isSub="true">
+        <app-layout title="Welcome" :chooseCate="false" NowPage="Welcome" NowCate="NONE" :isSub="true" shareUrl="https://isevdb.net">
             <template #header>
                 <h2 class="emitTitle">iseV</h2>
             </template>

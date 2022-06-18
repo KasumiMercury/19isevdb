@@ -51,13 +51,15 @@
 
         <Link as="div" :href="url" class="cursor-pointer flex flex-row mb-0 mt-1">
             <template v-if="status == 2">
-                <div class="pl-3 text-gray-500">
+                <div class="pl-3 text-gray-500 flex flex-row">
                     <p class="text-xxs lg:text-sm">{{ moment(date, "YYYY/MM/DD") }}</p>
+                    <p v-if="memberName" class="text-xxs lg:text-sm mr-auto ml-5">{{ memberName }}</p>
                 </div>
             </template>
             <template v-else>
-                <div class="pl-3 text-white">
+                <div class="pl-3 text-white flex flex-row">
                     <p class="text-xxs lg:text-sm">{{ moment(date, "YYYY/MM/DD") }}</p>
+                    <p v-if="memberName" class="text-xxs lg:text-sm mr-auto ml-5">{{ memberName }}</p>
                 </div>
             </template>
 
@@ -105,7 +107,7 @@ export default {
             return moment(date).format(format)
         },
     },
-    props: ["title", "id", "date", "status", "url", "isLike"],
+    props: ["title", "id", "date", "status", "url", "isLike", "memberName"],
     components: {
         Link,
     },

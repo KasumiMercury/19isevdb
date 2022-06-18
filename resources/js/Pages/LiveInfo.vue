@@ -25,11 +25,11 @@
                     </div>
                     <h2 class="goldTitle font-Caveat text-2xl sm:text-5xl emitRed h-fit">Info</h2>
                 </div>
-                <div class="flex flex-row justify-end pr-4 lg:pr-10 pb-2 bg-stone-800">
+                <div class="flex flex-row justify-start pr-4 lg:pr-10 pb-2 bg-stone-800">
                     <Link
                         as="button"
                         :href="route('TopPage')"
-                        class="flex flex-row font-body bg-transparent text-emerald-500 text-emit-lg shadow-emerald-400 text-xs md:text-lg"
+                        class="mr-auto ml-3 lg:ml-5 font-body bg-transparent text-emerald-500 text-emit-lg shadow-emerald-400 text-xs md:text-lg"
                     >
                         非公式いせぶいDB
                     </Link>
