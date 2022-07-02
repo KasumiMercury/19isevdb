@@ -43,12 +43,20 @@ Route::get('/live/info', function () {
 })->name('live.info'); 
 
 Route::get('/add', function () {
-    return Inertia::render('DataAdd');
+    return Inertia::render('RegisterData');
 })->name('data.add'); 
 
 Route::get('/welcome', function () {
     return Inertia::render('WelcomePage');
 })->name('welcome.page'); 
+
+Route::get('/autoregister/clip', function () {
+    return Inertia::render('ChannelAdd');
+})->name('channel.add');
+
+Route::get('/autoregister/collation', function () {
+    return Inertia::render('ChannelCollation');
+})->name('channel.collation');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/bookmark',[App\Http\Controllers\PlayerController::class, 'bookMark'])->name('user.book'); 
 

@@ -1,20 +1,20 @@
 <template>
     <div class="relative">
         <div
-            class="cursor-pointer z-10 border-2 rounded-sm relative flex items-center focus:outline-none select-none font-Raleway font-bold min-w-full"
+            class="cursor-pointer z-10 relative flex items-center focus:outline-none select-none font-Raleway font-bold min-w-full"
             :class="classSet"
             @click="open = !open"
         >
-            <span class="px-1 lg:px-2 py-1 lg:py-2 text-xs min-w-full">
-                <div class="flex justify-items-center">
-                    <div class="flex-grow">
+            <span class="px-4 lg:px-2 py-1 lg:py-2 text-xs lg:text-sm min-w-full">
+                <div class="flex justify-items-center w-fit mx-auto">
+                    <div>
                         <div class="min-w-full flex justify-center">
                             <div>
                                 <slot name="button"></slot>
                             </div>
                         </div>
                     </div>
-                    <svg class="my-auto w-2 h-2 md:w-4 md:h-4 flex-none fill-amber-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                    <svg class="my-auto w-3 h-3 lg:w-3.5 lg:h-3.5 flex-none fill-amber-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                         <path
                             d="M4.516 7.548c.436-.446 1.043-.481 1.576 0L10 11.295l3.908-3.747c.533-.481 1.141-.446 1.574 0 .436.445.408 1.197 0 1.615-.406.418-4.695 4.502-4.695 4.502a1.095 1.095 0 0 1-1.576 0S4.924 9.581 4.516 9.163c-.409-.418-.436-1.17 0-1.615z"
                         />

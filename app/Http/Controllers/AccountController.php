@@ -1,14 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Member;
-use App\Models\Players;
-use Illuminate\Support\Facades\Auth;
-use Abraham\TwitterOAuth\TwitterOAuth;
-use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\URL;
 
 class AccountController extends Controller
 {

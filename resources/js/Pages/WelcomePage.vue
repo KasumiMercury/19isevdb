@@ -9,18 +9,26 @@
             </template>
 
             <template #default>
-                <div class="flex flex-col text-center pt-10">
+                <div class="flex flex-col text-center pt-10 px-3">
                     <p class="text-2xl lg:text-4xl text-gray-200 my-5">非公式いせぶいDBとは</p>
                     <p class="text-xs lg:text-sm text-gray-200 my-2">非公式いせぶいDBは「異世界転生してVになりました。」</p>
-                    <p class="text-xs lg:text-sm text-gray-200 my-2">略して「いせぶい」に所属する各メンバーの可愛い声や面白いエピソード</p>
-                    <p class="text-xs lg:text-sm text-gray-200 my-2">ファンが作った切り抜きやファンアートを集約するデータベース（DB)です。</p>
+                    <p class="text-xs lg:text-sm text-gray-200 my-2">
+                        <span class="inline-block">略して「いせぶい」に所属する</span
+                        ><span class="inline-block">各メンバーの可愛い声や面白いエピソード</span>
+                    </p>
+                    <p class="text-xs lg:text-sm text-gray-200 my-2">
+                        <span class="inline-block">ファンが作った切り抜きやファンアートを集約する</span
+                        ><span class="inline-block">データベース（DB)です。</span>
+                    </p>
                     <p class="text-xs lg:text-sm text-gray-200 my-2">当サイトはYouTubeやTwitterを埋め込む形で直接共有します。</p>
                     <p class="text-xs lg:text-sm text-gray-200 my-2">当サイトでの再生・閲覧情報は直接、共有元にて計上されます。</p>
                     <p class="text-xs lg:text-sm text-gray-200 my-2">
-                        誰でもAddDataページから登録が可能です。ストック感覚でお気軽にご登録いただければ幸いです。
+                        <span class="inline-block">誰でもAddDataページから登録が可能です。</span
+                        ><span class="inline-block">ストック感覚でお気軽にご登録いただければ幸いです。</span>
                     </p>
                     <p class="text-xs lg:text-sm text-gray-200 mt-2 mb-8">
-                        当サイトがいせぶいメンバーの応援になり、いせぶいファンの皆様のお役立てればと思います。
+                        <span class="inline-block">当サイトがいせぶいメンバーの応援になり、</span
+                        ><span class="inline-block">いせぶいファンの皆様のお役立てればと思います。</span>
                     </p>
 
                     <p class="text-2xl lg:text-4xl text-gray-200 my-5">データ閲覧の仕方</p>
@@ -35,15 +43,27 @@
                         alt=""
                     />
                     <p class="text-xs lg:text-sm text-gray-200 my-2">一覧に表示されるカードを選択してください。</p>
-                    <p class="text-xs lg:text-sm text-gray-200 mt-2 mb-4">プレイヤーウィンドウが開くまたはプレイヤーページに遷移します。</p>
+                    <p class="text-xs lg:text-sm text-gray-200 mt-2 mb-4">
+                        <span class="inline-block">プレイヤーウィンドウが開く</span
+                        ><span class="inline-block">またはプレイヤーページに遷移します。</span>
+                    </p>
                     <p class="text-xs lg:text-sm text-gray-200 my-2">右下が青色のものはTwitterデータ、赤色のものはYouTubeデータ</p>
-                    <p class="text-xs lg:text-sm text-gray-200 my-2">緑色のものはメン限動画、暗くなっているものは非公開になったデータです。</p>
+                    <p class="text-xs lg:text-sm text-gray-200 my-2">
+                        <span class="inline-block">緑色のものはメン限動画、</span
+                        ><span class="inline-block">暗くなっているものは非公開になったデータです。</span>
+                    </p>
                     <img src="/img/CARD.png" class="max-w-sm rounded-md border border-gray-200 mx-auto w-5/6" alt="" />
                     <p class="text-xs lg:text-sm text-gray-200 my-2">右上以外のどこをクリック・タップしても移動できます。</p>
-                    <p class="text-xs lg:text-sm text-gray-200 mt-2 mb-16">右上をクリック・タップするとブックマークを操作できます（要ログイン）</p>
+                    <p class="text-xs lg:text-sm text-gray-200 mt-2 mb-16">
+                        <span class="inline-block">右上をクリック・タップすると</span
+                        ><span class="inline-block">ブックマークを操作できます（要ログイン）</span>
+                    </p>
                     <p class="text-sm lg:text-md text-blue-200 my-2">データ追加はAddDataページから誰でも可能です。</p>
                     <p class="text-xs lg:text-sm text-gray-200 my-2">
-                        いせぶいメンバーの動画から時間を設定して簡易切り抜きを作ったり、YouTubeやTwitterにアップロードした切り抜きを登録したり、Twitterに投稿したファンアを投稿することができます。
+                        <span class="inline-block"> いせぶいメンバーの動画から時間を設定して</span
+                        ><span class="inline-block">簡易切り抜きを作ったり、</span
+                        ><span class="inline-block">YouTubeやTwitterにアップロードした切り抜きを登録したり、</span
+                        ><span class="inline-block">Twitterに投稿したファンアを投稿することができます。</span>
                     </p>
                 </div>
             </template>

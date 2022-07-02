@@ -82,7 +82,7 @@
 
             <template #player>
                 <div class="flex flex-col">
-                    <div class="mx-auto w-fit px-1 mt-3">
+                    <div class="mx-auto w-fit px-1 lg:mt-3">
                         <a :href="'https://www.youtube.com/channel/' + currentMember['ChannelID']" target="_blank" rel="noopener noreferrer">
                             <div v-if="SNSinfo[0]" class="py-2 px-4 rounded-full w-fit my-2 flex flex-row bg-[#da1725]">
                                 <p v-if="SNSinfo[0][6] == 'FALSE'" class="text-xxs md:text-xs text-gray-100">
@@ -91,27 +91,40 @@
                                 <p v-else class="text-xs md:text-sm text-gray-100">
                                     YouTubeチャンネル登録者数が{{ SNSinfo[0][3] }}人になりました！！
                                 </p>
-                                <p class="text-right text-gray-200 text-xxs ml-1 mb-0 mt-auto">{{ SNSinfo[0][7] }}取得</p>
+                                <p v-if="SNSinfo[0][6] == 'FALSE'" class="text-right text-gray-200 text-xxs ml-1 mb-0 mt-auto">
+                                    {{ SNSinfo[0][8] }}取得
+                                </p>
+                                <p v-else class="text-right text-gray-200 text-xxs ml-1 mb-0 mt-auto">{{ SNSinfo[0][7] }}取得</p>
                             </div>
                             <div v-else class="py-2 px-4 rounded-full w-fit my-2 flex flex-row bg-[#da1725]">
                                 <p class="text-xxs md:text-xs text-gray-100">YouTubeチャンネル</p>
                             </div>
                         </a>
                     </div>
-                    <div class="mx-auto w-fit px-1 mt-3">
+                    <div class="mx-auto w-fit px-1 lg:mt-3">
                         <a :href="'https://twitter.com/' + currentMember['TWaccount']" target="_blank" rel="noopener noreferrer">
                             <div v-if="SNSinfo[1]" class="py-2 px-4 rounded-full w-fit my-2 flex flex-row bg-[#1da1f2]">
                                 <p v-if="SNSinfo[1][5] == 'FALSE'" class="text-xxs md:text-xs text-gray-100">
                                     Twitterフォロワー数が{{ SNSinfo[1][2] }}人まで{{ SNSinfo[1][3] }}人！！
                                 </p>
                                 <p v-else class="text-xs md:text-sm text-gray-100">Twitterフォロワー数が{{ SNSinfo[1][2] }}人になりました！！</p>
-                                <p class="text-right text-gray-200 text-xxs ml-1 mb-0 mt-auto">{{ SNSinfo[1][6] }}取得</p>
+                                <p v-if="SNSinfo[1][5] == 'FALSE'" class="text-right text-gray-200 text-xxs ml-1 mb-0 mt-auto">
+                                    {{ SNSinfo[1][7] }}取得
+                                </p>
+                                <p v-else class="text-right text-gray-200 text-xxs ml-1 mb-0 mt-auto">{{ SNSinfo[1][6] }}取得</p>
                             </div>
                             <div v-else class="py-2 px-4 rounded-full w-fit my-2 flex flex-row bg-[#1da1f2]">
                                 <p class="text-xxs md:text-xs text-gray-100">Twitterアカウント</p>
                             </div>
                         </a>
                     </div>
+                    <Link
+                        as="div"
+                        href="/live/info"
+                        class="py-2 px-4 cursor-pointer border rounded-full w-fit mt-1 lg:mt-4 mx-auto flex flex-row border-red-300 text-red-300 text-emit-lg shadow-red-200 text-xs"
+                    >
+                        <p>ライブ状況・配信予定枠のリアルタイム情報はこちら</p>
+                    </Link>
                 </div>
             </template>
 

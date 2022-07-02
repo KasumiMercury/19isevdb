@@ -212,15 +212,19 @@ export default defineComponent({
         } else {
             this.type = "twitter"
         }
+        if (this.$page.props.user != null) {
+            this.createrHN = this.$page.props.user.name
+        } else {
+            if (this.$cookies.get("createrHN") != null) {
+                this.createrHN = this.$cookies.get("createrHN")
+            }
+        }
     },
     methods: {
         status(s) {
             let self = this
             this.sendArray.set("id", this.id)
             this.sendArray.set("status", s)
-            if (this.$page.props.user) {
-                this.createrHN = this.$page.props.user.name
-            }
             if (s == 3 && this.createrHN != this.player.CreaterHN && this.createrHN != "admin") {
                 this.errorMessage = true
             } else {

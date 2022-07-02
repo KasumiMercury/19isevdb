@@ -59,6 +59,11 @@ class GetRss extends Command
                 $isNew = DB::connection('mysql_liveinfo')->table('stock')->where('VideoID',$sendArray["VideoID"])->doesntExist();
                 if($isNew){
                     DB::connection('mysql_liveinfo')->table('stock')->insert($sendArray);
+                }else{
+                    DB::connection('mysql_liveinfo')->table('stock')->where('VideoID',$sendArray["VideoID"])
+                                                    ->update([
+                                                        'title'=>$sendArray["title"],
+                                                    ]);
                 }
             }
         }

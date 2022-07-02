@@ -11,8 +11,9 @@
                     <p class="text-xxs lg:text-sm text-gray-100">
                         個人情報は扱いませんのでパスワードは簡易なもので結構ですが、識別のため8文字以上で設定してください。
                     </p>
+                    <p class="text-xxs lg:text-sm text-gray-100">なお、同一ハンドルネームでの登録はできません。</p>
                     <p class="text-xxs lg:text-sm text-gray-100">
-                        なお、同一ハンドルネームでの登録はできません。また、ハンドルネームは管理人が見ることができます。
+                        また、ハンドルネームは管理人が見ることができ、データ登録時の設定によっては一般に表示する場合があります。
                     </p>
                     <p class="text-xxs lg:text-sm text-gray-100">パスワードは登録時に暗号化されるため管理人は実質見ることはできません。</p>
                     <p class="text-xxs lg:text-sm text-gray-100">

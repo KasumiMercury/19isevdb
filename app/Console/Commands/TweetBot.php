@@ -40,7 +40,7 @@ class TweetBot extends Command
         ];
         $client = new Client($settings);
 
-        $randomData = DB::table('players')->where('status','0')->where('twitter',null)->where('YTclipUrl',null)->inRandomOrder()->first();
+        $randomData = DB::table('players')->where('status','0')->where('cate_id','!=',4)->where('twitter',null)->where('YTclipUrl',null)->inRandomOrder()->first();
         $dataMember = DB::table('member')->where('id',$randomData->member_id)->first();
         $dataCategory = DB::table('category')->where('id',$randomData->cate_id)->first();
         $DBname = "非公式".$dataMember->display."DB No.".$randomData->id." ".$dataCategory->title."カテゴリー";
@@ -48,14 +48,15 @@ class TweetBot extends Command
         $DBurl = "https://isevdb.sakura.ne.jp/".$dataMember->name."/share/".$randomData->id;
         $tag = "#非公式いせぶいDB"." #非公式".$dataMember->display."DB";
         $tag2 = "#Vtuber #VTuberを発掘せよ #Vtuberお探しですか";
-        $tweetArray = [$DBname,$DBtitle,$DBurl,$tag,$tag2];
+        $tweetArray = [$DBname,$DBtitle,$DBurl];
         $tweetText =  join("\n",$tweetArray);
         $TWreturn = $client->tweet()->performRequest('POST', ['text' => $tweetText]);
 
         $originURL = "元動画：https://www.youtube.com/watch?v=".$randomData->VideoID;
-        $memberName = "いせぶい所属　".$dataMember->display."さん　チャンネル：https://www.youtube.com/channel/".$dataMember->ChannelID;
+        $memberName = "いせぶい所属　".$dataMember->display."さん";
+        $memberChannel = "チャンネル：https://www.youtube.com/channel/".$dataMember->ChannelID;
 
-        $threadArray = [$originURL,$memberName];
+        $threadArray = [$originURL,$memberName,$memberChannel];
         $threadText = join("\n",$threadArray);
         $TWinfo = json_decode(json_encode($TWreturn), true);
         $replyId = ["in_reply_to_tweet_id"=> $TWinfo["data"]["id"]];

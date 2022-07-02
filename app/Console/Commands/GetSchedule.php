@@ -5,6 +5,8 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
+use Illuminate\Support\Facades\Log;
+
 use Google_Client;
 use Google_Service_YouTube;
 
@@ -61,13 +63,14 @@ class GetSchedule extends Command
 
         $itemNum = count($items);
         for($k = 0; $k < $itemNum; $k++){
-            $tempDate = $items[$k]["liveStreamingDetails"]["scheduledStartTime"];
+            $tempDate = date('Y-m-d H:i:s', strtotime($items[$k]["liveStreamingDetails"]["scheduledStartTime"]));
             
             $tempData = json_decode(json_encode($data[$k]), true);
             DB::connection('mysql_liveinfo')->table('stock')->where('id', $tempData["id"])
                                 ->update([
                                     'schedule' => $tempDate,
                                 ]);
+            Log::info('getStatus', ['id' => $tempData["id"],'status' => $tempDate]);
         }
     }
 }

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button @click="toggleAccordion()" class="flex items-center justify-center mx-auto space-x-3 block">
+        <button @click="toggleAccordion()" class="flex items-center justify-center mx-auto space-x-3 block w-full">
             <slot name="title" />
 
             <svg

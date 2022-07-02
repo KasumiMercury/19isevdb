@@ -321,6 +321,9 @@ export default defineComponent({
             listLength: 0,
             autoNext: true,
             readyYT: false,
+            middleArray: [],
+            middleStep: 0,
+            isMiddle: false,
         }
     },
     created() {
@@ -333,6 +336,11 @@ export default defineComponent({
             this.likes = []
         } else {
             this.likes = this.$page.props.setting.likesObj
+        }
+
+        if (this.player.middle != null) {
+            this.isMiddle = true
+            this.middleArray = this.player.middle.split(",")
         }
         this.readyYT = true
     },
@@ -404,6 +412,9 @@ export default defineComponent({
                 this.nextPlayer()
             }
         },
+        PlayAt(input) {
+            this.YTplayer.seekTo(input, true)
+        },
         getTime() {
             if (this.player.end != 0) {
                 this.timer = setTimeout(this.getTime, 1000)
@@ -413,6 +424,15 @@ export default defineComponent({
                     this.countDown()
                 } else {
                     this.NowTime = this.YTplayer.getCurrentTime()
+                    if (this.isMiddle) {
+                        if (Number(this.NowTime) > Number(this.middleArray[this.middleStep * 2])) {
+                            this.PlayAt(this.middleArray[this.middleStep * 2 + 1])
+                            this.middleStep += 1
+                            if (this.middleStep >= this.middleArray.length / 2) {
+                                this.isMiddle = false
+                            }
+                        }
+                    }
                 }
             }
         },

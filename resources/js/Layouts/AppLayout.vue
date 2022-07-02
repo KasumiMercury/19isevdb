@@ -6,18 +6,13 @@
             <!-- header -->
             <div class="bg-stone-800">
                 <header>
-                    <Link
-                        as="div"
-                        :href="route('TopPage')"
-                        class="cursor-pointer flex justify-evenly max-w-5xl mx-auto bg-stone-800 pt-4 pb-2"
-                        id="siteTitle"
-                    >
+                    <div class="cursor-pointer flex justify-evenly max-w-5xl mx-auto bg-stone-800 pt-4 pb-2" id="siteTitle">
                         <h2 class="goldTitle font-Caveat text-xl sm:text-4xl my-auto">UNOFFICIAL</h2>
-                        <div class="notGold font-Caveat text-2xl sm:text-5xl my-auto">
+                        <Link as="div" :href="route('TopPage')" class="notGold font-Caveat text-2xl sm:text-5xl my-auto">
                             <slot name="header"></slot>
-                        </div>
+                        </Link>
                         <h2 class="goldTitle font-Caveat text-xl sm:text-4xl my-auto">DATABASE</h2>
-                    </Link>
+                    </div>
                     <div class="flex flex-row justify-end pr-4 lg:pr-10 pb-2 bg-stone-800" id="playerTop">
                         <Link
                             as="button"
@@ -90,40 +85,51 @@
                             </div>
                             <!-- player end -->
 
-                            <div
-                                class="px-0 sm:px-6 lg:px-8 pt-4 pb-20 lg:pb-10 lg:pt-6 mx-auto mt-0 min-w-full bg-stone-800 flex flex-col lg:flex-row"
-                            >
+                            <div class="px-0 pt-0 pb-10 lg:pt-6 mx-auto mt-0 min-w-full bg-stone-800 flex flex-col lg:flex-row">
                                 <!-- common btn-->
-                                <div class="flex flex-col py-2 lg:py-0 lg:mr-10 lg:w-44 flex-none">
+                                <div class="flex flex-col py-2 lg:py-0 lg:w-60 lg:mx-4 flex-none lg:px-4">
+                                    <Link
+                                        as="div"
+                                        :href="route('TopPage')"
+                                        class="shadow-md shadow-stone-900 border-2 border-zinc-700 rounded-md w-max lg:w-full text-center cursor-pointer px-10 lg:px-5 mx-auto lg:mx-0 mb-1 mt-2 lg:mt-6 lg:mb-6 items-center focus:outline-none font-Raleway font-bold text-amber-500 text-emit-md"
+                                    >
+                                        <p class="px-0 lg:px-2 py-2 lg:py-4 text-xs lg:text-sm w-max mx-auto">
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 576 512"
+                                                class="w-3 h-3 lg:w-3.5 lg:h-3.5 fill-amber-500 mx-0 inline-block"
+                                            >
+                                                <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                                                <path
+                                                    d="M575.8 255.5C575.8 273.5 560.8 287.6 543.8 287.6H511.8L512.5 447.7C512.5 450.5 512.3 453.1 512 455.8V472C512 494.1 494.1 512 472 512H456C454.9 512 453.8 511.1 452.7 511.9C451.3 511.1 449.9 512 448.5 512H392C369.9 512 352 494.1 352 472V384C352 366.3 337.7 352 320 352H256C238.3 352 224 366.3 224 384V472C224 494.1 206.1 512 184 512H128.1C126.6 512 125.1 511.9 123.6 511.8C122.4 511.9 121.2 512 120 512H104C81.91 512 64 494.1 64 472V360C64 359.1 64.03 358.1 64.09 357.2V287.6H32.05C14.02 287.6 0 273.5 0 255.5C0 246.5 3.004 238.5 10.01 231.5L266.4 8.016C273.4 1.002 281.4 0 288.4 0C295.4 0 303.4 2.004 309.5 7.014L564.8 231.5C572.8 238.5 576.9 246.5 575.8 255.5L575.8 255.5z"
+                                                />
+                                            </svg>
+                                            <span class="mx-2 inline-block">TopPage</span>
+                                        </p>
+                                    </Link>
                                     <div class="min-w-full flex flex-row justify-around lg:flex-col mx-auto">
                                         <template v-if="!chooseCate">
-                                            <div class="flex flex-col lg:mx-0 lg:w-full my-1 lg:my-0">
-                                                <div
-                                                    class="animate-bounce text-xs lg:text-sm min-w-max mr-1 lg:mx-0 my-auto lg:my-2 text-emit-lg text-amber-500 shadow-amber-400/50"
-                                                >
-                                                    <p>CHOOSE MEMBER<span class="lg:hidden">：</span></p>
+                                            <div class="flex flex-col lg:mx-0 grow lg:grow-0 px-2 lg:px-0 lg:w-full">
+                                                <div class="text-xxs lg:text-xs min-w-max mr-1 lg:mx-0 px-2 my-auto lg:my-2 text-amber-500">
+                                                    <p>CHOOSE MEMBER</p>
                                                 </div>
-                                                <div class="min-w-max mt-0">
-                                                    <DropDown
-                                                        classSet="text-amber-300  bg-gradient-radial from-amber-500 via-amber-700 to-amber-800
-                                                                shadow-lg shadow-amber-700/80 border-amber-500 border-x-amber-600"
-                                                        :topOffset="96"
-                                                    >
+                                                <div class="border-2 border-zinc-700 rounded-md shadow-md shadow-stone-900 min-w-max mt-0">
+                                                    <DropDown classSet="text-amber-500  text-emit-md" :topOffset="96">
                                                         <template v-slot:button>
-                                                            <span class="mx-2 lg:mx-5">{{ NowPage }}</span>
+                                                            <svg
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                viewBox="0 0 448 512"
+                                                                class="w-3 h-3 lg:w-3.5 lg:h-3.5 fill-amber-500 mx-0 inline-block"
+                                                            >
+                                                                <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                                                                <path
+                                                                    d="M224 256c70.7 0 128-57.31 128-128s-57.3-128-128-128C153.3 0 96 57.31 96 128S153.3 256 224 256zM274.7 304H173.3C77.61 304 0 381.6 0 477.3c0 19.14 15.52 34.67 34.66 34.67h378.7C432.5 512 448 496.5 448 477.3C448 381.6 370.4 304 274.7 304z"
+                                                                />
+                                                            </svg>
+                                                            <span class="mx-2 lg:mx-4 inline-block">{{ NowPage }}</span>
                                                         </template>
 
                                                         <template v-slot:content>
-                                                            <Link
-                                                                as="a"
-                                                                v-bind:class="{ isActive: activeMember === 'top' }"
-                                                                @mouseover="activeMember = 'top'"
-                                                                @mouseout="activeMember = ''"
-                                                                class="flex w-full justify-between items-center rounded px-2 py-2 my-1 hover:text-white"
-                                                                href="/"
-                                                            >
-                                                                トップページ
-                                                            </Link>
                                                             <div v-for="member in $page.props.setting.member" :key="member.name">
                                                                 <Link
                                                                     as="a"
@@ -140,20 +146,26 @@
                                                     </DropDown>
                                                 </div>
                                             </div>
-                                            <div class="flex flex-col lg:mx-0 lg:w-full my-1 lg:mt-4 lg:my-0">
-                                                <div
-                                                    class="text-xs lg:text-sm min-w-max mr-1 lg:mx-0 my-auto lg:my-2 text-emit-lg text-amber-600 shadow-amber-400/50"
-                                                >
-                                                    <p>CHOOSE CATEGORY <span class="lg:hidden">：</span></p>
+                                            <div class="flex flex-col lg:mx-0 grow lg:grow-0 px-2 lg:px-0 lg:w-full lg:mt-2">
+                                                <div class="text-xxs lg:text-xs min-w-max mr-1 lg:mx-0 px-2 my-auto lg:my-2 text-amber-500">
+                                                    <p>CHOOSE CATEGORY</p>
                                                 </div>
-                                                <div class="min-w-max lg:min-w-full mt-0">
-                                                    <DropDown
-                                                        classSet="text-orange-200  bg-gradient-radial from-amber-600 via-amber-800 to-amber-900
-                                                                shadow-lg shadow-amber-800/80 border-amber-500 border-x-amber-600"
-                                                        :topOffset="0"
-                                                    >
+                                                <div
+                                                    class="border-2 border-zinc-700 rounded-md shadow-md shadow-stone-900 min-w-max lg:min-w-full mt-0"
+                                                >
+                                                    <DropDown classSet="text-amber-500  text-emit-md" :topOffset="0">
                                                         <template v-slot:button>
-                                                            <span class="mx-2">{{ NowCate }}</span>
+                                                            <svg
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                viewBox="0 0 448 512"
+                                                                class="w-3 h-3 lg:w-3.5 lg:h-3.5 fill-amber-500 mx-0 inline-block"
+                                                            >
+                                                                <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                                                                <path
+                                                                    d="M48 32H197.5C214.5 32 230.7 38.74 242.7 50.75L418.7 226.7C443.7 251.7 443.7 292.3 418.7 317.3L285.3 450.7C260.3 475.7 219.7 475.7 194.7 450.7L18.75 274.7C6.743 262.7 0 246.5 0 229.5V80C0 53.49 21.49 32 48 32L48 32zM112 176C129.7 176 144 161.7 144 144C144 126.3 129.7 112 112 112C94.33 112 80 126.3 80 144C80 161.7 94.33 176 112 176z"
+                                                                />
+                                                            </svg>
+                                                            <span class="mx-2 lg:mx-4 inline-block">{{ NowCate }}</span>
                                                         </template>
 
                                                         <template v-slot:content>
@@ -175,33 +187,27 @@
                                             </div>
                                         </template>
                                         <template v-else>
-                                            <div class="flex flex-col lg:mx-0 lg:w-full my-1 lg:my-0">
-                                                <div
-                                                    class="text-xs lg:text-sm min-w-max mr-1 lg:mx-0 my-auto lg:my-2 text-emit-lg text-amber-600 shadow-amber-400/50"
-                                                >
+                                            <div class="flex flex-col lg:mx-0 grow lg:grow-0 px-2 lg:px-0 lg:w-full">
+                                                <div class="text-xxs lg:text-xs min-w-max mr-1 lg:mx-0 px-2 my-auto lg:my-2 text-amber-500">
                                                     <p>CHOOSE MEMBER<span class="lg:hidden">：</span></p>
                                                 </div>
-                                                <div class="min-w-max mt-0">
-                                                    <DropDown
-                                                        classSet="text-orange-200  bg-gradient-radial from-amber-600 via-amber-800 to-amber-900
-                                                                shadow-lg shadow-amber-800/80 border-amber-500 border-x-amber-600"
-                                                        :topOffset="96"
-                                                    >
+                                                <div class="border-2 border-zinc-700 rounded-md shadow-md shadow-stone-900 min-w-max mt-0">
+                                                    <DropDown classSet="text-amber-500  text-emit-md" :topOffset="96">
                                                         <template v-slot:button>
-                                                            <span class="mx-2 lg:mx-5">{{ NowPage }}</span>
+                                                            <svg
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                viewBox="0 0 448 512"
+                                                                class="w-3 h-3 lg:w-3.5 lg:h-3.5 fill-amber-500 mx-0 inline-block"
+                                                            >
+                                                                <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                                                                <path
+                                                                    d="M224 256c70.7 0 128-57.31 128-128s-57.3-128-128-128C153.3 0 96 57.31 96 128S153.3 256 224 256zM274.7 304H173.3C77.61 304 0 381.6 0 477.3c0 19.14 15.52 34.67 34.66 34.67h378.7C432.5 512 448 496.5 448 477.3C448 381.6 370.4 304 274.7 304z"
+                                                                />
+                                                            </svg>
+                                                            <span class="mx-2 lg:mx-4 inline-block">{{ NowPage }}</span>
                                                         </template>
 
                                                         <template v-slot:content>
-                                                            <Link
-                                                                as="a"
-                                                                v-bind:class="{ isActive: activeMember === 'top' }"
-                                                                @mouseover="activeMember = 'top'"
-                                                                @mouseout="activeMember = ''"
-                                                                class="flex w-full justify-between items-center rounded px-2 py-2 my-1 hover:text-white"
-                                                                :href="'/'"
-                                                            >
-                                                                トップページ
-                                                            </Link>
                                                             <div v-for="member in $page.props.setting.member" :key="member.name">
                                                                 <Link
                                                                     as="a"
@@ -218,20 +224,26 @@
                                                     </DropDown>
                                                 </div>
                                             </div>
-                                            <div class="flex flex-col lg:mx-0 lg:w-full my-1 lg:mt-4 lg:my-0">
-                                                <div
-                                                    class="text-xs lg:text-sm min-w-max mr-1 lg:mx-0 my-auto lg:my-2 text-emit-lg text-amber-500 shadow-amber-400/50"
-                                                >
+                                            <div class="flex flex-col lg:mx-0 grow lg:grow-0 px-2 lg:px-0 lg:w-full lg:mt-2">
+                                                <div class="text-xxs lg:text-xs min-w-max mr-1 lg:mx-0 px-2 my-auto lg:my-2 text-amber-500">
                                                     <p>CHOOSE CATEGORY <span class="lg:hidden">：</span></p>
                                                 </div>
-                                                <div class="min-w-max lg:min-w-full mt-0">
-                                                    <DropDown
-                                                        classSet="text-orange-200  bg-gradient-radial from-amber-500 via-amber-700 to-amber-800
-                                                                shadow-lg shadow-amber-800/80 border-amber-500 border-x-amber-600"
-                                                        :topOffset="0"
-                                                    >
+                                                <div
+                                                    class="border-2 border-zinc-700 rounded-md shadow-md shadow-stone-900 min-w-max lg:min-w-full mt-0"
+                                                >
+                                                    <DropDown classSet="text-amber-500  text-emit-md" :topOffset="0">
                                                         <template v-slot:button>
-                                                            <span class="mx-2">{{ NowCate }}</span>
+                                                            <svg
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                viewBox="0 0 448 512"
+                                                                class="w-3 h-3 lg:w-3.5 lg:h-3.5 fill-amber-500 mx-0 inline-block"
+                                                            >
+                                                                <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                                                                <path
+                                                                    d="M48 32H197.5C214.5 32 230.7 38.74 242.7 50.75L418.7 226.7C443.7 251.7 443.7 292.3 418.7 317.3L285.3 450.7C260.3 475.7 219.7 475.7 194.7 450.7L18.75 274.7C6.743 262.7 0 246.5 0 229.5V80C0 53.49 21.49 32 48 32L48 32zM112 176C129.7 176 144 161.7 144 144C144 126.3 129.7 112 112 112C94.33 112 80 126.3 80 144C80 161.7 94.33 176 112 176z"
+                                                                />
+                                                            </svg>
+                                                            <span class="mx-2 lg:mx-4 inline-block">{{ NowCate }}</span>
                                                         </template>
 
                                                         <template v-slot:content>
@@ -263,65 +275,101 @@
                                             </div>
                                         </template>
                                     </div>
-                                    <Link
-                                        v-if="chooseCate"
-                                        as="div"
-                                        :href="route('TopPage')"
-                                        class="w-fit lg:w-full text-center cursor-pointer px-10 lg:px-5 mx-auto lg:mx-0 mb-2 mt-4 lg:mt-6 lg:mb-6 border-2 rounded-sm items-center focus:outline-none font-Raleway font-bold text-orange-200 bg-gradient-radial from-amber-500 via-amber-700 to-amber-800 shadow-lg shadow-amber-800/80 border-amber-500 border-x-amber-600"
-                                    >
-                                        <span class="px-0 lg:px-2 py-1 lg:py-2 inline-flex items-center text-xxs lg:text-xs">
-                                            <span class="mx-2 lg:mx-5">TopPage</span>
-                                        </span>
-                                    </Link>
                                     <!-- PC btn -->
-                                    <div class="lg:min-w-full hidden md:inline-block mx-auto">
-                                        <div class="flex flex-row lg:flex-col">
+                                    <div class="min-w-full mx-auto mt-2">
+                                        <div class="flex flex-row lg:flex-col justify-around my-1 lg:my-0">
                                             <Link
                                                 as="div"
                                                 :href="route('data.add')"
-                                                class="animate-flicker lg:w-full text-center cursor-pointer mx-5 lg:mx-0 my-2 lg:mt-6 lg:mb-6 border-2 rounded-sm items-center focus:outline-none font-Raleway font-bold text-emerald-300 bg-gradient-radial from-emerald-600 via-emerald-800 to-emerald-900 shadow-xl shadow-emerald-800/80 border-emerald-600 border-x-emerald-700"
+                                                class="grow shadow-md shadow-stone-900 border-2 border-zinc-700 rounded-md animate-flicker w-fit lg:w-full text-center cursor-pointer px-1 lg:px-5 mx-2 lg:mx-0 lg:my-8 items-center focus:outline-none font-Raleway font-bold text-emerald-300 text-emit-md"
                                             >
-                                                <span class="px-0 lg:px-2 py-1 lg:py-2 inline-flex items-center text-xxs lg:text-xs">
-                                                    <span class="mx-2 lg:mx-5">AddData</span>
-                                                </span>
+                                                <p class="mx-auto px-0 lg:px-2 py-1 lg:py-3 inline-flex items-center text-xxs lg:text-xs">
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        viewBox="0 0 640 512"
+                                                        class="w-3 h-3 lg:w-3.5 lg:h-3.5 fill-emerald-300 mx-0 inline-block"
+                                                    >
+                                                        <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                                                        <path
+                                                            d="M144 480C64.47 480 0 415.5 0 336C0 273.2 40.17 219.8 96.2 200.1C96.07 197.4 96 194.7 96 192C96 103.6 167.6 32 256 32C315.3 32 367 64.25 394.7 112.2C409.9 101.1 428.3 96 448 96C501 96 544 138.1 544 192C544 204.2 541.7 215.8 537.6 226.6C596 238.4 640 290.1 640 352C640 422.7 582.7 480 512 480H144zM223 263C213.7 272.4 213.7 287.6 223 296.1C232.4 306.3 247.6 306.3 256.1 296.1L296 257.9V392C296 405.3 306.7 416 320 416C333.3 416 344 405.3 344 392V257.9L383 296.1C392.4 306.3 407.6 306.3 416.1 296.1C426.3 287.6 426.3 272.4 416.1 263L336.1 183C327.6 173.7 312.4 173.7 303 183L223 263z"
+                                                        />
+                                                    </svg>
+                                                    <span class="mx-2 inline-block">AddData</span>
+                                                </p>
                                             </Link>
                                             <Link
                                                 v-if="$page.props.user"
                                                 as="div"
                                                 :href="route('user.book')"
-                                                class="lg:w-full text-center cursor-pointer mx-5 lg:mx-0 my-2 lg:mt-0 lg:mb-4 border-2 rounded-sm items-center focus:outline-none font-Raleway font-bold text-cyan-300 bg-gradient-radial from-cyan-600 via-cyan-800 to-cyan-900 shadow-lg shadow-cyan-800/80 border-cyan-600 border-x-cyan-700"
+                                                class="grow shadow-md shadow-stone-900 border-2 border-zinc-700 rounded-md w-fit lg:w-full text-center cursor-pointer px-1 lg:px-5 mx-2 lg:mx-0 lg:my-2 items-center focus:outline-none font-Raleway font-bold text-cyan-300 text-emit-md"
                                             >
-                                                <span class="px-0 lg:px-2 py-1 lg:py-2 inline-flex items-center text-xxs lg:text-xs">
-                                                    <span class="mx-2 lg:mx-5">BookMark</span>
-                                                </span>
+                                                <p class="mx-auto px-0 lg:px-2 py-1 lg:py-3 inline-flex items-center text-xxs lg:text-xs">
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        viewBox="0 0 384 512"
+                                                        class="w-3 h-3 lg:w-3.5 lg:h-3.5 fill-cyan-300 mx-0 inline-block"
+                                                    >
+                                                        <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                                                        <path d="M384 48V512l-192-112L0 512V48C0 21.5 21.5 0 48 0h288C362.5 0 384 21.5 384 48z" />
+                                                    </svg>
+                                                    <span class="mx-2 inline-block">BookMark</span>
+                                                </p>
                                             </Link>
                                             <div
                                                 v-else
                                                 @click="modalShow = true"
-                                                class="lg:w-full text-center cursor-pointer mx-5 lg:mx-0 my-2 lg:mt-0 lg:mb-4 border-2 rounded-sm items-center focus:outline-none font-Raleway font-bold text-cyan-300 bg-gradient-radial from-cyan-600 via-cyan-800 to-cyan-900 shadow-lg shadow-cyan-800/80 border-cyan-600 border-x-cyan-700"
+                                                class="grow shadow-md shadow-stone-900 border-2 border-zinc-700 rounded-md w-fit lg:w-full text-center cursor-pointer px-1 lg:px-5 mx-2 lg:mx-0 lg:my-2 items-center focus:outline-none font-Raleway font-bold text-cyan-300 text-emit-md"
                                             >
-                                                <span class="px-0 lg:px-2 py-1 lg:py-2 inline-flex items-center text-xxs lg:text-xs">
-                                                    <span class="mx-2 lg:mx-5">BookMark</span>
-                                                </span>
+                                                <p class="mx-auto px-0 lg:px-2 py-1 lg:py-3 inline-flex items-center text-xxs lg:text-xs">
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        viewBox="0 0 384 512"
+                                                        class="w-3 h-3 lg:w-3.5 lg:h-3.5 fill-cyan-300 mx-0 inline-block"
+                                                    >
+                                                        <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                                                        <path d="M384 48V512l-192-112L0 512V48C0 21.5 21.5 0 48 0h288C362.5 0 384 21.5 384 48z" />
+                                                    </svg>
+                                                    <span class="mx-2 inline-block">BookMark</span>
+                                                </p>
                                             </div>
                                             <Link
                                                 v-if="$page.props.user"
                                                 as="div"
                                                 :href="route('user.added')"
-                                                class="lg:w-full text-center cursor-pointer mx-5 lg:mx-0 my-2 lg:mt-0 lg:mb-0 border-2 rounded-sm items-center focus:outline-none font-Raleway font-bold text-cyan-300 bg-gradient-radial from-cyan-600 via-cyan-800 to-cyan-900 shadow-lg shadow-cyan-800/80 border-cyan-600 border-x-cyan-700"
+                                                class="grow shadow-md shadow-stone-900 border-2 border-zinc-700 rounded-md w-fit lg:w-full text-center cursor-pointer px-1 lg:px-5 mx-2 lg:mx-0 lg:my-2 items-center focus:outline-none font-Raleway font-bold text-cyan-300 text-emit-md"
                                             >
-                                                <span class="px-0 lg:px-2 py-1 lg:py-2 inline-flex items-center text-xxs lg:text-xs">
-                                                    <span class="mx-2 lg:mx-5">YourData</span>
-                                                </span>
+                                                <p class="mx-auto px-0 lg:px-2 py-1 lg:py-3 inline-flex items-center text-xxs lg:text-xs">
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        viewBox="0 0 576 512"
+                                                        class="w-3 h-3 lg:w-3.5 lg:h-3.5 fill-cyan-300 mx-0 inline-block"
+                                                    >
+                                                        <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                                                        <path
+                                                            d="M147.8 192H480V144C480 117.5 458.5 96 432 96h-160l-64-64h-160C21.49 32 0 53.49 0 80v328.4l90.54-181.1C101.4 205.6 123.4 192 147.8 192zM543.1 224H147.8C135.7 224 124.6 230.8 119.2 241.7L0 480h447.1c12.12 0 23.2-6.852 28.62-17.69l96-192C583.2 249 567.7 224 543.1 224z"
+                                                        />
+                                                    </svg>
+                                                    <span class="mx-2 inline-block">YourData</span>
+                                                </p>
                                             </Link>
                                             <div
                                                 v-else
                                                 @click="modalShow = true"
-                                                class="lg:w-full text-center cursor-pointer mx-5 lg:mx-0 my-2 lg:mt-0 lg:mb-4 border-2 rounded-sm items-center focus:outline-none font-Raleway font-bold text-cyan-300 bg-gradient-radial from-cyan-600 via-cyan-800 to-cyan-900 shadow-lg shadow-cyan-800/80 border-cyan-600 border-x-cyan-700"
+                                                class="grow shadow-md shadow-stone-900 border-2 border-zinc-700 rounded-md w-fit lg:w-full text-center cursor-pointer px-1 lg:px-5 mx-2 lg:mx-0 lg:my-2 items-center focus:outline-none font-Raleway font-bold text-cyan-300 text-emit-md"
                                             >
-                                                <span class="px-0 lg:px-2 py-1 lg:py-2 inline-flex items-center text-xxs lg:text-xs">
-                                                    <span class="mx-2 lg:mx-5">YourData</span>
-                                                </span>
+                                                <p class="mx-auto px-0 lg:px-2 py-1 lg:py-3 inline-flex items-center text-xxs lg:text-xs">
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        viewBox="0 0 576 512"
+                                                        class="w-3 h-3 lg:w-3.5 lg:h-3.5 fill-cyan-300 mx-0 inline-block"
+                                                    >
+                                                        <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                                                        <path
+                                                            d="M147.8 192H480V144C480 117.5 458.5 96 432 96h-160l-64-64h-160C21.49 32 0 53.49 0 80v328.4l90.54-181.1C101.4 205.6 123.4 192 147.8 192zM543.1 224H147.8C135.7 224 124.6 230.8 119.2 241.7L0 480h447.1c12.12 0 23.2-6.852 28.62-17.69l96-192C583.2 249 567.7 224 543.1 224z"
+                                                        />
+                                                    </svg>
+                                                    <span class="mx-2 inline-block">YourData</span>
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -329,12 +377,12 @@
                                 </div>
                                 <!-- common btn end -->
 
-                                <div class="flex-grow">
+                                <div class="flex-grow sm:px-3 lg:px-4">
                                     <slot></slot>
                                 </div>
 
-                                <!-- SP btn -->
-                                <div class="fixed bottom-0 inset-x-0 mx-0 w-full z-10 md:hidden shadow-xl shadow-stone-900">
+                                <!-- 
+                                <div class="fixed bottom-0 inset-x-0 mx-0 w-full z-10 lg:hidden shadow-xl shadow-stone-900">
                                     <div class="w-full h-px goldLine m-0"></div>
                                     <div class="flex flex-row bg-stone-800 mx-0 w-full">
                                         <Link
@@ -388,7 +436,7 @@
                                         </Link>
                                     </div>
                                 </div>
-                                <!-- SP btn end -->
+                                -->
                             </div>
                         </div>
                     </div>
@@ -460,23 +508,32 @@
                     </p>
                 </div>
                 <div class="max-w-5xl mx-auto text-center flex flex-col">
-                    <a class="text-xxs lg-text-xs text-blue-300 mb-1" href="https://isevdb.net/matome">まよすけまとめ（ネタページ）</a>
-                    <a class="text-xxs lg:text-xs text-gray-100" href="https://twitter.com/Mmazoku_media?s=20&t=aTPqq5WEuY9UgH-AKAKZTw"
+                    <Link as="a" href="/autoregister/collation" class="w-fit mx-auto text-xs lg:text-sm text-red-300 mb-4"
+                        >自動登録照合ページはこちら</Link
+                    >
+                    <a class="w-fit mx-auto text-xxs lg-text-xs text-blue-300 my-3 lg:my-1" href="https://isevdb.net/matome"
+                        >まよすけまとめ（ネタページ）</a
+                    >
+                    <a
+                        class="w-fit mx-auto text-xxs lg:text-xs text-gray-100 my-3 lg:my-1"
+                        href="https://twitter.com/Mmazoku_media?s=20&t=aTPqq5WEuY9UgH-AKAKZTw"
                         >管理人：@Mmazoku_media</a
                     >
-                    <p class="text-xxs lg-text-xs text-gray-100 mb-1">
+                    <p class="w-fit mx-auto text-xxs lg-text-xs text-gray-100 my-3 lg:my-1">
                         ご意見・バグ報告は
                         <a class="text-blue-300" href="https://forms.gle/NrwdxsRVT9Q5XYkz9">Googleフォーム</a>
                         からでも可能です。
                     </p>
-                    <p class="text-xxs lg:text-xs text-gray-100">当サイトは個人Vtuberグループ「いせぶい」のファンが制作した非公式サイトです。</p>
+                    <p class="text-xxs lg:text-xs text-gray-100">
+                        <span>当サイトは個人Vtuberグループ「いせぶい」</span><span>のファンが制作した非公式サイトです。</span>
+                    </p>
                     <p class="text-xxs lg:text-xs text-gray-100">
                         <span>当サイトは完全非営利です。</span><span>ユーザー識別に使用している情報については</span
                         ><span>Registerページをご確認ください。</span>
                     </p>
                     <p class="text-xxs lg:text-xs text-gray-100">
-                        <span>当サイト内の切り抜き・ファンアートの著作権は製作者に、</span
-                        ><span>その他のコンテンツの著作権・肖像権はすべて「いせぶい」所属メンバーに帰属します。</span>
+                        <span>当サイト内の切り抜き・ファンアートの著作権は製作者に、</span><span>その他のコンテンツの著作権・肖像権は</span
+                        ><span>すべて「いせぶい」所属メンバーに帰属します。</span>
                     </p>
                 </div>
             </div>

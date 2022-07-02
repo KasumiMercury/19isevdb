@@ -7,7 +7,7 @@
 
                 <input
                     :value="element.title"
-                    @input="changeTitle($event.target.value)"
+                    @input="$emit('changeTitle', $event.target.value)"
                     class="w-full py-1 text-sm border-2 border-gray-200 rounded"
                     id="title"
                     type="text"
@@ -22,7 +22,7 @@
                 aria-label="member"
                 name="member"
                 :value="element.member_id"
-                @change="$emit('update:YTclipMember', $event.target.value)"
+                @change="$emit('changeMember', $event.target.value)"
             >
                 <option v-for="member in $page.props.setting.member" :key="'member' + member.id" :value="member.id">
                     {{ member.display }}
@@ -36,7 +36,7 @@
                 aria-label="member"
                 name="member"
                 :value="element.cate_id"
-                @change="$emit('update:YTclipCategory', $event.target.value)"
+                @change="$emit('changeCategory', $event.target.value)"
             >
                 <option v-for="cate in $page.props.setting.category" :key="'cate' + cate.id" :value="cate.id">
                     {{ cate.title }}
@@ -53,22 +53,15 @@
 
 <script>
 export default {
-    props: ["YTclip", "error"],
+    props: ["ytclip"],
     data() {
         return {
             element: [],
         }
     },
     created() {
-        this.element = this.YTclip
+        this.element = this.ytclip
     },
-    methods: {
-        changeTitle(e) {
-            if (e != null && e != "") {
-                this.$emit("update:YTclipTitle", e)
-            }
-        },
-    },
-    emits: ["update:YTclipMember", "update:YTclipCategory", "update:YTclipTitle"],
+    emits: ["changeTitle", "changeCategory", "changeMember", "delete"],
 }
 </script>

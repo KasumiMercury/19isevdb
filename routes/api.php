@@ -20,6 +20,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::GET('/get/newData', 'App\Http\Controllers\PlayerController@newData');
 
+Route::GET('/get/videos/{id}', 'App\Http\Controllers\DataController@getVideoMember');
+
 Route::GET('/snsinfo/all', 'App\Http\Controllers\SnsController@snsAll');
 Route::GET('/snsinfo/full', 'App\Http\Controllers\SnsController@snsFull');
 Route::GET('/snsinfo/{id}', 'App\Http\Controllers\SnsController@snsMember');
@@ -27,12 +29,15 @@ Route::GET('/snsinfo/{id}', 'App\Http\Controllers\SnsController@snsMember');
 Route::GET('/register/show/{id}', 'App\Http\Controllers\AccountController@registerShow');
 Route::POST('/questionnaire', 'App\Http\Controllers\AccountController@postIsShow');
 
+Route::GET('/channel/collation', 'App\Http\Controllers\DataController@channelCollation')->name('auto.collation');
+
 Route::GET('/liveinfo/status', 'App\Http\Controllers\SnsController@getStatus')->name('liveinfo.status');
 Route::GET('/liveinfo/full', 'App\Http\Controllers\SnsController@getLiveInfo');
 
 Route::put('/status/player', 'App\Http\Controllers\DataController@editStatus')->name('player.status');
 Route::put('/edit/player', 'App\Http\Controllers\DataController@playerChange')->name('player.change');
 
+Route::POST('/add/autoregister', 'App\Http\Controllers\DataController@addAuto')->name('add.auto');
 Route::POST('/add/twitter', 'App\Http\Controllers\DataController@addTwitter')->name('add.twitter');
 Route::POST('/add/clip', 'App\Http\Controllers\DataController@addClip')->name('add.clip');
 Route::POST('/add/youtube', 'App\Http\Controllers\DataController@addYoutube')->name('add.youtube');

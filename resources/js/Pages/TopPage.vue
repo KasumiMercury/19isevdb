@@ -110,9 +110,13 @@
             </template>
 
             <template #player>
-                <div class="py-2 px-4 border rounded-full w-fit mt-4 mx-auto flex flex-row text-gray-200 text-xs">
-                    <p>SNS情報のお知らせは右下に移動しました</p>
-                </div>
+                <Link
+                    as="div"
+                    href="/live/info"
+                    class="py-2 px-4 cursor-pointer border rounded-full w-fit mt-2 lg:mt-4 mx-auto flex flex-row border-red-300 text-red-300 text-emit-lg shadow-red-200 text-xs"
+                >
+                    <p>ライブ状況・配信予定枠のリアルタイム情報はこちら</p>
+                </Link>
             </template>
 
             <template #default>
@@ -135,70 +139,189 @@
                             <p>閉じる</p>
                         </div>
                     </div>
-                    <div v-if="showSNS" class="w-full bg-zinc-800 mt-2 py-5 px-4 rounded-l-lg overflow-y-auto max-h-96 border border-green-500">
+                    <div
+                        v-if="showSNS"
+                        ref="SNSbox"
+                        class="w-full relative bg-zinc-800 mt-2 py-5 px-4 rounded-l-lg overflow-y-auto max-h-96 border border-green-500"
+                    >
                         <div class="flex flex-col">
                             <div v-for="(YTfollower, index) in YTlist" :key="index" class="mx-auto w-fit px-1 mt-1">
-                                <div
-                                    class="py-2 px-4 border rounded-full w-fit my-2 flex flex-row"
+                                <Link
+                                    as="div"
+                                    class="py-2 px-4 border cursor-pointer rounded-full w-fit my-2 flex flex-row"
                                     :style="'border-color:' + YTfollower[3]['ImageCol']"
+                                    :href="'/' + YTfollower[3]['name'] + '/latest'"
+                                    v-if="YTfollower[3]['display'] != 'いせぶい公式'"
                                 >
-                                    <Link
-                                        as="a"
-                                        :style="'color:' + YTfollower[3]['ImageCol']"
-                                        v-if="YTfollower[3]['display'] != 'いせぶい公式'"
-                                        class="text-xxs md:text-xs"
-                                        :href="'/' + YTfollower[3]['name'] + '/latest'"
-                                    >
-                                        {{ YTfollower[3]["display"] }}YouTubeチャンネル登録者数にニュースがあります！！
-                                    </Link>
-                                    <div v-else>
-                                        <a href="https://www.youtube.com/channel/UC7JnbgdpZKohbBc9H-LaveA" target="_blank" rel="noopener noreferrer">
-                                            <p
-                                                :style="'color:' + YTfollower[3]['ImageCol']"
-                                                v-if="YTfollower[2][6] == 'FALSE'"
-                                                class="text-xxs md:text-xs"
+                                    <p v-if="YTfollower[1] == 'TRUE'" :style="'color:' + YTfollower[3]['ImageCol']" class="text-xxs md:text-xs">
+                                        <span v-if="YTemit[index]" class="inline-block align-text-top">
+                                            <svg
+                                                class="fill-red-500 mr-1 w-[0.6rem] h-[0.6rem] md:w-[0.75rem] md:h-[0.75rem]"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 448 512"
                                             >
-                                                いせぶい公式YouTubeチャンネル登録者数が{{ YTfollower[2][3] }}人まで{{ YTfollower[2][4] }}人！！
-                                            </p>
-                                            <p :style="'color:' + YTfollower[3]['ImageCol']" v-else class="text-xs md:text-sm">
-                                                いせぶい公式YouTubeチャンネル登録者数が{{ YTfollower[2][3] }}人になりました！！
-                                            </p>
-                                            <p class="text-right text-gray-400 text-xxs ml-1 mb-0 mt-auto">{{ YTfollower[2][8] }}取得</p>
-                                        </a>
-                                    </div>
-                                </div>
+                                                <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                                                <path
+                                                    d="M256 32V51.2C329 66.03 384 130.6 384 208V226.8C384 273.9 401.3 319.2 432.5 354.4L439.9 362.7C448.3 372.2 450.4 385.6 445.2 397.1C440 408.6 428.6 416 416 416H32C19.4 416 7.971 408.6 2.809 397.1C-2.353 385.6-.2883 372.2 8.084 362.7L15.5 354.4C46.74 319.2 64 273.9 64 226.8V208C64 130.6 118.1 66.03 192 51.2V32C192 14.33 206.3 0 224 0C241.7 0 256 14.33 256 32H256zM224 512C207 512 190.7 505.3 178.7 493.3C166.7 481.3 160 464.1 160 448H288C288 464.1 281.3 481.3 269.3 493.3C257.3 505.3 240.1 512 224 512z"
+                                                />
+                                            </svg>
+                                        </span>
+                                        {{ YTfollower[3]["display"] }}YouTubeチャンネル登録者数にニュースがあります！！
+                                    </p>
+                                    <p v-else :style="'color:' + YTfollower[3]['ImageCol']" class="text-xxs md:text-xs">
+                                        <span v-if="YTemit[index]" class="inline-block align-text-top">
+                                            <svg
+                                                class="fill-red-500 mr-1 w-[0.6rem] h-[0.6rem] md:w-[0.75rem] md:h-[0.75rem]"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 448 512"
+                                            >
+                                                <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                                                <path
+                                                    d="M256 32V51.2C329 66.03 384 130.6 384 208V226.8C384 273.9 401.3 319.2 432.5 354.4L439.9 362.7C448.3 372.2 450.4 385.6 445.2 397.1C440 408.6 428.6 416 416 416H32C19.4 416 7.971 408.6 2.809 397.1C-2.353 385.6-.2883 372.2 8.084 362.7L15.5 354.4C46.74 319.2 64 273.9 64 226.8V208C64 130.6 118.1 66.03 192 51.2V32C192 14.33 206.3 0 224 0C241.7 0 256 14.33 256 32H256zM224 512C207 512 190.7 505.3 178.7 493.3C166.7 481.3 160 464.1 160 448H288C288 464.1 281.3 481.3 269.3 493.3C257.3 505.3 240.1 512 224 512z"
+                                                />
+                                            </svg>
+                                        </span>
+                                        {{ YTfollower[3]["display"] }}YouTubeチャンネル登録者数をカウントダウン中！
+                                    </p>
+                                </Link>
+                                <a
+                                    v-else
+                                    class="py-2 px-4 border cursor-pointer rounded-full w-fit my-2 flex flex-row"
+                                    :style="'border-color:' + YTfollower[3]['ImageCol']"
+                                    href="https://www.youtube.com/channel/UC7JnbgdpZKohbBc9H-LaveA"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    <p :style="'color:' + YTfollower[3]['ImageCol']" v-if="YTfollower[1] == 'FALSE'" class="text-xxs md:text-xs">
+                                        <span v-if="YTemit[index]" class="inline-block align-text-top">
+                                            <svg
+                                                class="fill-red-500 mr-1 w-[0.6rem] h-[0.6rem] md:w-[0.75rem] md:h-[0.75rem]"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 448 512"
+                                            >
+                                                <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                                                <path
+                                                    d="M256 32V51.2C329 66.03 384 130.6 384 208V226.8C384 273.9 401.3 319.2 432.5 354.4L439.9 362.7C448.3 372.2 450.4 385.6 445.2 397.1C440 408.6 428.6 416 416 416H32C19.4 416 7.971 408.6 2.809 397.1C-2.353 385.6-.2883 372.2 8.084 362.7L15.5 354.4C46.74 319.2 64 273.9 64 226.8V208C64 130.6 118.1 66.03 192 51.2V32C192 14.33 206.3 0 224 0C241.7 0 256 14.33 256 32H256zM224 512C207 512 190.7 505.3 178.7 493.3C166.7 481.3 160 464.1 160 448H288C288 464.1 281.3 481.3 269.3 493.3C257.3 505.3 240.1 512 224 512z"
+                                                />
+                                            </svg>
+                                        </span>
+                                        いせぶい公式YouTubeチャンネル登録者数が{{ YTfollower[4][3] }}人まで{{ YTfollower[4][4] }}人！！
+                                    </p>
+                                    <p :style="'color:' + YTfollower[3]['ImageCol']" v-else class="text-xs md:text-sm">
+                                        <span v-if="YTemit[index]" class="inline-block align-text-top">
+                                            <svg
+                                                class="fill-red-500 mr-1 w-[0.6rem] h-[0.6rem] md:w-[0.75rem] md:h-[0.75rem]"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 448 512"
+                                            >
+                                                <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                                                <path
+                                                    d="M256 32V51.2C329 66.03 384 130.6 384 208V226.8C384 273.9 401.3 319.2 432.5 354.4L439.9 362.7C448.3 372.2 450.4 385.6 445.2 397.1C440 408.6 428.6 416 416 416H32C19.4 416 7.971 408.6 2.809 397.1C-2.353 385.6-.2883 372.2 8.084 362.7L15.5 354.4C46.74 319.2 64 273.9 64 226.8V208C64 130.6 118.1 66.03 192 51.2V32C192 14.33 206.3 0 224 0C241.7 0 256 14.33 256 32H256zM224 512C207 512 190.7 505.3 178.7 493.3C166.7 481.3 160 464.1 160 448H288C288 464.1 281.3 481.3 269.3 493.3C257.3 505.3 240.1 512 224 512z"
+                                                />
+                                            </svg>
+                                        </span>
+                                        いせぶい公式YouTubeチャンネル登録者数が{{ YTfollower[4][3] }}人になりました！！
+                                    </p>
+                                    <p v-if="YTfollower[1] == 'FALSE'" class="text-right text-gray-400 text-xxs ml-1 mb-0 mt-auto">
+                                        {{ YTfollower[4][8] }}取得
+                                    </p>
+                                    <p v-else class="text-right text-gray-400 text-xxs ml-1 mb-0 mt-auto">{{ YTfollower[4][7] }}取得</p>
+                                </a>
                             </div>
                             <div v-for="(TWfollower, index) in TWlist" :key="index" class="mx-auto w-fit mt-1 px-1">
-                                <div
-                                    class="py-2 px-4 border rounded-full w-fit my-2 flex flex-row"
+                                <Link
+                                    as="div"
+                                    :href="'/' + TWfollower[3]['name'] + '/latest'"
+                                    v-if="TWfollower[3]['display'] != 'いせぶい公式'"
+                                    class="cursor-pointer py-2 px-4 border rounded-full w-fit my-2 flex flex-row"
                                     :style="'border-color:' + TWfollower[3]['ImageCol']"
                                 >
-                                    <Link
-                                        as="a"
-                                        :style="'color:' + TWfollower[3]['ImageCol']"
-                                        v-if="TWfollower[3]['display'] != 'いせぶい公式'"
-                                        class="text-xxs md:text-xs"
-                                        :href="'/' + TWfollower[3]['name'] + '/latest'"
-                                    >
-                                        {{ TWfollower[3]["display"] }}Twitterフォロワー数にニュースがあります！！
-                                    </Link>
-                                    <div v-else>
-                                        <a href="https://twitter.com/isev_info" target="_blank" rel="noopener noreferrer">
-                                            <p
-                                                :style="'color:' + TWfollower[3]['ImageCol']"
-                                                v-if="TWfollower[2][5] == 'FALSE'"
-                                                class="text-xxs md:text-xs"
+                                    <p v-if="TWfollower[1] == 'TRUE'" :style="'color:' + TWfollower[3]['ImageCol']" class="text-xxs md:text-xs">
+                                        <span v-if="TWemit[index]" class="inline-block align-text-top">
+                                            <svg
+                                                class="fill-red-500 mr-1 w-[0.6rem] h-[0.6rem] md:w-[0.75rem] md:h-[0.75rem]"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 448 512"
                                             >
-                                                いせぶい公式Twitterフォロワー数が{{ TWfollower[2][2] }}人まで{{ TWfollower[2][3] }}人！！
-                                            </p>
-                                            <p :style="'color:' + TWfollower[3]['ImageCol']" v-else class="text-xs md:text-sm">
-                                                いせぶい公式Twitterフォロワー数が{{ TWfollower[2][2] }}人になりました！！
-                                            </p>
-                                            <p class="text-right text-gray-400 text-xxs ml-1 mb-0 mt-auto">{{ TWfollower[2][7] }}取得</p>
-                                        </a>
-                                    </div>
-                                </div>
+                                                <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                                                <path
+                                                    d="M256 32V51.2C329 66.03 384 130.6 384 208V226.8C384 273.9 401.3 319.2 432.5 354.4L439.9 362.7C448.3 372.2 450.4 385.6 445.2 397.1C440 408.6 428.6 416 416 416H32C19.4 416 7.971 408.6 2.809 397.1C-2.353 385.6-.2883 372.2 8.084 362.7L15.5 354.4C46.74 319.2 64 273.9 64 226.8V208C64 130.6 118.1 66.03 192 51.2V32C192 14.33 206.3 0 224 0C241.7 0 256 14.33 256 32H256zM224 512C207 512 190.7 505.3 178.7 493.3C166.7 481.3 160 464.1 160 448H288C288 464.1 281.3 481.3 269.3 493.3C257.3 505.3 240.1 512 224 512z"
+                                                />
+                                            </svg>
+                                        </span>
+                                        {{ TWfollower[3]["display"] }}Twitterフォロワー数にニュースがあります！！
+                                    </p>
+                                    <p v-else :style="'color:' + TWfollower[3]['ImageCol']" class="text-xxs md:text-xs">
+                                        <span v-if="TWemit[index]" class="inline-block align-text-top">
+                                            <svg
+                                                class="fill-red-500 mr-1 w-[0.6rem] h-[0.6rem] md:w-[0.75rem] md:h-[0.75rem]"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 448 512"
+                                            >
+                                                <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                                                <path
+                                                    d="M256 32V51.2C329 66.03 384 130.6 384 208V226.8C384 273.9 401.3 319.2 432.5 354.4L439.9 362.7C448.3 372.2 450.4 385.6 445.2 397.1C440 408.6 428.6 416 416 416H32C19.4 416 7.971 408.6 2.809 397.1C-2.353 385.6-.2883 372.2 8.084 362.7L15.5 354.4C46.74 319.2 64 273.9 64 226.8V208C64 130.6 118.1 66.03 192 51.2V32C192 14.33 206.3 0 224 0C241.7 0 256 14.33 256 32H256zM224 512C207 512 190.7 505.3 178.7 493.3C166.7 481.3 160 464.1 160 448H288C288 464.1 281.3 481.3 269.3 493.3C257.3 505.3 240.1 512 224 512z"
+                                                />
+                                            </svg>
+                                        </span>
+                                        {{ TWfollower[3]["display"] }}Twitterフォロワー数をカウントダウン中！
+                                    </p>
+                                </Link>
+                                <a
+                                    v-else
+                                    class="cursor-pointer py-2 px-4 border rounded-full w-fit my-2 flex flex-row"
+                                    :style="'border-color:' + TWfollower[3]['ImageCol']"
+                                    href="https://twitter.com/isev_info"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    <p :style="'color:' + TWfollower[3]['ImageCol']" v-if="TWfollower[1] == 'FALSE'" class="text-xxs md:text-xs">
+                                        <span v-if="TWemit[index]" class="inline-block align-text-top">
+                                            <svg
+                                                class="fill-red-500 mr-1 w-[0.6rem] h-[0.6rem] md:w-[0.75rem] md:h-[0.75rem]"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 448 512"
+                                            >
+                                                <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                                                <path
+                                                    d="M256 32V51.2C329 66.03 384 130.6 384 208V226.8C384 273.9 401.3 319.2 432.5 354.4L439.9 362.7C448.3 372.2 450.4 385.6 445.2 397.1C440 408.6 428.6 416 416 416H32C19.4 416 7.971 408.6 2.809 397.1C-2.353 385.6-.2883 372.2 8.084 362.7L15.5 354.4C46.74 319.2 64 273.9 64 226.8V208C64 130.6 118.1 66.03 192 51.2V32C192 14.33 206.3 0 224 0C241.7 0 256 14.33 256 32H256zM224 512C207 512 190.7 505.3 178.7 493.3C166.7 481.3 160 464.1 160 448H288C288 464.1 281.3 481.3 269.3 493.3C257.3 505.3 240.1 512 224 512z"
+                                                />
+                                            </svg>
+                                        </span>
+                                        いせぶい公式Twitterフォロワー数が{{ TWfollower[4][2] }}人まで{{ TWfollower[4][3] }}人！！
+                                    </p>
+                                    <p :style="'color:' + TWfollower[3]['ImageCol']" v-else class="text-xs md:text-sm">
+                                        <span v-if="TWemit[index]" class="inline-block align-text-top">
+                                            <svg
+                                                class="fill-red-500 mr-1 w-[0.6rem] h-[0.6rem] md:w-[0.75rem] md:h-[0.75rem]"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 448 512"
+                                            >
+                                                <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                                                <path
+                                                    d="M256 32V51.2C329 66.03 384 130.6 384 208V226.8C384 273.9 401.3 319.2 432.5 354.4L439.9 362.7C448.3 372.2 450.4 385.6 445.2 397.1C440 408.6 428.6 416 416 416H32C19.4 416 7.971 408.6 2.809 397.1C-2.353 385.6-.2883 372.2 8.084 362.7L15.5 354.4C46.74 319.2 64 273.9 64 226.8V208C64 130.6 118.1 66.03 192 51.2V32C192 14.33 206.3 0 224 0C241.7 0 256 14.33 256 32H256zM224 512C207 512 190.7 505.3 178.7 493.3C166.7 481.3 160 464.1 160 448H288C288 464.1 281.3 481.3 269.3 493.3C257.3 505.3 240.1 512 224 512z"
+                                                />
+                                            </svg>
+                                        </span>
+                                        いせぶい公式Twitterフォロワー数が{{ TWfollower[4][2] }}人になりました！！
+                                    </p>
+                                    <p v-if="TWfollower[1] == 'FALSE'" class="text-right text-gray-400 text-xxs ml-1 mb-0 mt-auto">
+                                        {{ TWfollower[4][7] }}取得
+                                    </p>
+                                    <p v-else class="text-right text-gray-400 text-xxs ml-1 mb-0 mt-auto">{{ TWfollower[4][6] }}取得</p>
+                                </a>
                             </div>
+                        </div>
+                        <div
+                            v-if="isOverflow"
+                            class="m-1 border bg-stone-800 border-gray-50 rounded-full absolute bottom-2 right-2 p-1 animate-bounce"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="w-6 h-6 md:w-8 md:h-8 fill-white">
+                                <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                                <path
+                                    d="M192 384c-8.188 0-16.38-3.125-22.62-9.375l-160-160c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L192 306.8l137.4-137.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-160 160C208.4 380.9 200.2 384 192 384z"
+                                />
+                            </svg>
                         </div>
                     </div>
                 </div>
@@ -416,7 +539,10 @@ export default defineComponent({
             YTlist: {},
             showSNS: false,
             SNSBatch: false,
+            YTemit: [],
+            TWemit: [],
             openedDate: null,
+            isOverflow: false,
         }
     },
     created() {
@@ -458,23 +584,40 @@ export default defineComponent({
                 .then((response) => {
                     self.YTlist = response["data"]["YTlist"]
                     self.TWlist = response["data"]["TWlist"]
-                    if (self.openedDate == null) {
-                        self.SNSBatch = true
-                    } else {
-                        let compareDate = new Date(self.openedDate)
-                        for (let i = 0; i < self.YTlist.length; i++) {
+                    let compareDate = new Date(self.openedDate)
+                    for (let i = 0; i < self.YTlist.length; i++) {
+                        if (self.openedDate == null) {
+                            self.SNSBatch = true
+                            self.YTemit[i] = true
+                        } else {
                             let tempDate = new Date(self.YTlist[i][2])
                             if (tempDate.getTime() >= compareDate.getTime()) {
                                 self.SNSBatch = true
-                            }
-                        }
-                        for (let j = 0; j < self.TWlist.length; j++) {
-                            let tempDate = new Date(self.TWlist[j][2])
-                            if (tempDate.getTime() >= compareDate.getTime()) {
-                                self.SNSBatch = true
+                                self.YTemit[i] = true
+                            } else {
+                                self.YTemit[i] = false
                             }
                         }
                     }
+                    for (let j = 0; j < self.TWlist.length; j++) {
+                        if (self.openedDate == null) {
+                            self.SNSBatch = true
+                            self.TWemit[j] = true
+                        } else {
+                            let tempDate = new Date(self.TWlist[j][2])
+                            if (tempDate.getTime() >= compareDate.getTime()) {
+                                self.SNSBatch = true
+                                self.TWemit[j] = true
+                            } else {
+                                self.TWemit[j] = false
+                            }
+                        }
+                    }
+                    self.$nextTick(function () {
+                        if (self.$refs.SNSbox.offsetWidth < self.$refs.SNSbox.scrollWidth) {
+                            self.isOverflow = true
+                        }
+                    })
                 })
                 .catch((error) => {
                     console.log(error)

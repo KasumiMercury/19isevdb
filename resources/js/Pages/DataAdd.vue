@@ -183,7 +183,7 @@
 
             <template #default>
                 <div class="flex flex-col">
-                    <div>
+                    <div class="mt-4 lg:mt-0">
                         <h2 class="sr-only">Steps</h2>
 
                         <div
@@ -290,15 +290,32 @@
 
                     <div v-if="step == 1" class="justify-center pt-5">
                         <div v-if="!$page.props.user" class="text-center flex flex-col justify-center">
-                            <p class="text-sm text-gray-100 mt-2 mb-1 text-center mx-auto">
+                            <p class="text-xxs lg:text-sm text-gray-100 mt-2 mb-1 text-center mx-auto">
                                 アカウントをお持ちの方はログインをしてから進んでください。
                             </p>
-                            <p class="text-sm text-gray-100 mt-1 mb-2 text-center mx-auto">途中でログインを行うと編集中のデータが初期化されます。</p>
+                            <p class="text-xxs lg:text-sm text-gray-100 mt-1 mb-2 text-center mx-auto">
+                                途中でログインを行うと編集中のデータが初期化されます。
+                            </p>
                             <Link as="button" :href="route('myLogin')" class="text-lg my-5 bg-green-700 text-gray-200 px-5 py-1 rounded-md mx-auto"
                                 >ログイン・登録はこちら</Link
                             >
                         </div>
-                        <div class="py-8 w-full mx-auto px-4 lg:px-16">
+                        <p class="my-10 w-fit mx-auto text-gray-50 text-sm text-emit-lg">登録するデータの種類を選択してください</p>
+                        <div class="py-4 lg:py-8 w-full mx-auto px-4 lg:px-16 my-2">
+                            <Link
+                                as="button"
+                                href="/autoregister/clip"
+                                class="border-[#da1725] border-2 text-lg font-bold text-gray-50 w-full py-5 rounded-md shadow-md shadow-gray-900"
+                            >
+                                切り抜きチャンネル登録
+                            </Link>
+                        </div>
+                        <div class="mx-auto w-fit">
+                            <Link href="/autoregister/collation" class="text-md text-gray-50 text-center mb-1 lg:mb-2 mx-auto">
+                                自動登録照合ページはこちら
+                            </Link>
+                        </div>
+                        <div class="py-4 lg:py-8 w-full mx-auto px-4 lg:px-16">
                             <button
                                 @click="setType('youtube')"
                                 class="bg-[#da1725] text-lg font-bold text-gray-50 w-full py-5 rounded-md shadow-md shadow-gray-900"
@@ -306,7 +323,7 @@
                                 YouTube
                             </button>
                         </div>
-                        <div class="py-8 w-full mx-auto px-4 lg:px-16">
+                        <div class="py-4 lg:py-8 w-full mx-auto px-4 lg:px-16">
                             <button
                                 @click="setType('clip')"
                                 class="bg-[#da1725] text-lg font-bold text-gray-50 w-full py-5 rounded-md shadow-md shadow-gray-900"
@@ -314,7 +331,7 @@
                                 切り抜き（YouTube)
                             </button>
                         </div>
-                        <div class="py-8 w-full mx-auto px-4 lg:px-16">
+                        <div class="py-4 lg:py-8 w-full mx-auto px-4 lg:px-16">
                             <button
                                 @click="setType('twitter')"
                                 class="bg-[#1da1f2] text-lg font-bold text-gray-50 w-full py-5 rounded-md shadow-md shadow-gray-900"
@@ -322,7 +339,7 @@
                                 Twitter
                             </button>
                         </div>
-                        <div class="py-8 w-full mx-auto px-4 lg:px-16">
+                        <div class="py-4 lg:py-8 w-full mx-auto px-4 lg:px-16">
                             <button
                                 @click="setType('YTclip')"
                                 class="bg-[#da1725] text-lg font-bold text-gray-50 w-full py-5 rounded-md shadow-md shadow-gray-900"
@@ -348,6 +365,43 @@
                                 <button class="bg-[#da1725] text-lg font-bold text-gray-50 px-5 py-1 lg:py-2 rounded-md" @click="addYoutube">
                                     Add
                                 </button>
+                            </div>
+                            <div class="mx-auto w-fit mt-5 lg:mt-10 text-center">
+                                <p class="text-gray-50 text-xs lg:text-sm">新着動画を表示します。</p>
+                                <p class="text-gray-50 text-xs lg:text-sm">下のドロップダウンでメンバーを選択してください。</p>
+                                <div class="flex flex-col">
+                                    <p class="mx-auto mb-1 mt-3 text-xs lg:text-sm text-gray-50">メンバーを選択してください</p>
+                                    <select
+                                        class="mx-auto mb-1 mt-3 w-fit form-select form-select-md appearance-none block px-8 py-1 text-xs lg:text-sm text-gray-700 bg-white border border-solid border-gray-300 rounded transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-gray-600 focus:outline-none"
+                                        aria-label="member"
+                                        name="member"
+                                        :value="videoMember"
+                                        @change="videosList($event.target.value)"
+                                    >
+                                        <option :value="0">Choose Member</option>
+                                        <option v-for="member in $page.props.setting.member" :key="'member' + member.id" :value="member.id">
+                                            {{ member.display }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="mt-3" v-if="showVideos">
+                                    <div
+                                        v-for="item in videos"
+                                        :key="item.id"
+                                        @click="selectVideo(item.VideoID)"
+                                        class="w-full px-2 cursor-pointer border-2 border-gray-50 text-gray-50 my-4 rounded-md flex flex-col"
+                                    >
+                                        <div class="flex flex-row">
+                                            <img
+                                                :src="'https://img.youtube.com/vi/' + item.VideoID + '/default.jpg'"
+                                                class="w-16 h-auto mx-2 my-1"
+                                                alt=""
+                                            />
+                                            <p class="px-1 text-xxs lg:text-xs">{{ item.title }}</p>
+                                        </div>
+                                        <p class="px-1 text-xs lg:text-sm">{{ item.publishedAt }}</p>
+                                    </div>
+                                </div>
                             </div>
                             <div class="mr-auto ml-1 w-fit mt-5 lg:mt-10">
                                 <button class="text-gray-200 text-lg font-bold px-5 py-1 lg:py-2 rounded-md" @click="backStep(2)">Back</button>
@@ -1027,7 +1081,10 @@
                                 />
                             </svg>
                             <p v-if="loading" class="my-3 text-2xl text-green-400">送信中</p>
-                            <p v-if="complete" class="my-3 text-2xl text-green-400">完了しました！ご協力ありがとうございます！</p>
+                            <div v-if="complete">
+                                <p class="mt-3 text-2xl text-green-400">完了しました！ご協力ありがとうございます！</p>
+                                <Link as="a" href="/" class="w-fit mx-auto mt-1 mb-3 text-blue-400 underline">トップページ</Link>
+                            </div>
                             <p v-if="sendError" class="my-3 text-2xl text-red-400">
                                 エラーが発生しました。内容を確認し、時間を数十秒おいて再度登録してください。
                             </p>
@@ -1037,12 +1094,24 @@
                         </div>
                     </div>
                 </div>
+                <div
+                    v-if="step == 1"
+                    class="m-1 border-2 bg-stone-800 border-gray-50 rounded-full fixed bottom-8 right-8 md:bottom-12 md:right-12 p-2 animate-bounce"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="w-8 h-8 md:w-12 md:h-12 fill-white">
+                        <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                        <path
+                            d="M374.6 310.6l-160 160C208.4 476.9 200.2 480 192 480s-16.38-3.125-22.62-9.375l-160-160c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 370.8V64c0-17.69 14.33-31.1 31.1-31.1S224 46.31 224 64v306.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0S387.1 298.1 374.6 310.6z"
+                        />
+                    </svg>
+                </div>
             </template>
         </app-layout>
     </div>
 </template>
 
 <script>
+import DropDown from "@/components/DropDown.vue"
 import { defineComponent } from "vue"
 import AppLayout from "@/Layouts/AppLayout.vue"
 import { Head, Link } from "@inertiajs/inertia-vue3"
@@ -1057,6 +1126,8 @@ import TWwindow from "../components/TWwindow.vue"
 import AccordionPanel from "../components/AccordionPanel"
 import YouTube from "vue3-youtube"
 import { install, uninstall } from "@github/hotkey"
+import dayjs from "dayjs"
+dayjs.locale("ja")
 
 export default defineComponent({
     data() {
@@ -1110,9 +1181,59 @@ export default defineComponent({
             pasteComplete: false,
             hotkey: null,
             fixSeconds: 1,
+            videos: [],
+            videoMember: 0,
+            showVideos: false,
+            memberSearch: [],
         }
     },
+    created() {
+        this.memberSearch = [
+            ["恋惡まよ", "まよすけ", "まよ抜き"],
+            ["星降あめる", "あめる", "切り取るあめる"],
+            ["綵てまり", "てまりん", "てまらいぶ"],
+            ["心寧はな", "まぢかよはな"],
+            ["羽奏こはく", "わかちこ", "羽奏を見よ"],
+            ["泉谷このみ", "このみん"],
+            ["勇未つかさ"],
+            ["紅月うる", "うるち", "うるこま", "うるカット"],
+            ["稲荷こまち", "いなこま", "うるこま", "いなこま切れ"],
+            ["神白ニア", "ニア", "ニア刈り"],
+        ]
+    },
     methods: {
+        filterMember(text) {
+            let memberIdArray = []
+            for (let i = 0; i < this.memberSearch.length; i++) {
+                let tempArray = this.memberSearch[i]
+                for (let k = 0; k < tempArray.length; k++) {
+                    let tempWord = tempArray[k]
+                    if (text.indexOf(tempWord) !== -1) {
+                        let isExist = memberIdArray.includes(i + 1)
+                        if (isExist == false) {
+                            memberIdArray.push(i + 1)
+                        }
+                    }
+                }
+            }
+            return memberIdArray
+        },
+        videosList(id) {
+            let self = this
+            axios
+                .get("/api/get/videos/" + id)
+                .then((response) => {
+                    self.videoMember = id
+                    self.videos = response["data"]["videos"]
+                    console.log(self.videos)
+                    self.$nextTick(function () {
+                        self.showVideos = true
+                    })
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        },
         nextStep(n) {
             this.step = n + 1
             if (n == 2 && this.contentType == "clip") {
@@ -1204,10 +1325,15 @@ export default defineComponent({
 
                         self.youtubeInfo.VideoID = self.createID
                         self.youtubeInfo.title = self.results.title
-                        self.youtubeInfo.date = self.results.publishedAt
+                        self.youtubeInfo.date = self.format(self.results.publishedAt)
                         self.youtubeInfo.channnel = self.results.channelId
                         self.youtubeInfo.thumbnail = self.results.thumbnails.default.url
-                        self.youtubeInfo.member_id = 1
+                        let member = self.$page.props.setting.member.find((v) => v.ChannelID == self.results.channelId)
+                        if (member) {
+                            self.youtubeInfo.member_id = member.id
+                        } else {
+                            self.youtubeInfo.member_id = 1
+                        }
                         self.step = 3
                         self.youtubeWindow = true
 
@@ -1222,6 +1348,37 @@ export default defineComponent({
                         console.log(error)
                     })
             }
+        },
+        selectVideo(VideoID) {
+            this.params.id = VideoID
+            let self = this
+            axios
+                .get("https://www.googleapis.com/youtube/v3/videos", {
+                    params: this.params,
+                })
+                .then(function (res) {
+                    self.results = res.data.items[0].snippet
+
+                    self.youtubeInfo.VideoID = VideoID
+                    self.youtubeInfo.title = self.results.title
+                    self.youtubeInfo.date = self.format(self.results.publishedAt)
+                    self.youtubeInfo.channnel = self.results.channelId
+                    self.youtubeInfo.thumbnail = self.results.thumbnails.default.url
+                    let member = self.$page.props.setting.member.find((v) => v.ChannelID == self.results.channelId)
+                    self.youtubeInfo.member_id = member.id
+                    self.step = 3
+                    self.youtubeWindow = true
+
+                    self.$nextTick(function () {
+                        self.hotkey = document.querySelectorAll("[data-hotkey]")
+                        for (const el of self.hotkey) {
+                            install(el)
+                        }
+                    })
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
         },
         addClip() {
             this.YTurl = this.urlInput
@@ -1257,18 +1414,39 @@ export default defineComponent({
                     })
                     .then(function (res) {
                         self.results = res.data.items[0].snippet
-                        let clipForm = []
+                        let textArray = [self.results.title, self.results.description]
+                        let memberIdArray = self.filterMember(textArray.join(""))
+                        console.log(memberIdArray)
 
-                        clipForm.VideoID = self.createID
-                        clipForm.title = self.results.title
-                        clipForm.date = self.results.publishedAt
-                        clipForm.channel = self.results.channelTitle
-                        clipForm.thumbnail = self.results.thumbnails.default.url
-                        clipForm.member_id = 1
-                        clipForm.id = Math.floor(Math.random() * 101)
-                        self.clipMember.push(1)
-                        self.clipArray.push(clipForm)
-                        console.log(self.clipArray)
+                        if (memberIdArray == 0) {
+                            let clipForm = []
+
+                            clipForm.VideoID = self.createID
+                            clipForm.title = self.results.title
+                            clipForm.date = self.format(self.results.publishedAt)
+                            clipForm.channel = self.results.channelTitle
+                            clipForm.thumbnail = self.results.thumbnails.default.url
+                            clipForm.member_id = 1
+                            clipForm.id = Math.floor(Math.random() * 101)
+                            self.clipMember.push(1)
+                            self.clipArray.push(clipForm)
+                            console.log(self.clipArray)
+                        } else {
+                            for (let i = 0; i < memberIdArray.length; i++) {
+                                let clipForm = []
+
+                                clipForm.VideoID = self.createID
+                                clipForm.title = self.results.title
+                                clipForm.date = self.format(self.results.publishedAt)
+                                clipForm.channel = self.results.channelTitle
+                                clipForm.thumbnail = self.results.thumbnails.default.url
+                                clipForm.member_id = memberIdArray[i]
+                                clipForm.id = Math.floor(Math.random() * 101)
+                                self.clipMember.push(memberIdArray[i])
+                                self.clipArray.push(clipForm)
+                                console.log(self.clipArray)
+                            }
+                        }
                     })
                     .catch((error) => {
                         console.log(error)
@@ -1287,6 +1465,8 @@ export default defineComponent({
         },
         addTweet() {
             this.Tweeturl = this.urlInput
+            let whereDomain = this.Tweeturl.indexOf("twitter.com/") + 12
+            let whereName = this.Tweeturl.indexOf("/status/")
             let whereStatus = this.Tweeturl.indexOf("/status/") + 8
             let whereEnd = this.Tweeturl.indexOf("?s=")
             if (whereEnd == -1) {
@@ -1294,6 +1474,8 @@ export default defineComponent({
             } else {
                 this.createTweet = this.Tweeturl.slice(whereStatus, whereEnd)
             }
+            let screenName = this.Tweeturl.slice(whereDomain, whereName)
+            let member = this.$page.props.setting.member.find((v) => v.TWaccount == screenName)
 
             this.tweetForm = []
 
@@ -1302,7 +1484,11 @@ export default defineComponent({
             this.tweetForm.twitterId = this.createTweet
             this.tweetForm.title = ""
             this.tweetForm.cate_id = 5
-            this.tweetForm.member_id = 1
+            if (member) {
+                this.tweetForm.member_id = member.id
+            } else {
+                this.tweetForm.member_id = 1
+            }
             this.tweetArray.push(this.tweetForm)
             this.errorTWArray.push(true)
         },
@@ -1389,13 +1575,13 @@ export default defineComponent({
                 for (let i = 0; i < Object.keys(this.YTclipArray).length; i++) {
                     this.sendArray.push({
                         title: this.YTclipArray[i].title,
-                        date: new Date(),
+                        date: this.format(new Date()),
                         status: 0,
                         cate_id: this.YTclipArray[i].cate_id,
                         member_id: this.YTclipArray[i].member_id,
                         YTclipUrl: this.YTclipArray[i].YTclipURL,
-                        created_at: new Date(),
-                        updated_at: new Date(),
+                        created_at: this.format(new Date()),
+                        updated_at: this.format(new Date()),
                         createrHN: this.createrHN,
                         isShow: this.isShow,
                     })
@@ -1405,13 +1591,13 @@ export default defineComponent({
                 for (let i = 0; i < Object.keys(this.YTclipArray).length; i++) {
                     this.sendArray.push({
                         title: this.YTclipArray[i].title,
-                        date: new Date(),
+                        date: this.format(new Date()),
                         status: 0,
                         cate_id: this.YTclipArray[i].cate_id,
                         member_id: this.YTclipArray[i].member_id,
                         YTclipUrl: this.YTclipArray[i].YTclipURL,
-                        created_at: new Date(),
-                        updated_at: new Date(),
+                        created_at: this.format(new Date()),
+                        updated_at: this.format(new Date()),
                         createrHN: this.$page.props.user.name,
                         isShow: this.isShow,
                     })
@@ -1430,6 +1616,7 @@ export default defineComponent({
                     console.log(response)
                     self.loading = false
                     self.complete = true
+                    self.YTclipArray = []
                 })
                 .catch((error) => {
                     self.loading = false
@@ -1444,7 +1631,7 @@ export default defineComponent({
                 for (let i = 0; i < Object.keys(this.tweetArray).length; i++) {
                     this.sendArray.push({
                         title: this.tweetArray[i].title,
-                        date: new Date(),
+                        date: this.format(new Date()),
                         status: 0,
                         cate_id: this.tweetArray[i].cate_id,
                         member_id: this.tweetArray[i].member_id,
@@ -1452,8 +1639,8 @@ export default defineComponent({
                         twitterId: this.tweetArray[i].twitterId,
                         tweetUrl: "",
                         tweetType: "",
-                        created_at: new Date(),
-                        updated_at: new Date(),
+                        created_at: this.format(new Date()),
+                        updated_at: this.format(new Date()),
                         createrHN: this.createrHN,
                     })
                 }
@@ -1462,7 +1649,7 @@ export default defineComponent({
                 for (let i = 0; i < Object.keys(this.tweetArray).length; i++) {
                     this.sendArray.push({
                         title: this.tweetArray[i].title,
-                        date: new Date(),
+                        date: this.format(new Date()),
                         status: 0,
                         cate_id: this.tweetArray[i].cate_id,
                         member_id: this.tweetArray[i].member_id,
@@ -1470,8 +1657,8 @@ export default defineComponent({
                         twitterId: this.tweetArray[i].twitterId,
                         tweetUrl: "",
                         tweetType: "",
-                        created_at: new Date(),
-                        updated_at: new Date(),
+                        created_at: this.format(new Date()),
+                        updated_at: this.format(new Date()),
                         createrHN: this.$page.props.user.name,
                     })
                 }
@@ -1489,6 +1676,7 @@ export default defineComponent({
                     console.log(response)
                     self.loading = false
                     self.complete = true
+                    self.tweetArray = []
                 })
                 .catch((error) => {
                     self.loading = false
@@ -1503,15 +1691,15 @@ export default defineComponent({
                 for (let i = 0; i < Object.keys(this.clipArray).length; i++) {
                     this.sendArray.push({
                         title: this.clipArray[i].title,
-                        date: this.clipArray[i].date,
+                        date: this.format(this.clipArray[i].date),
                         VideoID: this.clipArray[i].VideoID,
                         start: 0,
                         end: 0,
                         status: 0,
                         cate_id: 4,
                         member_id: this.clipArray[i].member_id,
-                        created_at: new Date(),
-                        updated_at: new Date(),
+                        created_at: this.format(new Date()),
+                        updated_at: this.format(new Date()),
                         createrHN: this.createrHN,
                     })
                 }
@@ -1520,15 +1708,15 @@ export default defineComponent({
                 for (let i = 0; i < Object.keys(this.clipArray).length; i++) {
                     this.sendArray.push({
                         title: this.clipArray[i].title,
-                        date: this.clipArray[i].date,
+                        date: this.format(this.clipArray[i].date),
                         VideoID: this.clipArray[i].VideoID,
                         start: 0,
                         end: 0,
                         status: 0,
                         cate_id: 4,
                         member_id: this.clipArray[i].member_id,
-                        created_at: new Date(),
-                        updated_at: new Date(),
+                        created_at: this.format(new Date()),
+                        updated_at: this.format(new Date()),
                         createrHN: this.$page.props.user.name,
                     })
                 }
@@ -1545,6 +1733,7 @@ export default defineComponent({
                     console.log(response)
                     self.loading = false
                     self.complete = true
+                    self.clipArray = []
                 })
                 .catch((error) => {
                     self.loading = false
@@ -1640,17 +1829,17 @@ export default defineComponent({
             let rem = ("00" + (INTtime % 60)).slice(-2)
             let HMStime = hour + ":" + min + ":" + rem
 
-            this.youtubeForm.rowTime = Math.floor(time)
+            this.youtubeForm.rawTime = Math.floor(time)
             this.youtubeForm.time = HMStime
             this.youtubeForm.title = ""
             this.youtubeForm.isStart = true
-            this.youtubeForm.member_id = 1
+            this.youtubeForm.member_id = this.youtubeInfo.member_id
             this.youtubeForm.cate_id = 1
             this.youtubeForm.switch = true
             this.youtubeForm.error = true
 
             this.youtubeArray.push(this.youtubeForm)
-            this.youtubeArray.sort((a, b) => b.rowTime - a.rowTime)
+            this.youtubeArray.sort((a, b) => b.rawTime - a.rawTime)
             console.log(this.youtubeArray)
 
             this.youtubeIsStart = this.youtubeArray.map((item) => item["isStart"])
@@ -1702,10 +1891,10 @@ export default defineComponent({
                     let rem = ("00" + TimeS).slice(-2)
                     let HMStime = "00:" + min + ":" + rem
 
-                    this.youtubeForm.rowTime = timeSecond
+                    this.youtubeForm.rawTime = timeSecond
                     this.youtubeForm.time = HMStime
                     this.youtubeForm.isStart = true
-                    this.youtubeForm.member_id = 1
+                    this.youtubeForm.member_id = this.youtubeInfo.member_id
                     this.youtubeForm.cate_id = 1
                     this.youtubeForm.switch = true
 
@@ -1721,7 +1910,7 @@ export default defineComponent({
                     let rem = ("00" + TimeS).slice(-2)
                     let HMStime = hour + ":" + min + ":" + rem
 
-                    this.youtubeForm.rowTime = timeSecond
+                    this.youtubeForm.rawTime = timeSecond
                     this.youtubeForm.time = HMStime
                     this.youtubeForm.isStart = true
                     this.youtubeForm.member_id = 1
@@ -1731,7 +1920,7 @@ export default defineComponent({
                     this.youtubeArray.push(this.youtubeForm)
                 }
 
-                this.youtubeArray.sort((a, b) => b.rowTime - a.rowTime)
+                this.youtubeArray.sort((a, b) => b.rawTime - a.rawTime)
 
                 this.youtubeIsStart = this.youtubeArray.map((item) => item["isStart"])
                 this.youtubeCate = this.youtubeArray.map((item) => item["cate_id"])
@@ -1767,16 +1956,16 @@ export default defineComponent({
                 let TimeM = timeArray[0]
                 let TimeS = timeArray[1]
                 let timeSecond = Number(TimeM) * 60 + Number(TimeS)
-                this.youtubeArray[index].rowTime = timeSecond
+                this.youtubeArray[index].rawTime = timeSecond
             } else {
                 let TimeH = timeArray[0]
                 let TimeM = timeArray[1]
                 let TimeS = timeArray[2]
                 let timeSecond = Number(TimeH) * 3600 + Number(TimeM) * 60 + Number(TimeS)
-                this.youtubeArray[index].rowTime = timeSecond
+                this.youtubeArray[index].rawTime = timeSecond
             }
 
-            this.youtubeArray.sort((a, b) => b.rowTime - a.rowTime)
+            this.youtubeArray.sort((a, b) => b.rawTime - a.rawTime)
 
             this.youtubeIsStart = this.youtubeArray.map((item) => item["isStart"])
             this.youtubeCate = this.youtubeArray.map((item) => item["cate_id"])
@@ -1827,23 +2016,27 @@ export default defineComponent({
                 for (let i = 0; i < Object.keys(this.youtubeASC).length; i++) {
                     if (this.youtubeASC[i].isStart == true) {
                         if (this.youtubeASC[i].switch == true) {
+                            let endTime = 0
+                            if (i != Object.keys(this.youtubeASC).length - 1) {
+                                endTime = this.youtubeASC[i + 1].rawTime
+                            }
                             this.sendArray.push({
                                 title: this.youtubeASC[i].title,
-                                date: this.youtubeInfo.date,
+                                date: this.format(this.youtubeInfo.date),
                                 VideoID: this.youtubeInfo.VideoID,
-                                start: this.youtubeASC[i].rowTime,
-                                end: 0,
+                                start: this.youtubeASC[i].rawTime,
+                                end: endTime,
                                 status: 0,
                                 cate_id: this.youtubeASC[i].cate_id,
                                 member_id: this.youtubeASC[i].member_id,
-                                created_at: new Date(),
-                                updated_at: new Date(),
+                                created_at: this.format(new Date()),
+                                updated_at: this.format(new Date()),
                                 createrHN: this.createrHN,
                                 isShow: this.isShow,
                             })
                         }
                     } else {
-                        this.sendArray[this.sendArray.length - 1].end = this.youtubeASC[i].rowTime
+                        this.sendArray[this.sendArray.length - 1].end = this.youtubeASC[i].rawTime
                     }
                 }
             } else {
@@ -1851,23 +2044,27 @@ export default defineComponent({
                 for (let i = 0; i < Object.keys(this.youtubeASC).length; i++) {
                     if (this.youtubeASC[i].isStart == true) {
                         if (this.youtubeASC[i].switch == true) {
+                            let endTime = 0
+                            if (i != Object.keys(this.youtubeASC).length - 1) {
+                                endTime = this.youtubeASC[i + 1].rawTime
+                            }
                             this.sendArray.push({
                                 title: this.youtubeASC[i].title,
-                                date: this.youtubeInfo.date,
+                                date: this.format(this.youtubeInfo.date),
                                 VideoID: this.youtubeInfo.VideoID,
-                                start: this.youtubeASC[i].rowTime,
-                                end: 0,
+                                start: this.youtubeASC[i].rawTime,
+                                end: endTime,
                                 status: 0,
                                 cate_id: this.youtubeASC[i].cate_id,
                                 member_id: this.youtubeASC[i].member_id,
-                                created_at: new Date(),
-                                updated_at: new Date(),
+                                created_at: this.format(new Date()),
+                                updated_at: this.format(new Date()),
                                 createrHN: this.$page.props.user.name,
                                 isShow: this.isShow,
                             })
                         }
                     } else {
-                        this.sendArray[this.sendArray.length - 1].end = this.youtubeASC[i].rowTime
+                        this.sendArray[this.sendArray.length - 1].end = this.youtubeASC[i].rawTime
                     }
                 }
             }
@@ -1883,6 +2080,9 @@ export default defineComponent({
                     console.log(response)
                     self.loading = false
                     self.complete = true
+                    for (let i = 0; i < self.youtubeArray.length; i++) {
+                        self.youtubeArray[i].switch = false
+                    }
                 })
                 .catch((error) => {
                     self.loading = false
@@ -1899,6 +2099,10 @@ export default defineComponent({
                 this.youtubeArray[index]["error"] = false
             }
         },
+        format(date) {
+            let formated = dayjs(date).format("YYYY-MM-DD HH:mm:ss")
+            return formated
+        },
     },
     components: {
         AppLayout,
@@ -1914,6 +2118,7 @@ export default defineComponent({
         YouTube,
         Head,
         AccordionPanel,
+        DropDown,
     },
     computed: {
         YTplayer() {

@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Models\Member;
-use App\Models\Players;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use PhpParser\Node\Expr\Cast\Array_;
 
 class SnsController extends Controller
 {
@@ -44,6 +41,7 @@ class SnsController extends Controller
                 $TWlist[] = $TWvalue;
             }
         }
+        array_multisort( array_map( "strtotime", array_column( $TWlist, 2 ) ), SORT_DESC, $TWlist);
 
         $YTsheet_id = '1Bnl5N666vtcRiHlq-yqpn-oOMekW1KdI4uV_5wMhDQk';
         $YTrange = 'combineList!F1:H11'; 
@@ -68,6 +66,7 @@ class SnsController extends Controller
                 $YTlist[] = $YTvalue;
             }
         }
+        array_multisort( array_map( "strtotime", array_column( $YTlist, 2 ) ), SORT_DESC, $YTlist);
 
         return response()->json(
             [
@@ -144,12 +143,12 @@ class SnsController extends Controller
         $SNSinfo = array();
 
         $TWsheet_id = '1GhtCo0kSexw7-ckjrIgZOuj5GbWBcQgfajTXlPPPp7Q';
-        $TWrange = str('combineList!A'.str($id).':G'); 
+        $TWrange = str('combineList!A'.str($id).':H'); 
         $TWresponse = $spreadsheet_service->spreadsheets_values->get($TWsheet_id, $TWrange);
         $TWvalue = $TWresponse->getValues();
 
         $YTsheet_id = '1Bnl5N666vtcRiHlq-yqpn-oOMekW1KdI4uV_5wMhDQk';
-        $YTrange = str('combineList!A'.str($id).':H'); 
+        $YTrange = str('combineList!A'.str($id).':I'); 
         $YTresponse = $spreadsheet_service->spreadsheets_values->get($YTsheet_id, $YTrange);
         $YTvalue = $YTresponse->getValues();
 
